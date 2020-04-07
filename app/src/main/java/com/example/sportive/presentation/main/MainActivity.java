@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
 import com.example.sportive.presentation.home.HomeFragment;
+import com.example.sportive.presentation.profile.ProfileFragment;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -24,8 +27,11 @@ import timber.log.Timber;
  */
 public class MainActivity extends BaseActivity {
     public static final int TAG_HOME = 0;
+    public static final int TAG_PROFILE = 1;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
     @BindView(R.id.nav_main)
     BottomNavigationView bottomNavigationView;
 
@@ -68,8 +74,14 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
     private void setupViews() {
         Timber.d("setupViews");
+        addFragment(HomeFragment.getInstance(), HomeFragment.TAG, R.id.fragment_container);
         setupToolbar();
         setupBottomNavigationView();
     }
@@ -86,7 +98,11 @@ public class MainActivity extends BaseActivity {
             case TAG_HOME:
                 replaceFragment(HomeFragment.getInstance(), HomeFragment.TAG, R.id.fragment_container);
                 break;
+            case TAG_PROFILE:
+                replaceFragment(ProfileFragment.getInstance(), ProfileFragment.TAG, R.id.fragment_container);
+                break;
         }
+        appBarLayout.setVisibility(tag == TAG_PROFILE ? View.GONE : View.VISIBLE);
     }
 
     private void setupBottomNavigationView() {
@@ -104,6 +120,7 @@ public class MainActivity extends BaseActivity {
                     openScreenByTag(TAG_HOME);
                     break;
                 case R.id.item_profile:
+                    openScreenByTag(TAG_PROFILE);
                     break;
             }
             return true;

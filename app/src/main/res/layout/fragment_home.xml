@@ -5,46 +5,101 @@
     android:orientation="vertical"
     android:padding="@dimen/spacing_10">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/spacing_10"
+        android:text="Đặt sân trực tuyến"
+        android:textColor="@color/blue_500"
+        android:textSize="@dimen/font_18_title"
+        android:textStyle="bold"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_10"
+        android:orientation="horizontal">
+
+        <!--        <ImageView-->
+        <!--            android:layout_width="30dp"-->
+        <!--            android:layout_height="60dp"-->
+        <!--            android:src="@drawable/ic_perm_contact_calendar_black_24dp"></ImageView>-->
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/spacing_10"
+                android:layout_toLeftOf="@id/btn_select"
+                android:drawableLeft="@drawable/ic_perm_contact_calendar_black_24dp"
+                android:drawablePadding="@dimen/spacing_8"
+                android:paddingBottom="@dimen/spacing_18"
+                android:text="Sân bóng đã đá"></EditText>
+
+
+            <Button
+                android:id="@+id/btn_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/spacing_10"
+                android:text="Chọn">
+
+            </Button>
+        </RelativeLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_location_on_black_24dp"></ImageView>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/spacing_10"
+                android:layout_toLeftOf="@id/btn_location"
+
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_10"
                     android:text="Vị trí sân"
                     android:textSize="@dimen/font_16_subtitle"></TextView>
 
-                <TextView
-                    android:layout_width="wrap_content"
+
+                <EditText
+
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sân bóng gần bạn"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_20"></TextView>
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                    android:drawablePadding="@dimen/spacing_8"
+                    android:paddingBottom="@dimen/spacing_18"
+                    android:text="Sân bóng gần bạn"></EditText>
             </LinearLayout>
 
             <ImageView
+
+                android:id="@+id/btn_location"
                 android:layout_width="30dp"
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/spacing_10"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/spacing_20"
                 android:src="@drawable/ic_my_location_black_24dp"></ImageView>
 
         </RelativeLayout>
@@ -53,38 +108,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_10"
         android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_perm_contact_calendar_black_24dp"></ImageView>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/spacing_10"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_10"
                     android:text="Thời gian đá"
                     android:textSize="@dimen/font_16_subtitle"></TextView>
 
-                <TextView
-                    android:layout_width="wrap_content"
+
+                <EditText
+
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Thứ 7, 07/04/2020"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_20"></TextView>
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/ic_perm_contact_calendar_black_24dp"
+                    android:drawablePadding="@dimen/spacing_8"
+                    android:paddingBottom="@dimen/spacing_18"
+                    android:text="Thứ 7, 07/04/2020"></EditText>
             </LinearLayout>
+
 
         </RelativeLayout>
     </LinearLayout>
@@ -93,7 +147,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_10"
-        android:text="Tìm kiếm">
-
-    </Button>
+        android:text="Tìm kiếm"></Button>
 </LinearLayout>
