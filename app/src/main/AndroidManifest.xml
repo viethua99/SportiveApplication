@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.main.MainActivity"></activity>
+        <activity android:name=".presentation.result.ResultActivity"></activity>
     </application>
 
 </manifest>

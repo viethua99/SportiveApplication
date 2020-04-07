@@ -20,7 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/color_app_main"
+            android:background="@color/white"
             app:title="Sportive" />
     </com.google.android.material.appbar.AppBarLayout>
 

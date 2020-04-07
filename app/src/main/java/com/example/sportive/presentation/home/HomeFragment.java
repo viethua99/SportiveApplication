@@ -6,6 +6,10 @@ import android.view.View;
 
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
+import com.example.sportive.presentation.result.ResultActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import butterknife.OnClick;
 
 /**
  * Created By Viet Hua on 4/7/2020
@@ -34,5 +38,10 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void onAttachToContext(Context context) {
         mContext = context;
+    }
+
+    @OnClick(R.id.btn_search)
+    public void onSearchClick() {
+        ResultActivity.startResultActivity((AppCompatActivity) getActivity());
     }
 }
