@@ -50,7 +50,9 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="@dimen/spacing_10"
-                android:text="Chọn">
+                android:background="@drawable/border_circular"
+                android:text="Chọn"
+                android:textColor="@color/white">
 
             </Button>
         </RelativeLayout>
@@ -148,5 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_10"
-        android:text="Tìm kiếm"></Button>
+        android:background="@drawable/border_circular"
+        android:text="Tìm kiếm"
+        android:textColor="@color/white"></Button>
 </LinearLayout>

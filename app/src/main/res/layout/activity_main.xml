@@ -10,8 +10,9 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/blue_500"
         android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ToolbarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,15 +21,16 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            app:title="Sportive" />
+            android:background="@color/blue_500"
+            app:title="Sportive"
+            app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_above="@id/line"
         android:layout_height="match_parent"
+        android:layout_above="@id/line"
         android:layout_below="@id/appBarLayout">
 
     </FrameLayout>
@@ -42,6 +44,7 @@
         android:background="@color/bgColor" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:labelVisibilityMode="labeled"
         android:id="@+id/nav_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +52,7 @@
         android:layout_alignParentBottom="true"
         app:itemIconSize="26sp"
         app:itemIconTint="@color/selector"
-        app:itemTextColor="@android:color/background_dark"
+        app:itemTextColor="@color/selector"
         app:menu="@menu/bottom_navigation">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
