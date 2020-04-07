@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Sportive</string>
+    <string name="home">Trang chủ</string>
+    <string name="profile">Cá nhân</string>
 </resources>

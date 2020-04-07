@@ -3,7 +3,7 @@
     <item
         android:id="@+id/item_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Home"></item>
+        android:title="@string/home"></item>
     <item
         android:id="@+id/item_food"
         android:icon="@drawable/ic_home_black_24dp"
@@ -19,5 +19,5 @@
     <item
         android:id="@+id/item_profile"
         android:icon="@drawable/ic_account_circle_black_24dp"
-        android:title="Home"></item>
+        android:title="@string/profile"></item>
 </menu>

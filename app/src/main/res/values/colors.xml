@@ -10,7 +10,7 @@
     <color name="control_background">#cc4285f4</color>
     <color name="grey">#999c91</color>
     <color name="white">#ffffff</color>
-    <color name="color_app_main">#ffffff</color>
+    <color name="color_app_main">#cc4285f4</color>
     <color name="redcenter">#df4950</color>
     <color name="redEnd">#b0ff0612</color>
     <color name="transparent">#0000</color>
