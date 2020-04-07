@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
+import com.example.sportive.presentation.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import timber.log.Timber;
  * Created By Viet Hua on 4/7/2020
  */
 public class MainActivity extends BaseActivity {
+    public static final int TAG_HOME = 0;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.nav_main)
@@ -79,6 +81,14 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    private void openScreenByTag(int tag) {
+        switch (tag) {
+            case TAG_HOME:
+                replaceFragment(HomeFragment.getInstance(), HomeFragment.TAG, R.id.fragment_container);
+                break;
+        }
+    }
+
     private void setupBottomNavigationView() {
         Timber.d("setupBottomNavigationView");
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavigationViewListener);
@@ -91,6 +101,7 @@ public class MainActivity extends BaseActivity {
             Timber.d("onBottomNavigationView Selected: %s", menuItem.getTitle());
             switch (menuItem.getItemId()) {
                 case R.id.item_home:
+                    openScreenByTag(TAG_HOME);
                     break;
                 case R.id.item_profile:
                     break;

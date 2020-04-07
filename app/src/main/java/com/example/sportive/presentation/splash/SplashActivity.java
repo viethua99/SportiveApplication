@@ -8,6 +8,7 @@ import com.example.sportive.presentation.base.BaseActivity;
 import com.example.sportive.presentation.main.MainActivity;
 
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 /**
  * Created by Viet Hua on 4/7/2020
@@ -17,6 +18,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Timber.d("onCreate");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
