@@ -1,8 +1,10 @@
-package com.example.sportive;
+package com.example.sportive.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.sportive.R;
 
 public class MainActivity extends AppCompatActivity {
 
