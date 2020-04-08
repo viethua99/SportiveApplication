@@ -28,6 +28,9 @@
         <activity
             android:name=".presentation.detail.DetailActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".presentation.location.LocationActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

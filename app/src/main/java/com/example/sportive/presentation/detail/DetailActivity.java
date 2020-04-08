@@ -16,6 +16,9 @@ import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import timber.log.Timber;
 
+/**
+ * Created by Viet Hua on 4/8/2020
+ */
 public class DetailActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;

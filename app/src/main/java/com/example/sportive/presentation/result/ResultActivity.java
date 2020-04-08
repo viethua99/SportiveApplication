@@ -3,6 +3,7 @@ package com.example.sportive.presentation.result;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.example.domain.model.SportField;
 import com.example.sportive.R;
