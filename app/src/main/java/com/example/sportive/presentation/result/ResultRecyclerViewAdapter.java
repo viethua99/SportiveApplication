@@ -48,6 +48,9 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
             tvTime = itemView.findViewById(R.id.txt_time);
             tvPrice = itemView.findViewById(R.id.txt_price);
             imgField = itemView.findViewById(R.id.img_field);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+
         }
 
         @Override
