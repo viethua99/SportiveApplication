@@ -3,11 +3,13 @@ package com.example.sportive.presentation.result;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.example.domain.model.SportField;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
 import com.example.sportive.presentation.base.ItemClickListener;
+import com.example.sportive.presentation.detail.DetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +82,7 @@ public class ResultActivity extends BaseActivity {
     ItemClickListener<SportField> resultItemListener = new ItemClickListener<SportField>() {
         @Override
         public void onClickListener(int position, SportField sportField) {
-
+            DetailActivity.startDetailActivity(ResultActivity.this);
         }
 
         @Override
