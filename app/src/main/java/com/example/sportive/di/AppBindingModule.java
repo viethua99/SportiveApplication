@@ -1,5 +1,16 @@
 package com.example.sportive.di;
 
+import com.example.sportive.presentation.detail.DetailActivity;
+import com.example.sportive.presentation.detail.DetailModule;
+import com.example.sportive.presentation.location.LocationActivity;
+import com.example.sportive.presentation.location.LocationModule;
+import com.example.sportive.presentation.main.MainActivity;
+import com.example.sportive.presentation.main.MainModule;
+import com.example.sportive.presentation.result.ResultActivity;
+import com.example.sportive.presentation.result.ResultModule;
+import com.example.sportive.presentation.splash.SplashActivity;
+import com.example.sportive.presentation.splash.SplashModule;
+
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
@@ -8,6 +19,19 @@ import dagger.android.ContributesAndroidInjector;
  */
 @Module
 public abstract class AppBindingModule {
+    @ContributesAndroidInjector(modules = DetailModule.class)
+    public abstract DetailActivity detailActivity();
 
+    @ContributesAndroidInjector(modules = MainModule.class)
+    public abstract MainActivity mainActivity();
+
+    @ContributesAndroidInjector(modules = LocationModule.class)
+    public abstract LocationActivity locationActivity();
+
+    @ContributesAndroidInjector(modules = ResultModule.class)
+    public abstract ResultActivity resultActivity();
+
+    @ContributesAndroidInjector(modules = SplashModule.class)
+    public abstract SplashActivity splashActivity();
 
 }

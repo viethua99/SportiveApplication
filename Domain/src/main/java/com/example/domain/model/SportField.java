@@ -1,5 +1,7 @@
 package com.example.domain.model;
 
+import java.util.Objects;
+
 public class SportField {
     private String imgUrl;
     private String fieldName;
@@ -53,5 +55,33 @@ public class SportField {
         this.location = location;
         this.time = time;
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SportField)) return false;
+        SportField that = (SportField) o;
+        return Objects.equals(imgUrl, that.imgUrl) &&
+                Objects.equals(fieldName, that.fieldName) &&
+                Objects.equals(location, that.location) &&
+                Objects.equals(time, that.time) &&
+                Objects.equals(price, that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(imgUrl, fieldName, location, time, price);
+    }
+
+    @Override
+    public String toString() {
+        return "SportField{" +
+                "imgUrl='" + imgUrl + '\'' +
+                ", fieldName='" + fieldName + '\'' +
+                ", location='" + location + '\'' +
+                ", time='" + time + '\'' +
+                ", price='" + price + '\'' +
+                '}';
     }
 }
