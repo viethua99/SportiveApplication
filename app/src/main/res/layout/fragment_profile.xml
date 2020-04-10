@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TÀI KHOẢN"
-                android:textColor="@color/black"
+                android:textColor="@color/blue_500"
                 android:textSize="@dimen/font_20"
                 android:textStyle="bold"></TextView>
 
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_20"
                 android:text="THÔNG TIN"
-                android:textColor="@color/black"
+                android:textColor="@color/blue_500"
                 android:textSize="@dimen/font_20"
                 android:textStyle="bold"></TextView>
 

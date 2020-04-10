@@ -6,23 +6,22 @@
     android:padding="@dimen/spacing_10">
 
 
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/spacing_10"
-        android:text="@string/online_field_booking"
+        android:text="@string/played_history"
         android:textColor="@color/blue_500"
         android:textSize="@dimen/font_18_title"
         android:textStyle="bold"></TextView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_10"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <RelativeLayout
 
@@ -58,6 +57,16 @@
             </Button>
         </RelativeLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/spacing_10"
+        android:paddingTop="@dimen/spacing_10"
+        android:text="@string/online_field_booking"
+        android:textColor="@color/blue_500"
+        android:textSize="@dimen/font_18_title"
+        android:textStyle="bold"></TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -131,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_10"
-                    android:text="@string/play_time"
+                    android:text="@string/play_date"
                     android:textSize="@dimen/font_16_subtitle"></TextView>
 
 
@@ -151,6 +160,66 @@
 
 
         </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_weight="6"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_10"
+                android:text="@string/play_time"
+                android:textSize="@dimen/font_16_subtitle"></TextView>
+
+
+            <EditText
+                android:id="@+id/edt_play_hour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:drawableLeft="@drawable/ic_access_time_black_24dp"
+                android:drawablePadding="@dimen/spacing_8"
+                android:editable="false"
+                android:focusableInTouchMode="false"
+                android:paddingBottom="@dimen/spacing_18"
+                android:text="6h30"></EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/spacing_20"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/duration"
+                android:textSize="@dimen/font_16_subtitle"></TextView>
+
+
+            <Spinner
+                android:id="@+id/spinner_duration"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </Spinner>
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
