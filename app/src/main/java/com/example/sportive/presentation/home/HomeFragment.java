@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
@@ -25,8 +24,6 @@ import timber.log.Timber;
  */
 public class HomeFragment extends BaseFragment {
     public static final String TAG = HomeFragment.class.getSimpleName();
-    @BindView(R.id.edt_played_field)
-    EditText edtPlayedField;
     @BindView(R.id.edt_near_field)
     EditText edtNearField;
 

@@ -63,14 +63,6 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Timber.d("onOptionsItemSelected: %s", item.getTitle());
-        switch (item.getItemId()) {
-            case R.id.item_testa:
-                showToastMessage("TEST A");
-                break;
-            case R.id.item_testb:
-                showToastMessage("TEST B");
-                break;
-        }
         return true;
     }
 
