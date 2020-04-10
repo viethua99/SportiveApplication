@@ -58,6 +58,8 @@ dependencies {
     // image
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    //TimePickerDialog lib
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
     //Import module
     implementation project(':Domain')
 

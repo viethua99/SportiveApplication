@@ -2,4 +2,17 @@
     <string name="app_name">Sportive</string>
     <string name="home">Trang chủ</string>
     <string name="profile">Cá nhân</string>
+    <string name="online_field_booking">Đặt sân trực tuyến </string>
+    <string name="played_field">Sân bóng đã đá</string>
+    <string name="field_near_you">Sân bóng gần bạn</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="map">Bản đồ</string>
+    <string name="select">Chọn</string>
+    <string name="field_position">Vị trí sân</string>
+    <string name="play_time">Giờ bắt đầu</string>
+    <string name="duration">Thời lượng</string>
+    <string name="play_date">Ngày đá</string>
+    <string name="ranking_and_rating">Xếp hạng và đánh giá</string>
+    <string name="field_booking">Đặt sân</string>
+    <string name="played_history">Lịch sử đá</string>
 </resources>

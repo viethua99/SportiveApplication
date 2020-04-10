@@ -19,11 +19,11 @@
         </ImageView>
 
         <androidx.appcompat.widget.Toolbar
-            android:theme="@style/ToolbarTheme"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:theme="@style/ToolbarTheme" />
     </RelativeLayout>
 
 
@@ -41,12 +41,23 @@
             android:layout_height="wrap_content"
             android:text="Sân banh Hòa Bình"
             android:textColor="@color/blue_500"
-            android:textSize="@dimen/font_26"></TextView>
+            android:textSize="@dimen/font_26"
+            android:textStyle="bold"></TextView>
+
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_10"
+            android:rating="5"></RatingBar>
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_4"
+            android:layout_marginTop="@dimen/spacing_10"
             android:orientation="horizontal">
 
             <ImageView
@@ -61,6 +72,25 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/spacing_10"
                 android:text="Phường Tân Chánh Hiệp, quận 12"
+                android:textSize="@dimen/font_18_title"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_10"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_attach_money_black_24dp"></ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_10"
+                android:text="120.000 VND / 1h"
                 android:textSize="@dimen/font_18_title"></TextView>
         </LinearLayout>
 
@@ -102,6 +132,7 @@
                 android:text="0932095081"
                 android:textSize="@dimen/font_18_title"></TextView>
         </LinearLayout>
+
     </LinearLayout>
 
     <View
@@ -115,6 +146,7 @@
         android:background="@color/bgColor" />
 
     <RelativeLayout
+        android:id="@+id/layout_field_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/line2"
@@ -128,14 +160,52 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Xếp hạng và đánh giá"
+                android:text="Thông tin sân"
                 android:textColor="@color/blue_500"
-                android:textSize="@dimen/font_18_title">
+                android:textSize="@dimen/font_18_title"
+                android:textStyle="bold"></TextView>
 
-            </TextView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loại sân"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_18_title"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Sân cỏ nhân tạo"
+                    android:textSize="@dimen/font_18_title"></TextView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dịch vụ"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_18_title"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Miễn phí nước uống"
+                    android:textSize="@dimen/font_18_title"></TextView>
+            </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
-
 
     <View
         android:layout_width="match_parent"
@@ -164,7 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_10"
-                android:text="120.000 VND"
+                android:text="480.000 VND"
                 android:textColor="@color/blue_500"
                 android:textSize="@dimen/font_26"
                 android:textStyle="bold"></TextView>
@@ -172,7 +242,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1 giờ"
+                android:text="4 giờ"
                 android:textSize="@dimen/font_18_title"
                 android:textStyle="bold"></TextView>
         </LinearLayout>
@@ -187,7 +257,7 @@
             android:layout_marginTop="@dimen/spacing_10"
             android:layout_marginRight="@dimen/spacing_10"
             android:background="@drawable/border_circular"
-            android:text="Đặt sân"
+            android:text="@string/field_booking"
             android:textColor="@color/white"></Button>
 
     </RelativeLayout>
