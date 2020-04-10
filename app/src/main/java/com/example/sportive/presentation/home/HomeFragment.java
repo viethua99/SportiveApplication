@@ -59,7 +59,7 @@ public class HomeFragment extends BaseFragment {
 
     private void setupDatePickerDialog() {
         Timber.d("setupDatePickerDialog");
-        new DatePickerDialog(getContext(), dataPickerDialogListener,
+        new DatePickerDialog(getContext(),R.style.DialogTheme, dataPickerDialogListener,
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
