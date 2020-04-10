@@ -84,6 +84,25 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:src="@drawable/ic_attach_money_black_24dp"></ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_10"
+                android:text="120.000 VND / 1h"
+                android:textSize="@dimen/font_18_title"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_10"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_access_time_black_24dp"></ImageView>
 
             <TextView
@@ -113,6 +132,7 @@
                 android:text="0932095081"
                 android:textSize="@dimen/font_18_title"></TextView>
         </LinearLayout>
+
     </LinearLayout>
 
     <View
@@ -214,7 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_10"
-                android:text="120.000 VND"
+                android:text="480.000 VND"
                 android:textColor="@color/blue_500"
                 android:textSize="@dimen/font_26"
                 android:textStyle="bold"></TextView>
@@ -222,7 +242,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1 giờ"
+                android:text="4 giờ"
                 android:textSize="@dimen/font_18_title"
                 android:textStyle="bold"></TextView>
         </LinearLayout>

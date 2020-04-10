@@ -2,7 +2,6 @@ package com.example.sportive.presentation.home;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TimePicker;
 
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
@@ -34,18 +32,18 @@ import utils.TimeUtils;
  */
 public class HomeFragment extends BaseFragment {
     public static final String TAG = HomeFragment.class.getSimpleName();
+    private final Calendar myCalendar = Calendar.getInstance();
     @BindView(R.id.edt_near_field)
     EditText edtNearField;
     @BindView(R.id.edt_play_hour)
     EditText edtPlayHour;
     @BindView(R.id.edt_play_date)
     EditText edtPlayDate;
-
     @BindView(R.id.spinner_duration)
     Spinner durationSpinner;
 
     Context mContext;
-    private final Calendar myCalendar = Calendar.getInstance();
+
 
 
     public static HomeFragment getInstance() {
@@ -97,7 +95,7 @@ public class HomeFragment extends BaseFragment {
         durationList.add("4 hour");
         durationList.add("5 hour");
         durationList.add("6 hour");
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, durationList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, durationList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         durationSpinner.setOnItemSelectedListener(onItemSelectedListener);
         durationSpinner.setAdapter(arrayAdapter);
