@@ -123,7 +123,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/txt_price"
+                    android:id="@+id/txt_field_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_10"

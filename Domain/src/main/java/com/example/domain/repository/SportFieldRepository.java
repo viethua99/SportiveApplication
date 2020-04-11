@@ -12,5 +12,6 @@ import io.reactivex.Maybe;
  */
 public interface SportFieldRepository {
     Maybe<List<SportField>> getSportFieldList();
+    Maybe<SportField> getSportFieldById(String id);
     Completable addSportField(SportField sportField);
 }

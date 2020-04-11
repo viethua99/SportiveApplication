@@ -2,7 +2,7 @@ package com.example.domain.model;
 
 
 public class SportField {
-    private String uid;
+    private String fieldId;
     private String name;
     private String imgPath;
     private String address;
@@ -11,11 +11,11 @@ public class SportField {
 
 
     public String getFieldId() {
-        return uid;
+        return fieldId;
     }
 
     public void setFieldId(String fieldId) {
-        this.uid = fieldId;
+        this.fieldId = fieldId;
     }
 
     public String getName() {
@@ -61,7 +61,7 @@ public class SportField {
     @Override
     public String toString() {
         return "SportField{" +
-                "fieldId='" + uid + '\'' +
+                "uid='" + fieldId + '\'' +
                 ", name='" + name + '\'' +
                 ", imgPath='" + imgPath + '\'' +
                 ", address='" + address + '\'' +

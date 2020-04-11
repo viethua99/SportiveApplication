@@ -15,6 +15,7 @@ import com.example.sportive.presentation.base.ItemClickListener;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import utils.SportiveUtils;
 
 /**
  * Created by Viet Hua on 4/7/2020
@@ -48,7 +49,7 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
             tvFieldName = itemView.findViewById(R.id.txt_field_name);
             tvFieldLocation = itemView.findViewById(R.id.txt_field_location);
             tvTime = itemView.findViewById(R.id.txt_time);
-            tvPrice = itemView.findViewById(R.id.txt_price);
+            tvPrice = itemView.findViewById(R.id.txt_field_price);
             imgField = itemView.findViewById(R.id.img_field);
             ratingBar = itemView.findViewById(R.id.rating_bar);
             itemView.setOnClickListener(this);
@@ -73,8 +74,7 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
         public void renderUI(SportField data) {
             tvFieldName.setText(data.getName());
             tvFieldLocation.setText(data.getAddress());
-            tvPrice.setText(String.valueOf(data.getPrice()));
-            tvTime.setText(data.getFieldId());
+            tvPrice.setText(SportiveUtils.getPricePerHourFormat(data.getPrice()));
             Glide.with(context).load(data.getImgPath()).into(imgField);
             ratingBar.setRating(data.getRating());
         }

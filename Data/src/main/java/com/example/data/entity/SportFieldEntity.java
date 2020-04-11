@@ -4,7 +4,7 @@ package com.example.data.entity;
  * Created by Viet Hua on 04/11/2020.
  */
 public class SportFieldEntity {
-    private String uid;
+    private String fieldId;
     private String name;
     private String imgPath;
     private String address;
@@ -13,11 +13,11 @@ public class SportFieldEntity {
 
 
     public String getFieldId() {
-        return uid;
+        return fieldId;
     }
 
     public void setFieldId(String fieldId) {
-        this.uid = fieldId;
+        this.fieldId = fieldId;
     }
 
     public String getName() {
@@ -63,7 +63,7 @@ public class SportFieldEntity {
     @Override
     public String toString() {
         return "SportField{" +
-                "fieldId='" + uid + '\'' +
+                "fieldId='" + fieldId + '\'' +
                 ", name='" + name + '\'' +
                 ", imgPath='" + imgPath + '\'' +
                 ", address='" + address + '\'' +

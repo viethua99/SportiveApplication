@@ -38,6 +38,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
 
     @Override
     public void getSportFieldList() {
+        Timber.d("getSportFieldList");
         getSportFieldListUseCase.execute(new GetSportFieldListObserver(), new EmptyParam());
 
     }

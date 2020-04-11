@@ -11,6 +11,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/img_field"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:scaleType="centerCrop"
@@ -66,7 +67,7 @@
                 android:src="@drawable/ic_location_on_black_24dp"></ImageView>
 
             <TextView
-                android:id="@+id/txt_field_location"
+                android:id="@+id/txt_field_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -87,6 +88,7 @@
                 android:src="@drawable/ic_attach_money_black_24dp"></ImageView>
 
             <TextView
+                android:id="@+id/txt_field_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_10"
@@ -106,6 +108,7 @@
                 android:src="@drawable/ic_access_time_black_24dp"></ImageView>
 
             <TextView
+                android:id="@+id/txt_field_open_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -126,6 +129,7 @@
                 android:src="@drawable/ic_phone_ring_black_24dp"></ImageView>
 
             <TextView
+                android:id="@+id/txt_field_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_10"
@@ -177,7 +181,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_price"
+                android:id="@+id/txt_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_10"
@@ -187,6 +191,7 @@
                 android:textStyle="bold"></TextView>
 
             <TextView
+                android:id="@+id/txt_total_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="4 giờ"
@@ -196,7 +201,7 @@
 
 
         <Button
-            android:id="@+id/btn_select"
+            android:id="@+id/btn_field_booking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

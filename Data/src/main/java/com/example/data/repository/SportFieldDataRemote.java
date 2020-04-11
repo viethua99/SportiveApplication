@@ -12,5 +12,6 @@ import io.reactivex.Maybe;
  */
 public interface SportFieldDataRemote {
     Maybe<List<SportFieldEntity>> getSportFieldList();
+    Maybe<SportFieldEntity> getSportFieldById(String id);
     Completable addSportField(SportFieldEntity sportFieldEntity);
 }

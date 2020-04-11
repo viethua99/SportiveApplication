@@ -89,6 +89,7 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
 
     @Override
     public void showSportFieldList(List<SportField> sportFieldList) {
+        Timber.e("showSportFieldList: %s ", sportFieldList);
         resultRecyclerViewAdapter.setData(sportFieldList);
     }
 
@@ -116,7 +117,8 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         @Override
         public void onClickListener(int position, SportField sportField) {
             Timber.d("onClickListener: %d", position);
-            DetailActivity.startDetailActivity(ResultActivity.this);
+            String sportFieldId = resultRecyclerViewAdapter.getItem(position).getFieldId();
+            DetailActivity.startDetailActivity(ResultActivity.this, sportFieldId);
         }
 
         @Override

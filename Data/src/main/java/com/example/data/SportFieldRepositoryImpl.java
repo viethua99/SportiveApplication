@@ -38,6 +38,16 @@ public class SportFieldRepositoryImpl implements SportFieldRepository {
     }
 
     @Override
+    public Maybe<SportField> getSportFieldById(String id) {
+        return sportFieldDataRemote.getSportFieldById(id).map(new Function<SportFieldEntity, SportField>() {
+            @Override
+            public SportField apply(SportFieldEntity sportFieldEntity) throws Exception {
+                return sportFieldEntityMapper.mapFromEntity(sportFieldEntity);
+            }
+        });
+    }
+
+    @Override
     public Completable addSportField(SportField sportField) {
         return sportFieldDataRemote.addSportField(sportFieldEntityMapper.mapToEntity(sportField));
     }
