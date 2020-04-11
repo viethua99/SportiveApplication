@@ -4,18 +4,20 @@ package com.example.remote.model;
  * Created by Viet Hua on 04/11/2020.
  */
 public class SportFieldModel {
-    private String fieldId;
+    private String uid;
     private String name;
     private String imgPath;
     private String address;
+    private int rating;
     private int price;
 
+
     public String getFieldId() {
-        return fieldId;
+        return uid;
     }
 
     public void setFieldId(String fieldId) {
-        this.fieldId = fieldId;
+        this.uid = fieldId;
     }
 
     public String getName() {
@@ -50,13 +52,22 @@ public class SportFieldModel {
         this.price = price;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
-        return "SportFieldModel{" +
-                "fieldId='" + fieldId + '\'' +
+        return "SportField{" +
+                "fieldId='" + uid + '\'' +
                 ", name='" + name + '\'' +
                 ", imgPath='" + imgPath + '\'' +
                 ", address='" + address + '\'' +
+                ", rating=" + rating +
                 ", price=" + price +
                 '}';
     }

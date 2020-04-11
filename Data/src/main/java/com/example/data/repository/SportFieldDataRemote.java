@@ -4,6 +4,7 @@ import com.example.data.entity.SportFieldEntity;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 
 /**
@@ -11,4 +12,5 @@ import io.reactivex.Maybe;
  */
 public interface SportFieldDataRemote {
     Maybe<List<SportFieldEntity>> getSportFieldList();
+    Completable addSportField(SportFieldEntity sportFieldEntity);
 }

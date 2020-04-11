@@ -12,11 +12,11 @@ import io.reactivex.Maybe;
 /**
  * Created by Viet Hua on 04/11/2020.
  */
-public class GetSportFieldUseCase extends MaybeUseCase<EmptyParam> {
+public class GetSportFieldListUseCase extends MaybeUseCase<EmptyParam> {
     SportFieldRepository sportFieldRepository;
 
     @Inject
-    public GetSportFieldUseCase(ExecutionThread executionThread, SportFieldRepository sportFieldRepository) {
+    public GetSportFieldListUseCase(ExecutionThread executionThread, SportFieldRepository sportFieldRepository) {
         super(executionThread);
         this.sportFieldRepository = sportFieldRepository;
     }

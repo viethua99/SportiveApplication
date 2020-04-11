@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.example.domain.executor.ExecutionThread;
 import com.example.sportive.myapp.MyApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Singleton;
 
@@ -26,5 +29,17 @@ public class AppModule {
     @Singleton
     public ExecutionThread provideExecutionThread() {
         return new ExecutionThreadImpl();
+    }
+
+    @Provides
+    @Singleton
+    public DatabaseReference provideDatabaseReference() {
+        return FirebaseDatabase.getInstance().getReference();
+    }
+
+    @Provides
+    @Singleton
+    public FirebaseAuth provideFirebaseAuth() {
+        return FirebaseAuth.getInstance();
     }
 }

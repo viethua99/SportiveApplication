@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +40,7 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView tvFieldName, tvFieldLocation, tvTime, tvPrice;
+        RatingBar ratingBar;
         ImageView imgField;
 
         public ViewHolder(View itemView) {
@@ -48,6 +50,7 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
             tvTime = itemView.findViewById(R.id.txt_time);
             tvPrice = itemView.findViewById(R.id.txt_price);
             imgField = itemView.findViewById(R.id.img_field);
+            ratingBar = itemView.findViewById(R.id.rating_bar);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 
@@ -70,9 +73,10 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
         public void renderUI(SportField data) {
             tvFieldName.setText(data.getName());
             tvFieldLocation.setText(data.getAddress());
-//            tvPrice.setText(data.getPrice());
+            tvPrice.setText(String.valueOf(data.getPrice()));
             tvTime.setText(data.getFieldId());
             Glide.with(context).load(data.getImgPath()).into(imgField);
+            ratingBar.setRating(data.getRating());
         }
 
     }

@@ -1,21 +1,21 @@
 package com.example.domain.model;
 
 
-
 public class SportField {
-       private String fieldId;
-       private String name;
-       private String imgPath;
-       private String address;
-       private int price;
+    private String uid;
+    private String name;
+    private String imgPath;
+    private String address;
+    private int rating;
+    private int price;
 
 
     public String getFieldId() {
-        return fieldId;
+        return uid;
     }
 
     public void setFieldId(String fieldId) {
-        this.fieldId = fieldId;
+        this.uid = fieldId;
     }
 
     public String getName() {
@@ -50,13 +50,22 @@ public class SportField {
         this.price = price;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return "SportField{" +
-                "fieldId='" + fieldId + '\'' +
+                "fieldId='" + uid + '\'' +
                 ", name='" + name + '\'' +
                 ", imgPath='" + imgPath + '\'' +
                 ", address='" + address + '\'' +
+                ", rating=" + rating +
                 ", price=" + price +
                 '}';
     }

@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.functions.Function;
 
@@ -34,5 +35,10 @@ public class SportFieldRepositoryImpl implements SportFieldRepository {
                 return sportFieldEntityMapper.mapFromEntities(sportFieldEntityList);
             }
         });
+    }
+
+    @Override
+    public Completable addSportField(SportField sportField) {
+        return sportFieldDataRemote.addSportField(sportFieldEntityMapper.mapToEntity(sportField));
     }
 }

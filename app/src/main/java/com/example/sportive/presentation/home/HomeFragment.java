@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.domain.model.SportField;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
 import com.example.sportive.presentation.location.LocationActivity;
@@ -169,6 +170,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public void onPlayHourClick() {
         Timber.d("onPlayHourClick");
         setupTimePickerDialog();
+    }
+
+    @OnClick(R.id.btn_map)
+    public void onMapButtonClick() {
+        SportField sportFieldModel = new SportField();
+        sportFieldModel.setFieldId("123");
+        sportFieldModel.setName("Hoa Binh");
+        sportFieldModel.setPrice(500000);
+        sportFieldModel.setAddress("Quan 12");
+        sportFieldModel.setRating(4);
+        sportFieldModel.setImgPath("https://cdn.pixabay.com/photo/2016/06/15/01/11/soccer-1457988_1280.jpg");
+        presenter.saveSportFieldData(sportFieldModel);
     }
 
     private DatePickerDialog.OnDateSetListener dataPickerDialogListener = new DatePickerDialog.OnDateSetListener() {

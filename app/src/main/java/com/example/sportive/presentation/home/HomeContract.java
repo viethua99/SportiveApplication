@@ -1,5 +1,6 @@
 package com.example.sportive.presentation.home;
 
+import com.example.domain.model.SportField;
 import com.example.sportive.presentation.base.BasePresenter;
 import com.example.sportive.presentation.base.BaseView;
 
@@ -12,6 +13,8 @@ public interface HomeContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-            String getFormattedDate(int year,int month,int dayOfMonth);
+        String getFormattedDate(int year, int month, int dayOfMonth);
+
+        void saveSportFieldData(SportField sportField);
     }
 }

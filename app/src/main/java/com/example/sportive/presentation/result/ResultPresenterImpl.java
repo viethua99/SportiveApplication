@@ -1,10 +1,9 @@
 package com.example.sportive.presentation.result;
 
-import com.example.domain.interactor.sportfield.GetSportFieldUseCase;
+import com.example.domain.interactor.sportfield.GetSportFieldListUseCase;
 import com.example.domain.model.EmptyParam;
 import com.example.domain.model.SportField;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,7 +19,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
     ResultContract.View mView;
 
     @Inject
-    GetSportFieldUseCase getSportFieldUseCase;
+    GetSportFieldListUseCase getSportFieldListUseCase;
 
     @Inject
     ResultPresenterImpl() {
@@ -39,7 +38,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
 
     @Override
     public void getSportFieldList() {
-        getSportFieldUseCase.execute(new GetSportFieldListObserver(), new EmptyParam());
+        getSportFieldListUseCase.execute(new GetSportFieldListObserver(), new EmptyParam());
 
     }
 

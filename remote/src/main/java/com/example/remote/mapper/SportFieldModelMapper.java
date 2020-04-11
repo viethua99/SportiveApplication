@@ -19,6 +19,7 @@ public class SportFieldModelMapper implements BaseMapper<SportFieldEntity, Sport
         sportFieldModel.setAddress(sportFieldEntity.getAddress());
         sportFieldModel.setPrice(sportFieldEntity.getPrice());
         sportFieldModel.setImgPath(sportFieldEntity.getImgPath());
+        sportFieldModel.setRating(sportFieldEntity.getRating());
         return sportFieldModel;
     }
 
@@ -30,6 +31,7 @@ public class SportFieldModelMapper implements BaseMapper<SportFieldEntity, Sport
         sportFieldEntity.setAddress(sportFieldModel.getAddress());
         sportFieldEntity.setImgPath(sportFieldModel.getImgPath());
         sportFieldEntity.setPrice(sportFieldModel.getPrice());
+        sportFieldEntity.setRating(sportFieldModel.getRating());
         return sportFieldEntity;
     }
 

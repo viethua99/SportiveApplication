@@ -1,7 +1,12 @@
 package com.example.sportive.presentation.home;
 
+import com.example.domain.interactor.sportfield.AddSportFieldUsecase;
+import com.example.domain.model.SportField;
+
 import javax.inject.Inject;
 
+import io.reactivex.observers.DisposableCompletableObserver;
+import timber.log.Timber;
 import utils.TimeUtils;
 
 /**
@@ -9,6 +14,9 @@ import utils.TimeUtils;
  */
 public class HomePresenterImpl implements HomeContract.Presenter {
     HomeContract.View mView;
+
+    @Inject
+    AddSportFieldUsecase addSportFieldUsecase;
 
     @Inject
     public HomePresenterImpl() {
@@ -28,5 +36,22 @@ public class HomePresenterImpl implements HomeContract.Presenter {
     @Override
     public String getFormattedDate(int year, int month, int dayOfMonth) {
         return TimeUtils.getDateFormat(year, month, dayOfMonth);
+    }
+
+    @Override
+    public void saveSportFieldData(SportField sportField) {
+        addSportFieldUsecase.execute(new AddSportFieldDataObserver(), sportField);
+    }
+
+    private class AddSportFieldDataObserver extends DisposableCompletableObserver {
+        @Override
+        public void onComplete() {
+            Timber.d("onComplete");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Timber.e(e.getMessage());
+        }
     }
 }

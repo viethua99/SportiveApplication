@@ -4,6 +4,7 @@ import com.example.domain.model.SportField;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 
 /**
@@ -11,4 +12,5 @@ import io.reactivex.Maybe;
  */
 public interface SportFieldRepository {
     Maybe<List<SportField>> getSportFieldList();
+    Completable addSportField(SportField sportField);
 }
