@@ -175,7 +175,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         @Override
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
             Timber.d("onDataSet: %d , %d , %d", i, i1, i2);
-            String formattedDate = TimeUtils.getDateFormat(i, i1, i2);
+            String formattedDate = presenter.getFormattedDate(i, i1, i2);
             edtPlayDate.setText(formattedDate);
         }
     };

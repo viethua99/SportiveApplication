@@ -68,11 +68,11 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
         }
 
         public void renderUI(SportField data) {
-            tvFieldName.setText(data.getFieldName());
-            tvFieldLocation.setText(data.getLocation());
-            tvPrice.setText(data.getPrice());
-            tvTime.setText(data.getTime());
-            Glide.with(context).load(data.getImgUrl()).into(imgField);
+            tvFieldName.setText(data.getName());
+            tvFieldLocation.setText(data.getAddress());
+//            tvPrice.setText(data.getPrice());
+            tvTime.setText(data.getFieldId());
+            Glide.with(context).load(data.getImgPath()).into(imgField);
         }
 
     }

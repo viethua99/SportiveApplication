@@ -1,14 +1,14 @@
-package com.example.domain.model;
+package com.example.remote.model;
 
-
-
-public class SportField {
-       private String fieldId;
-       private String name;
-       private String imgPath;
-       private String address;
-       private int price;
-
+/**
+ * Created by Viet Hua on 04/11/2020.
+ */
+public class SportFieldModel {
+    private String fieldId;
+    private String name;
+    private String imgPath;
+    private String address;
+    private int price;
 
     public String getFieldId() {
         return fieldId;
@@ -52,7 +52,7 @@ public class SportField {
 
     @Override
     public String toString() {
-        return "SportField{" +
+        return "SportFieldModel{" +
                 "fieldId='" + fieldId + '\'' +
                 ", name='" + name + '\'' +
                 ", imgPath='" + imgPath + '\'' +

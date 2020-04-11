@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -62,5 +63,7 @@ dependencies {
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
     //Import module
     implementation project(':Domain')
+    implementation project (':Data')
+    implementation project(':remote')
 
 }

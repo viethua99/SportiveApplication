@@ -2,6 +2,7 @@ package com.example.sportive.di;
 
 import android.content.Context;
 
+import com.example.domain.executor.ExecutionThread;
 import com.example.sportive.myapp.MyApp;
 
 import javax.inject.Singleton;
@@ -16,7 +17,14 @@ import dagger.Provides;
 public class AppModule {
     @Provides
     @Singleton
-    public Context provideContext(MyApp myApp){
+    public Context provideContext(MyApp myApp) {
         return myApp;
+    }
+
+
+    @Provides
+    @Singleton
+    public ExecutionThread provideExecutionThread() {
+        return new ExecutionThreadImpl();
     }
 }

@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import dagger.android.AndroidInjection;
 import timber.log.Timber;
@@ -65,6 +66,7 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
+        presenter.getSportFieldList();
     }
 
     @Override
@@ -85,6 +87,11 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         return true;
     }
 
+    @Override
+    public void showSportFieldList(List<SportField> sportFieldList) {
+        resultRecyclerViewAdapter.setData(sportFieldList);
+    }
+
     private void setupViews() {
         Timber.d("setupViews");
         setupToolBar();
@@ -101,7 +108,6 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         Timber.d("setupRecyclerView");
         resultRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         resultRecyclerViewAdapter = new ResultRecyclerViewAdapter(this, resultItemListener);
-        resultRecyclerViewAdapter.setData(testData());
         resultRecyclerView.setAdapter(resultRecyclerViewAdapter);
     }
 
@@ -119,17 +125,5 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         }
     };
 
-    private List<SportField> testData() {
-        List<SportField> sportFieldList = new ArrayList<>();
-        sportFieldList.add(new SportField("https://cdn.pixabay.com/photo/2018/04/23/18/06/ball-3345070_960_720.jpg", "Sân banh Hòa Bình", "phường Tân Chánh Hiệp, quận 12", "6 giờ - 24 giò", "120.000 VND/giờ"));
-        sportFieldList.add(new SportField("https://cdn.pixabay.com/photo/2018/04/23/18/06/ball-3345070_960_720.jpg", "Sân banh Hòa Bình", "phường Tân Chánh Hiệp, quận 12", "6 giờ - 24 giò", "120.000 VND/giờ"));
-        sportFieldList.add(new SportField("https://cdn.pixabay.com/photo/2018/04/23/18/06/ball-3345070_960_720.jpg", "Sân banh Hòa Bình", "phường Tân Chánh Hiệp, quận 12", "6 giờ - 24 giò", "120.000 VND/giờ"));
-        sportFieldList.add(new SportField("https://cdn.pixabay.com/photo/2018/04/23/18/06/ball-3345070_960_720.jpg", "Sân banh Hòa Bình", "phường Tân Chánh Hiệp, quận 12", "6 giờ - 24 giò", "120.000 VND/giờ"));
-        sportFieldList.add(new SportField("https://cdn.pixabay.com/photo/2018/04/23/18/06/ball-3345070_960_720.jpg", "Sân banh Hòa Bình", "phường Tân Chánh Hiệp, quận 12", "6 giờ - 24 giò", "120.000 VND/giờ"));
-        sportFieldList.add(new SportField("https://cdn.pixabay.com/photo/2018/04/23/18/06/ball-3345070_960_720.jpg", "Sân banh Hòa Bình", "phường Tân Chánh Hiệp, quận 12", "6 giờ - 24 giò", "120.000 VND/giờ"));
-        sportFieldList.add(new SportField("https://cdn.pixabay.com/photo/2018/04/23/18/06/ball-3345070_960_720.jpg", "Sân banh Hòa Bình", "phường Tân Chánh Hiệp, quận 12", "6 giờ - 24 giò", "120.000 VND/giờ"));
-        sportFieldList.add(new SportField("https://cdn.pixabay.com/photo/2018/04/23/18/06/ball-3345070_960_720.jpg", "Sân banh Hòa Bình", "phường Tân Chánh Hiệp, quận 12", "6 giờ - 24 giò", "120.000 VND/giờ"));
-        return sportFieldList;
-    }
 
 }
