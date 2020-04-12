@@ -2,6 +2,7 @@ package com.example.sportive.presentation.home;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -103,10 +105,20 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     private void setupDatePickerDialog() {
         Timber.d("setupDatePickerDialog");
+        setFixLanguageToVietnamese();
         new DatePickerDialog(Objects.requireNonNull(getContext()), R.style.DialogTheme, dataPickerDialogListener,
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void setFixLanguageToVietnamese() {
+        Timber.d("setFixLanguageToVietnamese");
+        Locale locale = new Locale("vi", "VN");
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getContext().getResources().updateConfiguration(config, null);
     }
 
     private void setupTimePickerDialog() {
