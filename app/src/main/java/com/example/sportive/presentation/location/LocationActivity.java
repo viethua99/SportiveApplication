@@ -129,16 +129,16 @@ public class LocationActivity extends BaseActivity implements LocationContract.V
         return testModelList;
     }
 
-    ItemClickListener<TestModel> listener = new ItemClickListener<TestModel>() {
+    ItemClickListener listener = new ItemClickListener() {
         @Override
-        public void onClickListener(int position, TestModel testModel) {
+        public void onClickListener(int position) {
             Timber.d("onClickListener: %d", position);
             finish();
 
         }
 
         @Override
-        public void onLongClickListener(int position, TestModel testModel) {
+        public void onLongClickListener(int position) {
 
         }
     };

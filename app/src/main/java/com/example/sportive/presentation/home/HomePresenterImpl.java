@@ -14,7 +14,7 @@ import utils.TimeUtils;
  */
 public class HomePresenterImpl implements HomeContract.Presenter {
     HomeContract.View mView;
-
+    private boolean currentDateFlag = false;
     @Inject
     AddSportFieldUsecase addSportFieldUsecase;
 
@@ -35,7 +35,15 @@ public class HomePresenterImpl implements HomeContract.Presenter {
 
     @Override
     public String getFormattedDate(int year, int month, int dayOfMonth) {
-        return TimeUtils.getDateFormat(year, month, dayOfMonth);
+        long dateInMilliseconds = 0L;
+        if (!currentDateFlag) { //Make sure only get current date for the first time
+            dateInMilliseconds = TimeUtils.getCurrentDateInMilliseconds();
+            currentDateFlag = true;
+        }
+        if (year != -1 && month != -1 && dayOfMonth != -1) {
+            dateInMilliseconds = TimeUtils.getDateFormatInMilliseconds(year, month, dayOfMonth);
+        }
+        return TimeUtils.convertMillisecondsToDateFormat(dateInMilliseconds);
     }
 
     @Override

@@ -3,8 +3,11 @@ package com.example.sportive.presentation.detail;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +45,10 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
     TextView tvFieldPrice;
     @BindView(R.id.rating_bar)
     RatingBar ratingBar;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.layout_detail)
+    RelativeLayout detailLayout;
 
 
     @Inject
@@ -102,11 +109,13 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
     @Override
     public void showSportField(SportField sportField) {
         Timber.d("showSportField: %s", sportField);
+        progressBar.setVisibility(View.GONE);
         Glide.with(this).load(sportField.getImgPath()).into(imgField);
         tvFieldName.setText(sportField.getName());
         tvFieldPrice.setText(SportiveUtils.getPricePerHourFormat(sportField.getPrice()));
         tvFieldAddress.setText(sportField.getAddress());
         ratingBar.setRating(sportField.getRating());
+        detailLayout.setVisibility(View.VISIBLE);
     }
 
     private void setupToolbar() {

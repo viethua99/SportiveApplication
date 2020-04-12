@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class BaseRecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     protected List<T> mListData;
-    protected ItemClickListener<T> mListener;
+    protected ItemClickListener mListener;
     protected Context context;
     protected LayoutInflater mLayoutInflater;
 
@@ -20,7 +20,7 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends RecyclerView.ViewHol
         mLayoutInflater = LayoutInflater.from(context);
     }
 
-    public void setListener(ItemClickListener<T> listener) {
+    public void setListener(ItemClickListener listener) {
         this.mListener = listener;
     }
 

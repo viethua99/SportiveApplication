@@ -3,7 +3,8 @@ package com.example.sportive.presentation.result;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.domain.model.SportField;
 import com.example.sportive.R;
@@ -11,7 +12,6 @@ import com.example.sportive.presentation.base.BaseActivity;
 import com.example.sportive.presentation.base.ItemClickListener;
 import com.example.sportive.presentation.detail.DetailActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,6 +36,8 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     RecyclerView resultRecyclerView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     @Inject
     ResultContract.Presenter presenter;
@@ -89,7 +91,8 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
 
     @Override
     public void showSportFieldList(List<SportField> sportFieldList) {
-        Timber.e("showSportFieldList: %s ", sportFieldList);
+        Timber.d("showSportFieldList: %s ", sportFieldList);
+        progressBar.setVisibility(View.GONE);
         resultRecyclerViewAdapter.setData(sportFieldList);
     }
 
@@ -109,23 +112,51 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         Timber.d("setupRecyclerView");
         resultRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         resultRecyclerViewAdapter = new ResultRecyclerViewAdapter(this, resultItemListener);
+        resultRecyclerViewAdapter.setButtonClickListener(detailButtonClickListener, bookingButtonClickListener);
         resultRecyclerView.setAdapter(resultRecyclerViewAdapter);
     }
 
 
-    ItemClickListener<SportField> resultItemListener = new ItemClickListener<SportField>() {
+    ItemClickListener resultItemListener = new ItemClickListener() {
         @Override
-        public void onClickListener(int position, SportField sportField) {
-            Timber.d("onClickListener: %d", position);
-            String sportFieldId = resultRecyclerViewAdapter.getItem(position).getFieldId();
-            DetailActivity.startDetailActivity(ResultActivity.this, sportFieldId);
+        public void onClickListener(int position) {
+            Timber.d("OnClickListener: %d", position);
+
         }
 
         @Override
-        public void onLongClickListener(int position, SportField sportField) {
+        public void onLongClickListener(int position) {
+
+        }
+    };
+    ItemClickListener detailButtonClickListener = new ItemClickListener() {
+        @Override
+        public void onClickListener(int position) {
+            Timber.d("onDetailButtonClick: %d", position);
+            String sportFieldId = resultRecyclerViewAdapter.getItem(position).getFieldId();
+            DetailActivity.startDetailActivity(ResultActivity.this, sportFieldId);
+
+        }
+
+        @Override
+        public void onLongClickListener(int position) {
 
         }
     };
 
+    ItemClickListener bookingButtonClickListener = new ItemClickListener() {
+        @Override
+        public void onClickListener(int position) {
+            Timber.d("onBookingButtonClick: %d", position);
+            showToastMessage("Đặt sân thành công");
+            finish();
+
+        }
+
+        @Override
+        public void onLongClickListener(int position) {
+
+        }
+    };
 
 }

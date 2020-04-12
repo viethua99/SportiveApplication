@@ -17,4 +17,25 @@ public class TimeUtils {
         return formattedDate;
     }
 
+    public static long getCurrentDateInMilliseconds() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar.getTimeInMillis();
+    }
+
+    public static long getDateFormatInMilliseconds(int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth);
+        return calendar.getTimeInMillis();
+    }
+
+    public static String convertMillisecondsToDateFormat(long milliSeconds) {
+        SimpleDateFormat formatter = new SimpleDateFormat(VN_DATE_FORMAT);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
+    }
+
 }

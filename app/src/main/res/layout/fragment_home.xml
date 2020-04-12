@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/spacing_10"
-        android:text="@string/played_history"
+        android:text="@string/fast_booking"
         android:textColor="@color/blue_500"
         android:textSize="@dimen/font_18_title"
         android:textStyle="bold"></TextView>
@@ -57,6 +57,13 @@
             </Button>
         </RelativeLayout>
     </LinearLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/spacing_20"
+        android:background="@color/bgColor" />
 
     <TextView
         android:layout_width="wrap_content"

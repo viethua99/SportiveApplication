@@ -88,6 +88,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
+        edtPlayDate.setText(presenter.getFormattedDate(-1, -1, -1));  //show current date for the first time
     }
 
     @Override
@@ -134,12 +135,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     private void setupDurationSpinner() {
         Timber.d("setupDurationSpinner");
         List<String> durationList = new ArrayList<>();
-        durationList.add("1 hour");
-        durationList.add("2 hour");
-        durationList.add("3 hour");
-        durationList.add("4 hour");
-        durationList.add("5 hour");
-        durationList.add("6 hour");
+        durationList.add(String.format("%d %s", 1, getString(R.string.hour)));
+        durationList.add(String.format("%d %s", 2, getString(R.string.hour)));
+        durationList.add(String.format("%d %s", 3, getString(R.string.hour)));
+        durationList.add(String.format("%d %s", 4, getString(R.string.hour)));
+        durationList.add(String.format("%d %s", 5, getString(R.string.hour)));
+        durationList.add(String.format("%d %s", 6, getString(R.string.hour)));
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, durationList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         durationSpinner.setOnItemSelectedListener(onItemSelectedListener);

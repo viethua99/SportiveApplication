@@ -3,11 +3,13 @@ package com.example.sportive.presentation.result;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.domain.model.EmptyParam;
 import com.example.domain.model.SportField;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseRecyclerViewAdapter;
@@ -21,10 +23,15 @@ import utils.SportiveUtils;
  * Created by Viet Hua on 4/7/2020
  */
 public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportField, ResultRecyclerViewAdapter.ViewHolder> {
-    public ResultRecyclerViewAdapter(Context context, ItemClickListener<SportField> listener) {
+
+    private ItemClickListener onDetailButtonClickListener;
+    private ItemClickListener onBookingButtonClickListener;
+
+    public ResultRecyclerViewAdapter(Context context, ItemClickListener listener) {
         super(context);
         setListener(listener);
     }
+
 
     @NonNull
     @Override
@@ -39,13 +46,21 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
         holder.renderUI(sportField);
     }
 
+    public void setButtonClickListener(ItemClickListener detailButtonClickListener, ItemClickListener bookingButtonClickListener) {
+        this.onDetailButtonClickListener = detailButtonClickListener;
+        this.onBookingButtonClickListener = bookingButtonClickListener;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        Button btnBooking, btnDetail;
         TextView tvFieldName, tvFieldLocation, tvTime, tvPrice;
         RatingBar ratingBar;
         ImageView imgField;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            btnBooking = itemView.findViewById(R.id.btn_field_booking);
+            btnDetail = itemView.findViewById(R.id.btn_field_detail);
             tvFieldName = itemView.findViewById(R.id.txt_field_name);
             tvFieldLocation = itemView.findViewById(R.id.txt_field_location);
             tvTime = itemView.findViewById(R.id.txt_time);
@@ -60,13 +75,13 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
         @Override
         public void onClick(View view) {
             if (mListener == null) return;
-            mListener.onClickListener(getAdapterPosition(), null);
+            mListener.onClickListener(getAdapterPosition());
         }
 
         @Override
         public boolean onLongClick(View view) {
             if (mListener != null) {
-                mListener.onLongClickListener(getAdapterPosition(), null);
+                mListener.onLongClickListener(getAdapterPosition());
             }
             return false;
         }
@@ -74,10 +89,25 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
         public void renderUI(SportField data) {
             tvFieldName.setText(data.getName());
             tvFieldLocation.setText(data.getAddress());
-            tvPrice.setText(SportiveUtils.getPricePerHourFormat(data.getPrice()));
+            tvPrice.setText(SportiveUtils.getTotalPriceFormat(data.getPrice()));
             Glide.with(context).load(data.getImgPath()).into(imgField);
             ratingBar.setRating(data.getRating());
+
+            btnDetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onDetailButtonClickListener.onClickListener(getAdapterPosition());
+                }
+            });
+
+            btnBooking.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBookingButtonClickListener.onClickListener(getAdapterPosition());
+                }
+            });
         }
 
     }
+
 }

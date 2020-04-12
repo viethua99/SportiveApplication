@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/spacing_4"
     android:orientation="horizontal"
     android:weightSum="10">
@@ -21,7 +21,7 @@
                 android:id="@+id/img_field"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher"></ImageView>
 
@@ -57,11 +57,10 @@
 
                 <RatingBar
                     android:id="@+id/rating_bar"
-                    android:rating="3"
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RatingBar>
+                    android:layout_height="wrap_content"
+                    android:rating="3"></RatingBar>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -127,10 +126,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_10"
-                    android:text="120.000 VND / giờ"
+                    android:text="Tổng tiền: 400.000đ"
                     android:textColor="@color/blue_500"
                     android:textSize="@dimen/font_20"
                     android:textStyle="bold"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_10"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_field_booking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/spacing_10"
+                        android:background="@drawable/border_circular"
+                        android:text="@string/field_booking"
+                        android:textColor="@color/white">
+
+                    </Button>
+
+                    <Button
+                        android:id="@+id/btn_field_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_circular"
+                        android:text="@string/detail"
+                        android:textColor="@color/white">
+
+                    </Button>
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
