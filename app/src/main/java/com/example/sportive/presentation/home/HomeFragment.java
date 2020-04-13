@@ -138,24 +138,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     private void setupDurationSpinner() {
         Timber.d("setupDurationSpinner");
-        List<String> durationList = new ArrayList<>();
-        durationList.add(String.format("%d %s", 1, getString(R.string.hour)));
-        durationList.add(String.format("%d %s", 2, getString(R.string.hour)));
-        durationList.add(String.format("%d %s", 3, getString(R.string.hour)));
-        durationList.add(String.format("%d %s", 4, getString(R.string.hour)));
-        durationList.add(String.format("%d %s", 5, getString(R.string.hour)));
-        durationList.add(String.format("%d %s", 6, getString(R.string.hour)));
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, durationList);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         durationSpinner.setOnItemSelectedListener(onItemSelectedListener);
-        durationSpinner.setAdapter(arrayAdapter);
     }
 
     @OnClick(R.id.btn_search)
     public void onSearchClick() {
         Timber.d("onSearchClick");
         ResultActivity.startResultActivity((AppCompatActivity) getActivity());
-        Timber.d("START TIME: %d", presenter.convertDateFormatToMillisecond());
+        Timber.d("START TIME: %d", presenter.getStartTime());
+        Timber.d("FINISH TIME: %d", presenter.getFinishTime());
     }
 
     @OnClick(R.id.btn_select)
@@ -215,7 +206,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     private AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Timber.d("onItemSelected: %d", position);
+            int duration = position + 1;
+            presenter.saveDurationTime(duration);
         }
 
         @Override

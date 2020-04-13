@@ -17,6 +17,15 @@
     <string name="played_history">Lịch sử đá</string>
     <string name="fast_booking">Chọn sân nhanh</string>
     <string name="choose_play_time">Chọn giờ bắt đầu</string>
-    <string name="hour">Giờ</string>
     <string name="detail">Chi tiết</string>
+
+    <!-- Duration Spinner List -->
+    <string-array name="duration_spinner_list">
+        <item>1 Giờ</item>
+        <item>2 Giờ</item>
+        <item>3 Giờ</item>
+        <item>4 Giờ</item>
+        <item>5 Giờ</item>
+        <item>6 Giờ</item>
+    </string-array>
 </resources>

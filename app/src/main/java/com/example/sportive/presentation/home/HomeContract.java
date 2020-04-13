@@ -17,8 +17,9 @@ public interface HomeContract {
 
         String getFormattedHour(int hourOfDay);
 
-        long convertDateFormatToMillisecond();
-
+        long getStartTime();
+        long getFinishTime();
+        void saveDurationTime(int duration);
         void saveSportFieldData(SportField sportField);
     }
 }

@@ -18,6 +18,7 @@ public class HomePresenterImpl implements HomeContract.Presenter {
     private int month = TimeUtils.getCurrentMonth();
     private int dayOfMonth = TimeUtils.getCurrentDayOfMonth();
     private int hourOfDay = TimeUtils.getCurrentHour() + 1;
+    private int duration = 1;
 
     @Inject
     AddSportFieldUsecase addSportFieldUsecase;
@@ -61,11 +62,22 @@ public class HomePresenterImpl implements HomeContract.Presenter {
     }
 
     @Override
-    public long convertDateFormatToMillisecond() {
-        long time = TimeUtils.getDateFormatInMilliseconds(this.year, this.month, this.dayOfMonth, this.hourOfDay);
-        return time;
+    public void saveDurationTime(int duration) {
+        this.duration = duration;
     }
 
+    @Override
+    public long getStartTime() {
+        long startTime = TimeUtils.getDateFormatInMilliseconds(this.year, this.month, this.dayOfMonth, this.hourOfDay);
+        return startTime;
+    }
+
+    @Override
+    public long getFinishTime() {
+        int finishHour = this.hourOfDay + duration;
+        long finishTime = TimeUtils.getDateFormatInMilliseconds(this.year, this.month, this.dayOfMonth, finishHour);
+        return finishTime;
+    }
 
     private class AddSportFieldDataObserver extends DisposableCompletableObserver {
         @Override
