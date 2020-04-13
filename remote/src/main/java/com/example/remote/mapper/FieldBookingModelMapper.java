@@ -18,6 +18,7 @@ public class FieldBookingModelMapper implements BaseMapper<FieldBookingEntity, F
         fieldBookingModel.setFieldId(fieldBookingEntity.getFieldId());
         fieldBookingModel.setStartTime(fieldBookingEntity.getStartTime());
         fieldBookingModel.setFinishTime(fieldBookingEntity.getFinishTime());
+        fieldBookingModel.setMiniFieldId(fieldBookingEntity.getMiniFieldId());
         return fieldBookingModel;
     }
 
@@ -28,6 +29,7 @@ public class FieldBookingModelMapper implements BaseMapper<FieldBookingEntity, F
         fieldBookingEntity.setFieldId(fieldBookingModel.getFieldId());
         fieldBookingEntity.setStartTime(fieldBookingModel.getStartTime());
         fieldBookingEntity.setFinishTime(fieldBookingModel.getFinishTime());
+        fieldBookingEntity.setMiniFieldId(fieldBookingModel.getMiniFieldId());
         return fieldBookingEntity;
     }
 

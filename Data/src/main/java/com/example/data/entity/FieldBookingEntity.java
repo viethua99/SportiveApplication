@@ -6,6 +6,7 @@ package com.example.data.entity;
 public class FieldBookingEntity {
     private String fieldBookingId;
     private String fieldId;
+    private String miniFieldId;
     private long startTime;
     private long finishTime;
 
@@ -41,11 +42,20 @@ public class FieldBookingEntity {
         this.finishTime = finishTime;
     }
 
+    public String getMiniFieldId() {
+        return miniFieldId;
+    }
+
+    public void setMiniFieldId(String miniFieldId) {
+        this.miniFieldId = miniFieldId;
+    }
+
     @Override
     public String toString() {
         return "FieldBookingEntity{" +
                 "fieldBookingId='" + fieldBookingId + '\'' +
                 ", fieldId='" + fieldId + '\'' +
+                ", miniFieldId='" + miniFieldId + '\'' +
                 ", startTime=" + startTime +
                 ", finishTime=" + finishTime +
                 '}';

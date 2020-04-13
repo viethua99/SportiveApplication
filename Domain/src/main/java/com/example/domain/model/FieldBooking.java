@@ -8,6 +8,7 @@ import java.util.Objects;
 public class FieldBooking {
     private String fieldBookingId;
     private String fieldId;
+    private String miniFieldId;
     private long startTime;
     private long finishTime;
 
@@ -43,6 +44,14 @@ public class FieldBooking {
         this.finishTime = finishTime;
     }
 
+    public String getMiniFieldId() {
+        return miniFieldId;
+    }
+
+    public void setMiniFieldId(String miniFieldId) {
+        this.miniFieldId = miniFieldId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,12 +60,13 @@ public class FieldBooking {
         return startTime == that.startTime &&
                 finishTime == that.finishTime &&
                 Objects.equals(fieldBookingId, that.fieldBookingId) &&
-                Objects.equals(fieldId, that.fieldId);
+                Objects.equals(fieldId, that.fieldId) &&
+                Objects.equals(miniFieldId, that.miniFieldId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fieldBookingId, fieldId, startTime, finishTime);
+        return Objects.hash(fieldBookingId, fieldId, miniFieldId, startTime, finishTime);
     }
 
     @Override
@@ -64,6 +74,7 @@ public class FieldBooking {
         return "FieldBooking{" +
                 "fieldBookingId='" + fieldBookingId + '\'' +
                 ", fieldId='" + fieldId + '\'' +
+                ", miniFieldId='" + miniFieldId + '\'' +
                 ", startTime=" + startTime +
                 ", finishTime=" + finishTime +
                 '}';

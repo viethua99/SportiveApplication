@@ -6,6 +6,7 @@ package com.example.remote.model;
 public class FieldBookingModel {
     private String fieldBookingId;
     private String fieldId;
+    private String miniFieldId;
     private long startTime;
     private long finishTime;
 
@@ -39,6 +40,14 @@ public class FieldBookingModel {
 
     public void setFinishTime(long finishTime) {
         this.finishTime = finishTime;
+    }
+
+    public String getMiniFieldId() {
+        return miniFieldId;
+    }
+
+    public void setMiniFieldId(String miniFieldId) {
+        this.miniFieldId = miniFieldId;
     }
 
     @Override

@@ -65,6 +65,7 @@ public class SportFieldDataRemoteImpl implements SportFieldDataRemote {
         DatabaseReference fieldDatabase = firebaseDatabase.child(Constants.KEY_BOOKINGS).child(key);
         Map<String, Object> data = new HashMap<>();
         data.put("fieldId","-M4dLq0KRVjwD69P6VXw");
+        data.put("miniFieldId","-M4iXRzscTTS59VJA9ih");
         data.put("startTime",900);
         data.put("finishTime",1200);
         return RxFirebaseDatabase.setValue(fieldDatabase, data);
