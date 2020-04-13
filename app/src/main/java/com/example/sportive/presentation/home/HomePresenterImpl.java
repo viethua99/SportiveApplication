@@ -14,10 +14,11 @@ import utils.TimeUtils;
  */
 public class HomePresenterImpl implements HomeContract.Presenter {
     HomeContract.View mView;
-    private boolean currentDateFlag = false;
-    private boolean currentHourFlag = false;
-    private long dateInMilliseconds = 0L;
-    private int hourOfDay = 0;
+    private int year = TimeUtils.getCurrentYear();
+    private int month = TimeUtils.getCurrentMonth();
+    private int dayOfMonth = TimeUtils.getCurrentDayOfMonth();
+    private int hourOfDay = TimeUtils.getCurrentHour() + 1;
+
     @Inject
     AddSportFieldUsecase addSportFieldUsecase;
 
@@ -38,14 +39,12 @@ public class HomePresenterImpl implements HomeContract.Presenter {
 
     @Override
     public String getFormattedDate(int year, int month, int dayOfMonth) {
-        if (!currentDateFlag) { //Make sure only get current date for the first time
-            dateInMilliseconds = TimeUtils.getCurrentDateInMilliseconds();
-            currentDateFlag = true;
+        if (year != 0 && month != 0 && dayOfMonth != 0) {
+            this.year = year;
+            this.month = month;
+            this.dayOfMonth = dayOfMonth;
         }
-        if (year != -1 && month != -1 && dayOfMonth != -1) {
-            dateInMilliseconds = TimeUtils.getDateFormatInMilliseconds(year, month, dayOfMonth);
-        }
-        return TimeUtils.convertMillisecondsToDateFormat(dateInMilliseconds);
+        return TimeUtils.getDateFormat(this.year, this.month, this.dayOfMonth);
     }
 
     @Override
@@ -55,16 +54,18 @@ public class HomePresenterImpl implements HomeContract.Presenter {
 
     @Override
     public String getFormattedHour(int hourOfDay) {
-        if (!currentHourFlag) { //Make sure only get current hour for the first time
-            this.hourOfDay = TimeUtils.getCurrentHour() + 1;
-            currentHourFlag = true;
-
-        }
-        if (hourOfDay != -1) {
+        if (hourOfDay != 0) {
             this.hourOfDay = hourOfDay;
         }
         return String.valueOf(this.hourOfDay) + "h";
     }
+
+    @Override
+    public long convertDateFormatToMillisecond() {
+        long time = TimeUtils.getDateFormatInMilliseconds(this.year, this.month, this.dayOfMonth, this.hourOfDay);
+        return time;
+    }
+
 
     private class AddSportFieldDataObserver extends DisposableCompletableObserver {
         @Override

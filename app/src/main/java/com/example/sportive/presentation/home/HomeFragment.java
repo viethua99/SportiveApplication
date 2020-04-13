@@ -90,8 +90,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         presenter.attachView(this);
         setFixedLanguageToVietnamese();
         setupDurationSpinner();
-        edtPlayDate.setText(presenter.getFormattedDate(-1, -1, -1));  //show current date for the first time
-        edtPlayHour.setText(presenter.getFormattedHour(-1)); //show (current hour+1) for the first time
+        edtPlayDate.setText(presenter.getFormattedDate(0, 0, 0));  //show current date for the first time
+        edtPlayHour.setText(presenter.getFormattedHour(0)); //show (current hour+1) for the first time
     }
 
     @Override
@@ -155,6 +155,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public void onSearchClick() {
         Timber.d("onSearchClick");
         ResultActivity.startResultActivity((AppCompatActivity) getActivity());
+        Timber.d("START TIME: %d", presenter.convertDateFormatToMillisecond());
     }
 
     @OnClick(R.id.btn_select)
@@ -226,7 +227,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     private TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-            Timber.d("onTimeSet: %d h", hourOfDay);
+            Timber.d("onTimeSet: %dh %dm %ds", hourOfDay, minute, second);
             edtPlayHour.setText(presenter.getFormattedHour(hourOfDay));
         }
     };

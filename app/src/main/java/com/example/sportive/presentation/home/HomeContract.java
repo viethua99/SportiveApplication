@@ -14,7 +14,11 @@ public interface HomeContract {
 
     interface Presenter extends BasePresenter<View> {
         String getFormattedDate(int year, int month, int dayOfMonth);
+
         String getFormattedHour(int hourOfDay);
+
+        long convertDateFormatToMillisecond();
+
         void saveSportFieldData(SportField sportField);
     }
 }
