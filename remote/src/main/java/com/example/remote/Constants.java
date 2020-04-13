@@ -5,4 +5,5 @@ package com.example.remote;
  */
 public class Constants {
     public static final String KEY_FIELD = "fields";
+    public static final String KEY_BOOKINGS = "bookings";
 }

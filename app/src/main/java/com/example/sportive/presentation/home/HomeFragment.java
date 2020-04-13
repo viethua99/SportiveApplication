@@ -31,7 +31,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
 import timber.log.Timber;
 import utils.TimeUtils;
@@ -73,7 +72,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     protected void onMyCreatedView(View view) {
         Timber.d("onMyCreatedView");
-        setupDurationSpinner();
+
     }
 
     @Override
@@ -81,6 +80,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         super.onCreate(savedInstanceState);
         Timber.d("onCreate");
         AndroidSupportInjection.inject(this);
+
     }
 
     @Override
@@ -88,7 +88,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
+        setFixedLanguageToVietnamese();
+        setupDurationSpinner();
         edtPlayDate.setText(presenter.getFormattedDate(-1, -1, -1));  //show current date for the first time
+        edtPlayHour.setText(presenter.getFormattedHour(-1)); //show (current hour+1) for the first time
     }
 
     @Override
@@ -106,15 +109,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     private void setupDatePickerDialog() {
         Timber.d("setupDatePickerDialog");
-        setFixLanguageToVietnamese();
         new DatePickerDialog(Objects.requireNonNull(getContext()), R.style.DialogTheme, dataPickerDialogListener,
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    private void setFixLanguageToVietnamese() {
-        Timber.d("setFixLanguageToVietnamese");
+    //Set all datepicker / timerpick dialogs language to Vietnamese
+    private void setFixedLanguageToVietnamese() {
+        Timber.d("setFixedLanguageToVietnamese");
         Locale locale = new Locale("vi", "VN");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -127,7 +130,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(onTimeSetListener,
                 myCalendar.HOUR_OF_DAY,
                 myCalendar.MINUTE,
-                true);
+                false);
+        timePickerDialog.setTitle(getString(R.string.choose_play_time));
         timePickerDialog.enableMinutes(false);
         timePickerDialog.show(Objects.requireNonNull(getFragmentManager()), "TimePickerDialog");
     }
@@ -223,8 +227,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         @Override
         public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
             Timber.d("onTimeSet: %d h", hourOfDay);
-            String formattedTime = hourOfDay + "h";
-            edtPlayHour.setText(formattedTime);
+            edtPlayHour.setText(presenter.getFormattedHour(hourOfDay));
         }
     };
 

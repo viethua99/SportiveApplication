@@ -139,22 +139,22 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/btn_field_booking"
+                        android:id="@+id/btn_field_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/spacing_10"
                         android:background="@drawable/border_circular"
-                        android:text="@string/field_booking"
+                        android:text="@string/detail"
                         android:textColor="@color/white">
 
                     </Button>
 
                     <Button
-                        android:id="@+id/btn_field_detail"
+                        android:id="@+id/btn_field_booking"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border_circular"
-                        android:text="@string/detail"
+                        android:text="@string/field_booking"
                         android:textColor="@color/white">
 
                     </Button>

@@ -31,6 +31,11 @@ public class TimeUtils {
         return calendar.getTimeInMillis();
     }
 
+    public static int getCurrentHour(){
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.HOUR_OF_DAY);
+    }
+
     public static String convertMillisecondsToDateFormat(long milliSeconds) {
         SimpleDateFormat formatter = new SimpleDateFormat(VN_DATE_FORMAT);
         Calendar calendar = Calendar.getInstance();

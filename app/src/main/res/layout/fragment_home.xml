@@ -58,12 +58,6 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/spacing_20"
-        android:background="@color/bgColor" />
 
     <TextView
         android:layout_width="wrap_content"

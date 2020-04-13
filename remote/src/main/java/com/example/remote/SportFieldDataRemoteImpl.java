@@ -58,18 +58,15 @@ public class SportFieldDataRemoteImpl implements SportFieldDataRemote {
         });
     }
 
+
     @Override
     public Completable addSportField(SportFieldEntity sportFieldEntity) {
         String key = firebaseDatabase.push().getKey();
-        DatabaseReference fieldDatabase = firebaseDatabase.child(Constants.KEY_FIELD).child(key);
+        DatabaseReference fieldDatabase = firebaseDatabase.child(Constants.KEY_BOOKINGS).child(key);
         Map<String, Object> data = new HashMap<>();
-        data.put("fieldId", key);
-        data.put("name", sportFieldEntity.getName());
-        data.put("address", sportFieldEntity.getAddress());
-        data.put("price", sportFieldEntity.getPrice());
-        data.put("rating", sportFieldEntity.getRating());
-        data.put("imgPath", sportFieldEntity.getImgPath());
-
+        data.put("fieldId","-M4dLq0KRVjwD69P6VXw");
+        data.put("startTime",900);
+        data.put("finishTime",1200);
         return RxFirebaseDatabase.setValue(fieldDatabase, data);
     }
 
