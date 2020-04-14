@@ -6,11 +6,11 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.domain.model.SearchFieldConfig;
 import com.example.domain.model.SportField;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
@@ -18,9 +18,7 @@ import com.example.sportive.presentation.location.LocationActivity;
 import com.example.sportive.presentation.result.ResultActivity;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -33,7 +31,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 import timber.log.Timber;
-import utils.TimeUtils;
 
 /**
  * Created By Viet Hua on 4/7/2020
@@ -144,15 +141,16 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @OnClick(R.id.btn_search)
     public void onSearchClick() {
         Timber.d("onSearchClick");
-        ResultActivity.startResultActivity((AppCompatActivity) getActivity());
-        Timber.d("START TIME: %d", presenter.getStartTime());
-        Timber.d("FINISH TIME: %d", presenter.getFinishTime());
+        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime());
+        ResultActivity.startResultActivity((AppCompatActivity) getActivity(), searchFieldConfig);
+
     }
 
     @OnClick(R.id.btn_select)
     public void onSelectClick() {
         Timber.d("onSelectClick");
-        ResultActivity.startResultActivity((AppCompatActivity) getActivity());
+        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime());
+        ResultActivity.startResultActivity((AppCompatActivity) getActivity(), searchFieldConfig);
 
     }
 

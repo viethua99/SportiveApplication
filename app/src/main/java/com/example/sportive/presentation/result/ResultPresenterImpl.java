@@ -5,6 +5,7 @@ import com.example.domain.interactor.sportfield.GetSportFieldByIdUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldListUseCase;
 import com.example.domain.model.EmptyParam;
 import com.example.domain.model.FieldBooking;
+import com.example.domain.model.SearchFieldConfig;
 import com.example.domain.model.SportField;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import timber.log.Timber;
 public class ResultPresenterImpl implements ResultContract.Presenter {
 
     ResultContract.View mView;
+    private SearchFieldConfig mSearchFieldConfig;
 
     @Inject
     GetSportFieldListUseCase getSportFieldListUseCase;
@@ -45,13 +47,16 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
 
     @Override
     public void dropView() {
+        getFieldBookingListUseCase.dispose();
+        getSportFieldByIdUseCase.dispose();
+        getSportFieldListUseCase.dispose();
         mView = null;
     }
 
     @Override
-    public void getSportFieldList() {
-        Timber.d("getSportFieldList");
-        getSportFieldListUseCase.execute(new GetSportFieldListObserver(), new EmptyParam());
+    public void getFieldBookingList(SearchFieldConfig searchFieldConfig) {
+        Timber.d("getFieldBookingList");
+        mSearchFieldConfig = searchFieldConfig;
         getFieldBookingListUseCase.execute(new GetFieldBookingListObserver(), new EmptyParam());
 
     }
@@ -78,9 +83,11 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onSuccess(List<FieldBooking> fieldBookingList) {
             Timber.d("onSuccess: %s", fieldBookingList.toString());
-            List<String> test = handleOverlappingBooking(fieldBookingList, 100, 600);
-            for (String s : test) {
-                getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), s);
+            List<String> availableUniqueFieldIdList = handleOverlappingBooking(fieldBookingList,
+                    mSearchFieldConfig.getStartTime(),
+                    mSearchFieldConfig.getFinishTime());
+            for (String fieldId : availableUniqueFieldIdList) {
+                getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), fieldId);
             }
         }
 
@@ -99,6 +106,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onSuccess(SportField sportField) {
             Timber.d("onSuccess: %s", sportField.toString());
+            mView.addMoreSportFieldData(sportField);
         }
 
         @Override
@@ -112,23 +120,26 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         }
     }
 
-    private List<String> handleOverlappingBooking(List<FieldBooking> fieldBookingList, long start, long finish) {
-        List<String> test = new ArrayList<>();
+    private List<String> handleOverlappingBooking(List<FieldBooking> fieldBookingList, long startTime, long finishTime) {
+        Timber.d("start time : %s  , finish time : %s", startTime, finishTime);
+        List<String> availableFieldId = new ArrayList<>();
 
+        //REMOVE ALL OVERRLAPPED PLAY TIME
         Iterator<FieldBooking> iter = fieldBookingList.iterator();
         while (iter.hasNext()) {
             FieldBooking fieldBooking = iter.next();
-            if (fieldBooking.getStartTime() < finish && fieldBooking.getFinishTime() > start) {
+            if (fieldBooking.getStartTime() < finishTime && fieldBooking.getFinishTime() > startTime) {
                 iter.remove();
             }
         }
 
         for (FieldBooking fieldBooking : fieldBookingList) {
-            test.add(fieldBooking.getFieldId());
+            availableFieldId.add(fieldBooking.getFieldId());
         }
+        //GET ALL UNIQUE FIELD ID
         Set<String> fieldBookingSet = new HashSet<>();
-        fieldBookingSet.addAll(test);
-        List<String> test2 = new ArrayList<>(fieldBookingSet);
-        return test2;
+        fieldBookingSet.addAll(availableFieldId);
+        List<String> availableUniqueFieldId = new ArrayList<>(fieldBookingSet);
+        return availableUniqueFieldId;
     }
 }

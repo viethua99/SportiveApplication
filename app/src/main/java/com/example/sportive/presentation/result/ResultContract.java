@@ -1,5 +1,6 @@
 package com.example.sportive.presentation.result;
 
+import com.example.domain.model.SearchFieldConfig;
 import com.example.domain.model.SportField;
 import com.example.sportive.presentation.base.BasePresenter;
 import com.example.sportive.presentation.base.BaseView;
@@ -12,9 +13,10 @@ import java.util.List;
 public interface ResultContract {
     interface View extends BaseView {
         void showSportFieldList(List<SportField> sportFieldList);
+        void addMoreSportFieldData(SportField sportField);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getSportFieldList();
+        void getFieldBookingList(SearchFieldConfig searchFieldConfig);
     }
 }

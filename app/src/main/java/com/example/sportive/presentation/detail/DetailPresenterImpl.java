@@ -32,6 +32,7 @@ public class DetailPresenterImpl implements DetailContract.Presenter {
 
     @Override
     public void dropView() {
+        getSportFieldByIdUseCase.dispose();
         mView = null;
     }
 

@@ -30,6 +30,7 @@ public class HomePresenterImpl implements HomeContract.Presenter {
 
     @Override
     public void attachView(HomeContract.View view) {
+        addSportFieldUsecase.dispose();
         mView = view;
     }
 

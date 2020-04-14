@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.example.domain.model.SearchFieldConfig;
 import com.example.domain.model.SportField;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
@@ -32,6 +33,7 @@ import timber.log.Timber;
  * Created by Viet Hua on 4/7/2020
  */
 public class ResultActivity extends BaseActivity implements ResultContract.View {
+    public static final String HANDLE_SEARCH_FIELD = "HANDLE_SEARCH_FIELD";
     @BindView(R.id.rv_result)
     RecyclerView resultRecyclerView;
     @BindView(R.id.toolbar)
@@ -39,14 +41,17 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
+    private SearchFieldConfig searchFieldConfig;
+
     @Inject
     ResultContract.Presenter presenter;
 
     private ResultRecyclerViewAdapter resultRecyclerViewAdapter;
 
-    public static void startResultActivity(AppCompatActivity activity) {
+    public static void startResultActivity(AppCompatActivity activity, SearchFieldConfig searchFieldConfig) {
         Timber.d("startResultActivity");
         Intent intent = new Intent(activity, ResultActivity.class);
+        intent.putExtra(HANDLE_SEARCH_FIELD, searchFieldConfig);
         activity.startActivity(intent);
     }
 
@@ -60,6 +65,9 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         super.onCreate(savedInstanceState);
         Timber.d("onCreate");
         AndroidInjection.inject(this);
+        searchFieldConfig = (SearchFieldConfig) getIntent().getSerializableExtra(HANDLE_SEARCH_FIELD);
+        presenter.attachView(this);
+        presenter.getFieldBookingList(searchFieldConfig);
         setupViews();
     }
 
@@ -67,8 +75,6 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     protected void onStart() {
         super.onStart();
         Timber.d("onStart");
-        presenter.attachView(this);
-        presenter.getSportFieldList();
     }
 
     @Override
@@ -92,8 +98,12 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     @Override
     public void showSportFieldList(List<SportField> sportFieldList) {
         Timber.d("showSportFieldList: %s ", sportFieldList);
+    }
+
+    @Override
+    public void addMoreSportFieldData(SportField sportField) {
+        resultRecyclerViewAdapter.addData(sportField);
         progressBar.setVisibility(View.GONE);
-        resultRecyclerViewAdapter.setData(sportFieldList);
     }
 
     private void setupViews() {
