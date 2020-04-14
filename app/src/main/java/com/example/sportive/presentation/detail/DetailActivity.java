@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.example.domain.model.SportField;
@@ -23,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import butterknife.BindView;
 import dagger.android.AndroidInjection;
 import timber.log.Timber;
@@ -33,10 +35,15 @@ import utils.SportiveUtils;
  */
 public class DetailActivity extends BaseActivity implements DetailContract.View {
     public static final String KEY_FIELD_ID = "KEY_FIELD_ID";
+    private static final int VIEW_FLIPPER_TIME = 3000;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.img_field)
-    ImageView imgField;
+    @BindView(R.id.img_field1)
+    ImageView imgField1;
+    @BindView(R.id.img_field2)
+    ImageView imgField2;
+    @BindView(R.id.img_field3)
+    ImageView imgField3;
     @BindView(R.id.txt_field_name)
     TextView tvFieldName;
     @BindView(R.id.txt_field_address)
@@ -49,6 +56,8 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
     ProgressBar progressBar;
     @BindView(R.id.layout_detail)
     RelativeLayout detailLayout;
+    @BindView(R.id.view_flipper)
+    ViewFlipper viewFlipper;
 
 
     @Inject
@@ -77,6 +86,7 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
         Bundle bundle = getIntent().getExtras();
         fieldId = bundle.getString(KEY_FIELD_ID);
         setupToolbar();
+        setupViewFlipper();
     }
 
     @Override
@@ -110,7 +120,9 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
     public void showSportField(SportField sportField) {
         Timber.d("showSportField: %s", sportField);
         progressBar.setVisibility(View.GONE);
-        Glide.with(this).load(sportField.getImgPath()).into(imgField);
+        Glide.with(this).load(sportField.getImgPath()).into(imgField1);
+        Glide.with(this).load("https://cdn.pixabay.com/photo/2016/06/15/01/11/soccer-1457988_1280.jpg").into(imgField2);
+        Glide.with(this).load("https://cdn.pixabay.com/photo/2017/06/23/23/49/youth-2436343_960_720.jpg").into(imgField3);
         tvFieldName.setText(sportField.getName());
         tvFieldPrice.setText(SportiveUtils.getPricePerHourFormat(sportField.getPrice()));
         tvFieldAddress.setText(sportField.getAddress());
@@ -123,5 +135,12 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupViewFlipper() {
+        viewFlipper.setAutoStart(true);
+        viewFlipper.setFlipInterval(VIEW_FLIPPER_TIME);
+        viewFlipper.setInAnimation(this, android.R.anim.slide_in_left);
+        viewFlipper.setOutAnimation(this, android.R.anim.slide_out_right);
     }
 }
