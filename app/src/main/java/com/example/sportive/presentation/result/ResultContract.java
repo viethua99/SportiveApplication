@@ -12,8 +12,7 @@ import java.util.List;
  */
 public interface ResultContract {
     interface View extends BaseView {
-        void showSportFieldList(List<SportField> sportFieldList);
-        void addMoreSportFieldData(SportField sportField);
+        void showAvailableSportFieldData(SportField sportField);
     }
 
     interface Presenter extends BasePresenter<View> {

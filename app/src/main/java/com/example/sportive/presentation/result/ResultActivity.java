@@ -66,8 +66,10 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         Timber.d("onCreate");
         AndroidInjection.inject(this);
         searchFieldConfig = (SearchFieldConfig) getIntent().getSerializableExtra(HANDLE_SEARCH_FIELD);
+
         presenter.attachView(this);
         presenter.getFieldBookingList(searchFieldConfig);
+
         setupViews();
     }
 
@@ -95,13 +97,11 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         return true;
     }
 
-    @Override
-    public void showSportFieldList(List<SportField> sportFieldList) {
-        Timber.d("showSportFieldList: %s ", sportFieldList);
-    }
+
 
     @Override
-    public void addMoreSportFieldData(SportField sportField) {
+    public void showAvailableSportFieldData(SportField sportField) {
+        Timber.d("showAvailableSpotFieldData");
         resultRecyclerViewAdapter.addData(sportField);
         progressBar.setVisibility(View.GONE);
     }

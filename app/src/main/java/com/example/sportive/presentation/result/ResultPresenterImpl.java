@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import javax.inject.Inject;
 
@@ -26,14 +25,14 @@ import timber.log.Timber;
 public class ResultPresenterImpl implements ResultContract.Presenter {
 
     ResultContract.View mView;
-    private SearchFieldConfig mSearchFieldConfig;
 
-    @Inject
-    GetSportFieldListUseCase getSportFieldListUseCase;
+
     @Inject
     GetFieldBookingListUseCase getFieldBookingListUseCase;
     @Inject
     GetSportFieldByIdUseCase getSportFieldByIdUseCase;
+
+    private SearchFieldConfig mSearchFieldConfig;
 
     @Inject
     ResultPresenterImpl() {
@@ -49,7 +48,6 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
     public void dropView() {
         getFieldBookingListUseCase.dispose();
         getSportFieldByIdUseCase.dispose();
-        getSportFieldListUseCase.dispose();
         mView = null;
     }
 
@@ -61,23 +59,6 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
 
     }
 
-    private class GetSportFieldListObserver extends DisposableMaybeObserver<List<SportField>> {
-        @Override
-        public void onSuccess(List<SportField> sportFieldList) {
-            Timber.d("onSuccess: %s", sportFieldList.toString());
-            mView.showSportFieldList(sportFieldList);
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Timber.e(e.getMessage());
-        }
-
-        @Override
-        public void onComplete() {
-            Timber.d("onComplete");
-        }
-    }
 
     private class GetFieldBookingListObserver extends DisposableMaybeObserver<List<FieldBooking>> {
         @Override
@@ -98,7 +79,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
 
         @Override
         public void onComplete() {
-
+            Timber.d("onComplete");
         }
     }
 
@@ -106,22 +87,22 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onSuccess(SportField sportField) {
             Timber.d("onSuccess: %s", sportField.toString());
-            mView.addMoreSportFieldData(sportField);
+            mView.showAvailableSportFieldData(sportField);
         }
 
         @Override
         public void onError(Throwable e) {
-
+            Timber.e(e.getMessage());
         }
 
         @Override
         public void onComplete() {
-
+            Timber.d("onComplete");
         }
     }
 
     private List<String> handleOverlappingBooking(List<FieldBooking> fieldBookingList, long startTime, long finishTime) {
-        Timber.d("start time : %s  , finish time : %s", startTime, finishTime);
+        Timber.d("handleOverlappingBooking");
         List<String> availableFieldId = new ArrayList<>();
 
         //REMOVE ALL OVERRLAPPED PLAY TIME
