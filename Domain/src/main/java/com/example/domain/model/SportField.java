@@ -1,57 +1,72 @@
 package com.example.domain.model;
 
+
 public class SportField {
-    private String imgUrl;
-    private String fieldName;
-    private String location;
-    private String time;
-    private String price;
+    private String fieldId;
+    private String name;
+    private String imgPath;
+    private String address;
+    private int rating;
+    private int price;
 
-    public String getImgUrl() {
-        return imgUrl;
+
+    public String getFieldId() {
+        return fieldId;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setFieldId(String fieldId) {
+        this.fieldId = fieldId;
     }
 
-    public String getFieldName() {
-        return fieldName;
+    public String getName() {
+        return name;
     }
 
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getImgPath() {
+        return imgPath;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 
-    public String getTime() {
-        return time;
+    public String getAddress() {
+        return address;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public SportField(String imgUrl, String fieldName, String location, String time, String price) {
-        this.imgUrl = imgUrl;
-        this.fieldName = fieldName;
-        this.location = location;
-        this.time = time;
-        this.price = price;
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "SportField{" +
+                "uid='" + fieldId + '\'' +
+                ", name='" + name + '\'' +
+                ", imgPath='" + imgPath + '\'' +
+                ", address='" + address + '\'' +
+                ", rating=" + rating +
+                ", price=" + price +
+                '}';
     }
 }

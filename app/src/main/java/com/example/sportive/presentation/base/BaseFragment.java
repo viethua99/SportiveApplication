@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dagger.android.HasAndroidInjector;
 
 /**
  * Created by Viet Hua on 4/7/2020

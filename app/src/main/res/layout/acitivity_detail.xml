@@ -5,260 +5,298 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/layout_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_test">
-
-        </ImageView>
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
-            android:theme="@style/ToolbarTheme" />
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:id="@+id/layout_info"
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_image"
-        android:orientation="vertical"
-        android:padding="@dimen/spacing_10">
-
-        <TextView
-            android:id="@+id/txt_field_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sân banh Hòa Bình"
-            android:textColor="@color/blue_500"
-            android:textSize="@dimen/font_26"
-            android:textStyle="bold"></TextView>
-
-
-        <RatingBar
-            android:id="@+id/rating_bar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_10"
-            android:rating="5"></RatingBar>
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_10"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_location_on_black_24dp"></ImageView>
-
-            <TextView
-                android:id="@+id/txt_field_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/spacing_10"
-                android:text="Phường Tân Chánh Hiệp, quận 12"
-                android:textSize="@dimen/font_18_title"></TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_10"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_attach_money_black_24dp"></ImageView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_10"
-                android:text="120.000 VND / 1h"
-                android:textSize="@dimen/font_18_title"></TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_10"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_access_time_black_24dp"></ImageView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/spacing_10"
-                android:text="6 giờ - 24 giờ"
-                android:textSize="@dimen/font_18_title"></TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_10"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_phone_ring_black_24dp"></ImageView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_10"
-                android:text="0932095081"
-                android:textSize="@dimen/font_18_title"></TextView>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/line2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/layout_info"
-        android:layout_marginLeft="@dimen/spacing_10"
-        android:layout_marginTop="@dimen/spacing_10"
-        android:layout_marginRight="@dimen/spacing_10"
-        android:background="@color/bgColor" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:minWidth="50dp"
+        android:minHeight="50dp" />
 
     <RelativeLayout
-        android:id="@+id/layout_field_info"
+        android:id="@+id/layout_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/line2"
-        android:padding="@dimen/spacing_10">
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <RelativeLayout
+            android:id="@+id/layout_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ViewFlipper
+                android:id="@+id/view_flipper"
+                android:layout_width="match_parent"
+                android:layout_height="220dp">
+
+                <ImageView
+                    android:id="@+id/img_field1"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_test">
+
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/img_field2"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_test">
+
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/img_field3"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_test">
+
+                </ImageView>
+            </ViewFlipper>
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                android:theme="@style/ToolbarTheme" />
+        </RelativeLayout>
+
 
         <LinearLayout
+            android:id="@+id/layout_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_below="@id/layout_image"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_10">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Thông tin sân"
-                android:textColor="@color/blue_500"
-                android:textSize="@dimen/font_18_title"
-                android:textStyle="bold"></TextView>
+                android:orientation="horizontal"
+                android:weightSum="10">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_10">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Loại sân"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_18_title"></TextView>
+                    android:layout_weight="7.5"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/txt_field_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sân banh Hòa Bình"
+                        android:textColor="@color/blue_500"
+                        android:textSize="@dimen/font_26"
+                        android:textStyle="bold"></TextView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RatingBar
+                            android:id="@+id/rating_bar"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:rating="5"></RatingBar>
+
+                        <TextView
+                            android:id="@+id/txt_rating_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/spacing_10"
+                            android:text="(5 lượt đánh giá)">
+
+                        </TextView>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_share"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="Sân cỏ nhân tạo"
-                    android:textSize="@dimen/font_18_title"></TextView>
-            </RelativeLayout>
+                    android:layout_weight="2.5"
+                    android:background="@drawable/border_circular"
+                    android:drawableLeft="@drawable/ic_share_white_24dp"
+                    android:paddingLeft="@dimen/spacing_10"
+                    android:text="share"
+                    android:textColor="@color/white"></Button>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_10">
+            </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dịch vụ"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_18_title"></TextView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="Miễn phí nước uống"
-                    android:textSize="@dimen/font_18_title"></TextView>
-            </RelativeLayout>
-        </LinearLayout>
-    </RelativeLayout>
+            <LinearLayout
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@id/layout_price"
-        android:layout_marginLeft="@dimen/spacing_10"
-        android:layout_marginTop="@dimen/spacing_10"
-        android:layout_marginRight="@dimen/spacing_10"
-        android:background="@color/bgColor" />
-
-    <RelativeLayout
-        android:id="@+id/layout_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:padding="@dimen/spacing_10">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txt_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_10"
-                android:text="480.000 VND"
-                android:textColor="@color/blue_500"
-                android:textSize="@dimen/font_26"
-                android:textStyle="bold"></TextView>
+                android:orientation="horizontal">
 
-            <TextView
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_location_on_black_24dp"></ImageView>
+
+                <TextView
+                    android:id="@+id/txt_field_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/spacing_10"
+                    android:text="Phường Tân Chánh Hiệp, quận 12"
+                    android:textSize="@dimen/font_18_title"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="4 giờ"
-                android:textSize="@dimen/font_18_title"
-                android:textStyle="bold"></TextView>
+                android:layout_marginTop="@dimen/spacing_10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_attach_money_black_24dp"></ImageView>
+
+                <TextView
+                    android:id="@+id/txt_field_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_10"
+                    android:text="120.000 VND / 1h"
+                    android:textSize="@dimen/font_18_title"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_access_time_black_24dp"></ImageView>
+
+                <TextView
+                    android:id="@+id/txt_field_open_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/spacing_10"
+                    android:text="Giờ mở cửa: 6h"
+                    android:textSize="@dimen/font_18_title"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_giftcard_black_24dp"></ImageView>
+
+                <TextView
+                    android:id="@+id/txt_field_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_10"
+                    android:text="Nước uống, giữ xe"
+                    android:textSize="@dimen/font_18_title"></TextView>
+            </LinearLayout>
+
         </LinearLayout>
 
-
-        <Button
-            android:id="@+id/btn_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/layout_info"
+            android:layout_marginLeft="@dimen/spacing_10"
             android:layout_marginTop="@dimen/spacing_10"
             android:layout_marginRight="@dimen/spacing_10"
-            android:background="@drawable/border_circular"
-            android:text="@string/field_booking"
-            android:textColor="@color/white"></Button>
+            android:background="@color/bgColor" />
 
+        <RelativeLayout
+            android:id="@+id/layout_field_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line2"
+            android:padding="@dimen/spacing_10">
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@id/layout_price"
+            android:layout_marginLeft="@dimen/spacing_10"
+            android:layout_marginTop="@dimen/spacing_10"
+            android:layout_marginRight="@dimen/spacing_10"
+            android:background="@color/bgColor" />
+
+        <RelativeLayout
+            android:id="@+id/layout_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_10">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_total_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_10"
+                    android:text="480.000đ"
+                    android:textColor="@color/blue_500"
+                    android:textSize="@dimen/font_30"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/txt_total_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4 giờ"
+                    android:textSize="@dimen/font_20"
+                    android:textStyle="bold"></TextView>
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_field_booking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/spacing_10"
+                android:layout_marginRight="@dimen/spacing_10"
+                android:background="@drawable/border_circular"
+                android:padding="@dimen/spacing_20"
+                android:text="@string/field_booking"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_20"></Button>
+
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -15,37 +15,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import dagger.android.AndroidInjection;
 import timber.log.Timber;
 
 /**
  * Created by Viet Hua on 4/8/2020
  */
-public class LocationActivity extends BaseActivity {
+public class LocationActivity extends BaseActivity implements LocationContract.View {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rv_location)
     RecyclerView recyclerView;
 
-    LocationRecyclerViewAdapter locationRecyclerViewAdapter;
+    @Inject
+    LocationContract.Presenter presenter;
+
+    private LocationRecyclerViewAdapter locationRecyclerViewAdapter;
 
     public static void startLocationActivity(AppCompatActivity activity) {
+        Timber.d("startLocationActivity");
         Intent intent = new Intent(activity, LocationActivity.class);
         activity.startActivity(intent);
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Timber.d("onCreate");
-        setupViews();
     }
 
     @Override
@@ -54,7 +53,30 @@ public class LocationActivity extends BaseActivity {
     }
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Timber.d("onCreate");
+        AndroidInjection.inject(this);
+        setupViews();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Timber.d("onStart");
+        presenter.attachView(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Timber.d("onDestroy");
+        presenter.dropView();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Timber.d("onCreateOptionsMenu");
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.search, menu);
         return true;
@@ -62,6 +84,7 @@ public class LocationActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Timber.d("onOptionsItemSelected: %s", item.getTitle());
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -71,17 +94,20 @@ public class LocationActivity extends BaseActivity {
     }
 
     private void setupViews() {
+        Timber.d("setupViews");
         setupToolbar();
         setupRecyclerView();
     }
 
     private void setupToolbar() {
+        Timber.d("setupToolBar");
         toolbar.inflateMenu(R.menu.search);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupRecyclerView() {
+        Timber.d("setupRecyclerView");
         locationRecyclerViewAdapter = new LocationRecyclerViewAdapter(this, listener);
         locationRecyclerViewAdapter.setData(dataTest());
         recyclerView.setAdapter(locationRecyclerViewAdapter);
@@ -103,14 +129,16 @@ public class LocationActivity extends BaseActivity {
         return testModelList;
     }
 
-    ItemClickListener<TestModel> listener = new ItemClickListener<TestModel>() {
+    ItemClickListener listener = new ItemClickListener() {
         @Override
-        public void onClickListener(int position, TestModel testModel) {
+        public void onClickListener(int position) {
+            Timber.d("onClickListener: %d", position);
             finish();
+
         }
 
         @Override
-        public void onLongClickListener(int position, TestModel testModel) {
+        public void onLongClickListener(int position) {
 
         }
     };

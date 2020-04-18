@@ -14,7 +14,8 @@ import dagger.android.DaggerApplication;
  * Created By Viet Hua on 4/7/2020
  */
 @Singleton
-@Component(modules = {AndroidInjectionModule.class, AppBindingModule.class, AppModule.class})
+@Component(modules = {AndroidInjectionModule.class, AppBindingModule.class
+        , AppModule.class, DataModule.class, RemoteModule.class})
 public interface AppComponent extends AndroidInjector<DaggerApplication> {
     void inject(MyApp myApp);
 

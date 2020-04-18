@@ -9,10 +9,13 @@ import android.view.View;
 
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
+import com.example.sportive.presentation.base.Constants;
 import com.example.sportive.presentation.home.HomeFragment;
 import com.example.sportive.presentation.profile.ProfileFragment;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,9 +28,7 @@ import timber.log.Timber;
 /**
  * Created By Viet Hua on 4/7/2020
  */
-public class MainActivity extends BaseActivity {
-    public static final int TAG_HOME = 0;
-    public static final int TAG_PROFILE = 1;
+public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.appBarLayout)
@@ -35,7 +36,11 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.nav_main)
     BottomNavigationView bottomNavigationView;
 
+    @Inject
+    MainContract.Presenter presenter;
+
     public static void startMainActivity(AppCompatActivity activity) {
+        Timber.d("startMainActivity");
         Intent intent = new Intent(activity, MainActivity.class);
         activity.startActivity(intent);
     }
@@ -49,7 +54,22 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Timber.d("onCreated");
+        AndroidInjection.inject(this);
         setupViews();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Timber.d("onStart");
+        presenter.attachView(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Timber.d("onDestroy");
+        presenter.dropView();
     }
 
     @Override
@@ -68,7 +88,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-
+        Timber.d("onBackPressed");
     }
 
     private void setupViews() {
@@ -85,16 +105,17 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void openScreenByTag(int tag) {
+    private void openScreenByTag(String tag) {
+        Timber.d("openScreenByTag: %s", tag);
         switch (tag) {
-            case TAG_HOME:
+            case Constants.TAG_HOME:
                 replaceFragment(HomeFragment.getInstance(), HomeFragment.TAG, R.id.fragment_container);
                 break;
-            case TAG_PROFILE:
+            case Constants.TAG_PROFILE:
                 replaceFragment(ProfileFragment.getInstance(), ProfileFragment.TAG, R.id.fragment_container);
                 break;
         }
-        appBarLayout.setVisibility(tag == TAG_PROFILE ? View.GONE : View.VISIBLE);
+        appBarLayout.setVisibility(tag.equals(Constants.TAG_PROFILE) ? View.GONE : View.VISIBLE);
     }
 
     private void setupBottomNavigationView() {
@@ -109,10 +130,10 @@ public class MainActivity extends BaseActivity {
             Timber.d("onBottomNavigationView Selected: %s", menuItem.getTitle());
             switch (menuItem.getItemId()) {
                 case R.id.item_home:
-                    openScreenByTag(TAG_HOME);
+                    openScreenByTag(Constants.TAG_HOME);
                     break;
                 case R.id.item_profile:
-                    openScreenByTag(TAG_PROFILE);
+                    openScreenByTag(Constants.TAG_PROFILE);
                     break;
             }
             return true;

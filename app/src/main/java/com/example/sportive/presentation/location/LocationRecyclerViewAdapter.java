@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by Viet Hua on 4/8/2020
  */
 public class LocationRecyclerViewAdapter extends BaseRecyclerViewAdapter<TestModel, LocationRecyclerViewAdapter.ViewHolder> {
-    public LocationRecyclerViewAdapter(Context context, ItemClickListener<TestModel> listener) {
+    public LocationRecyclerViewAdapter(Context context, ItemClickListener listener) {
         super(context);
         mListener = listener;
     }
@@ -51,13 +51,13 @@ public class LocationRecyclerViewAdapter extends BaseRecyclerViewAdapter<TestMod
         @Override
         public void onClick(View view) {
             if (mListener == null) return;
-            mListener.onClickListener(getAdapterPosition(), null);
+            mListener.onClickListener(getAdapterPosition());
         }
 
         @Override
         public boolean onLongClick(View view) {
             if (mListener != null) {
-                mListener.onLongClickListener(getAdapterPosition(), null);
+                mListener.onLongClickListener(getAdapterPosition());
             }
             return false;
         }
