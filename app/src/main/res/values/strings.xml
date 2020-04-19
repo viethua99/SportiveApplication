@@ -28,4 +28,5 @@
         <item>5 Giờ</item>
         <item>6 Giờ</item>
     </string-array>
+    <string name="title_activity_test">Map</string>
 </resources>

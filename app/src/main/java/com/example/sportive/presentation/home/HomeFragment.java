@@ -15,6 +15,7 @@ import com.example.domain.model.SportField;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
 import com.example.sportive.presentation.location.LocationActivity;
+import com.example.sportive.presentation.map.MapActivity;
 import com.example.sportive.presentation.result.ResultActivity;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -141,7 +142,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @OnClick(R.id.btn_search)
     public void onSearchClick() {
         Timber.d("onSearchClick");
-        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime(),presenter.getDurationTime());
+        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime(), presenter.getDurationTime());
         ResultActivity.startResultActivity((AppCompatActivity) getActivity(), searchFieldConfig);
 
     }
@@ -149,7 +150,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @OnClick(R.id.btn_select)
     public void onSelectClick() {
         Timber.d("onSelectClick");
-        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime(),presenter.getDurationTime());
+        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime(), presenter.getDurationTime());
         ResultActivity.startResultActivity((AppCompatActivity) getActivity(), searchFieldConfig);
 
     }
@@ -181,14 +182,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     @OnClick(R.id.btn_map)
     public void onMapButtonClick() {
-        SportField sportFieldModel = new SportField();
-        sportFieldModel.setFieldId("123");
-        sportFieldModel.setName("Hoa Binh");
-        sportFieldModel.setPrice(500000);
-        sportFieldModel.setAddress("Quan 12");
-        sportFieldModel.setRating(4);
-        sportFieldModel.setImgPath("https://cdn.pixabay.com/photo/2016/06/15/01/11/soccer-1457988_1280.jpg");
-        presenter.saveSportFieldData(sportFieldModel);
+        MapActivity.startMapActivity((AppCompatActivity) getActivity());
     }
 
     private DatePickerDialog.OnDateSetListener dataPickerDialogListener = new DatePickerDialog.OnDateSetListener() {
