@@ -53,7 +53,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
 
     @Override
     public void getFieldBookingList(SearchFieldConfig searchFieldConfig) {
-        Timber.d("getFieldBookingList");
+        Timber.d("getFieldBookingList: %s",searchFieldConfig.toString());
         mSearchFieldConfig = searchFieldConfig;
         getFieldBookingListUseCase.execute(new GetFieldBookingListObserver(), new EmptyParam());
 

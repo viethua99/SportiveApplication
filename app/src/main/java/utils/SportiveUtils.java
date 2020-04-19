@@ -10,6 +10,14 @@ public class SportiveUtils {
     }
 
     public static String getTotalPriceFormat(int price) {
-        return String.format("Giá tiền: %,dđ/1h", price).replace(",",".");
+        return String.format("Tổng tiền: %,dđ", price).replace(",",".");
     }
+
+    public static String getPriceWithDotAndVietnameseCurrencyFormat(int price){
+        return String.format("%,dđ", price).replace(",",".");
+
+    }
+     public static String getDurationFormat(int duration){
+        return String.format("%d Giờ",duration);
+     }
 }

@@ -10,7 +10,7 @@ import com.example.sportive.presentation.base.BaseView;
 public interface DetailContract {
     interface View extends BaseView {
         void showSportField(SportField sportField);
-
+        void showTotalPrice(int pricePerHour);
     }
 
     interface Presenter extends BasePresenter<View> {

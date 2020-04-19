@@ -7,12 +7,14 @@ import java.util.Objects;
  * Created by Viet Hua on 04/14/2020.
  */
 public class SearchFieldConfig implements Serializable {
+    private int duration;
     private long startTime;
     private long finishTime;
 
-    public SearchFieldConfig(long startTime, long finishTime) {
+    public SearchFieldConfig(long startTime, long finishTime,int duration) {
         this.startTime = startTime;
         this.finishTime = finishTime;
+        this.duration = duration;
     }
 
     public long getStartTime() {
@@ -31,24 +33,35 @@ public class SearchFieldConfig implements Serializable {
         this.finishTime = finishTime;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof SearchFieldConfig)) return false;
         SearchFieldConfig that = (SearchFieldConfig) o;
-        return startTime == that.startTime &&
+        return duration == that.duration &&
+                startTime == that.startTime &&
                 finishTime == that.finishTime;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(startTime, finishTime);
+        return Objects.hash(duration, startTime, finishTime);
     }
 
     @Override
     public String toString() {
         return "SearchFieldConfig{" +
-                "startTime=" + startTime +
+                "duration=" + duration +
+                ", startTime=" + startTime +
                 ", finishTime=" + finishTime +
                 '}';
     }
