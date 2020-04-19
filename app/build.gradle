@@ -63,6 +63,9 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     //TimePickerDialog lib
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+//    //Google map libs
+//    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+//    implementation 'com.google.android.gms:play-services-location:15.0.1'
     //Import module
     implementation project(':Domain')
     implementation project(':Data')
