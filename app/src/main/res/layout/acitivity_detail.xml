@@ -274,7 +274,7 @@
                     android:textStyle="bold"></TextView>
 
                 <TextView
-                    android:id="@+id/txt_total_time"
+                    android:id="@+id/txt_duration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="4 giờ"

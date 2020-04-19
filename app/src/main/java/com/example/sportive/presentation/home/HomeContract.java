@@ -18,8 +18,13 @@ public interface HomeContract {
         String getFormattedHour(int hourOfDay);
 
         long getStartTime();
+
         long getFinishTime();
+
+        int getDurationTime();
+
         void saveDurationTime(int duration);
+
         void saveSportFieldData(SportField sportField);
     }
 }

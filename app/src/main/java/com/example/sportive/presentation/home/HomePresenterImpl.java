@@ -68,6 +68,11 @@ public class HomePresenterImpl implements HomeContract.Presenter {
     }
 
     @Override
+    public int getDurationTime() {
+        return this.duration;
+    }
+
+    @Override
     public long getStartTime() {
         long startTime = TimeUtils.getDateFormatInMilliseconds(this.year, this.month, this.dayOfMonth, this.hourOfDay);
         return startTime;

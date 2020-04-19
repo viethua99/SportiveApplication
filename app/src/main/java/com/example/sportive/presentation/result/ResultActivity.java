@@ -98,7 +98,6 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     }
 
 
-
     @Override
     public void showAvailableSportFieldData(SportField sportField) {
         Timber.d("showAvailableSpotFieldData");
@@ -123,6 +122,7 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         resultRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         resultRecyclerViewAdapter = new ResultRecyclerViewAdapter(this, resultItemListener);
         resultRecyclerViewAdapter.setButtonClickListener(detailButtonClickListener, bookingButtonClickListener);
+        resultRecyclerViewAdapter.setDuration(searchFieldConfig.getDuration());
         resultRecyclerView.setAdapter(resultRecyclerViewAdapter);
     }
 
@@ -144,7 +144,7 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         public void onClickListener(int position) {
             Timber.d("onDetailButtonClick: %d", position);
             String sportFieldId = resultRecyclerViewAdapter.getItem(position).getFieldId();
-            DetailActivity.startDetailActivity(ResultActivity.this, sportFieldId);
+            DetailActivity.startDetailActivity(ResultActivity.this, sportFieldId, searchFieldConfig.getDuration());
 
         }
 

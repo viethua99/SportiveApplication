@@ -141,7 +141,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @OnClick(R.id.btn_search)
     public void onSearchClick() {
         Timber.d("onSearchClick");
-        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime());
+        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime(),presenter.getDurationTime());
         ResultActivity.startResultActivity((AppCompatActivity) getActivity(), searchFieldConfig);
 
     }
@@ -149,7 +149,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @OnClick(R.id.btn_select)
     public void onSelectClick() {
         Timber.d("onSelectClick");
-        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime());
+        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime(),presenter.getDurationTime());
         ResultActivity.startResultActivity((AppCompatActivity) getActivity(), searchFieldConfig);
 
     }
