@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by Viet Hua on 04/10/2020.
  */
 public class TimeUtils {
-    public static final String VN_DATE_FORMAT = "EEEE dd/MM/YYYY";
+    public static final String VN_DATE_FORMAT = "EEEE dd/mm/yyyy";
     private static Calendar calendar = Calendar.getInstance();
 
     public static String getDateFormat(int year, int month, int dayOfMonth) {
