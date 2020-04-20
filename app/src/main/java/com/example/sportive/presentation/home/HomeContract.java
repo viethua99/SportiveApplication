@@ -23,8 +23,12 @@ public interface HomeContract {
 
         int getDurationTime();
 
+        float getLatitude();
+
+        float getLongitude();
+
         void saveDurationTime(int duration);
 
-        void saveSportFieldData(SportField sportField);
+        void saveLatitudeAndLongitude(float latitude, float longitude);
     }
 }

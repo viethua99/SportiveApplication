@@ -66,7 +66,6 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         Timber.d("onCreate");
         AndroidInjection.inject(this);
         searchFieldConfig = (SearchFieldConfig) getIntent().getSerializableExtra(HANDLE_SEARCH_FIELD);
-
         presenter.attachView(this);
         presenter.getFieldBookingList(searchFieldConfig);
 
@@ -100,9 +99,17 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
 
     @Override
     public void showAvailableSportFieldData(SportField sportField) {
-        Timber.d("showAvailableSpotFieldData");
+        Timber.d("showAvailableSportFieldData");
         resultRecyclerViewAdapter.addData(sportField);
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideLoading() {
+        progressBar.setVisibility(View.GONE);
+        if (resultRecyclerViewAdapter.getItemCount() == 0) {
+            showToastMessage("Can't find anything");
+        }
     }
 
     private void setupViews() {

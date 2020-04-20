@@ -10,11 +10,15 @@ public class SearchFieldConfig implements Serializable {
     private int duration;
     private long startTime;
     private long finishTime;
+    private float latitude;
+    private float longitude;
 
-    public SearchFieldConfig(long startTime, long finishTime,int duration) {
+    public SearchFieldConfig(int duration, long startTime, long finishTime, float latitude, float longitude) {
+        this.duration = duration;
         this.startTime = startTime;
         this.finishTime = finishTime;
-        this.duration = duration;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public long getStartTime() {
@@ -42,6 +46,22 @@ public class SearchFieldConfig implements Serializable {
     }
 
 
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,12 +69,14 @@ public class SearchFieldConfig implements Serializable {
         SearchFieldConfig that = (SearchFieldConfig) o;
         return duration == that.duration &&
                 startTime == that.startTime &&
-                finishTime == that.finishTime;
+                finishTime == that.finishTime &&
+                Float.compare(that.latitude, latitude) == 0 &&
+                Float.compare(that.longitude, longitude) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(duration, startTime, finishTime);
+        return Objects.hash(duration, startTime, finishTime, latitude, longitude);
     }
 
     @Override
@@ -63,6 +85,8 @@ public class SearchFieldConfig implements Serializable {
                 "duration=" + duration +
                 ", startTime=" + startTime +
                 ", finishTime=" + finishTime +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }

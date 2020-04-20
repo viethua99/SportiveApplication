@@ -10,6 +10,8 @@ public class SportFieldModel {
     private String address;
     private int rating;
     private int price;
+    private float latitude;
+    private float longitude;
 
 
     public String getFieldId() {
@@ -60,15 +62,33 @@ public class SportFieldModel {
         this.rating = rating;
     }
 
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public String toString() {
-        return "SportField{" +
+        return "SportFieldModel{" +
                 "fieldId='" + fieldId + '\'' +
                 ", name='" + name + '\'' +
                 ", imgPath='" + imgPath + '\'' +
                 ", address='" + address + '\'' +
                 ", rating=" + rating +
                 ", price=" + price +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }

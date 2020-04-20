@@ -1,14 +1,17 @@
 package com.example.domain.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Created by Viet Hua on 4/19/2020
  */
-public class DistrictLocation {
+public class DistrictLocation implements Serializable {
     private String name;
     private float latitude;
     private float longitude;
+
+
 
     public String getName() {
         return name;

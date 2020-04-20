@@ -20,6 +20,8 @@ public class SportFieldEntityMapper implements BaseMapper<SportFieldEntity, Spor
         sportFieldEntity.setPrice(sportField.getPrice());
         sportFieldEntity.setImgPath(sportField.getImgPath());
         sportFieldEntity.setRating(sportField.getRating());
+        sportFieldEntity.setLatitude(sportField.getLatitude());
+        sportFieldEntity.setLongitude(sportField.getLongitude());
         return sportFieldEntity;
     }
 
@@ -32,6 +34,8 @@ public class SportFieldEntityMapper implements BaseMapper<SportFieldEntity, Spor
         sportField.setPrice(sportFieldEntity.getPrice());
         sportField.setImgPath(sportFieldEntity.getImgPath());
         sportField.setRating(sportFieldEntity.getRating());
+        sportField.setLatitude(sportFieldEntity.getLatitude());
+        sportField.setLongitude(sportFieldEntity.getLongitude());
         return sportField;
 
     }

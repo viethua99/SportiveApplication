@@ -10,7 +10,7 @@ public class SportiveUtils {
     }
 
     public static String getTotalPriceFormat(int price) {
-        return String.format("Tổng tiền: %,dđ", price).replace(",",".");
+        return String.format("Tổng: %,dđ", price).replace(",",".");
     }
 
     public static String getPriceWithDotAndVietnameseCurrencyFormat(int price){

@@ -58,6 +58,7 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
 
     private GoogleMap mGoogleMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private Location currentLocation;
 
     public static void startMapActivity(AppCompatActivity activity) {
         Timber.d("startMapActivity");
@@ -134,6 +135,8 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
                     .position(latLng)
                     .title(districtLocation.getName())
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+            getNearbyMarkerFromCurrentLocation(latLng);
+
         }
     }
 
@@ -152,6 +155,7 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
                             requestNewLocationData();
 
                         } else {
+                            currentLocation = location;
                             addMarkerAtCurrentLocation(location);
                         }
                     }
@@ -224,6 +228,15 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
         mGoogleMap.addMarker(new MarkerOptions().position(latLng).title("Your Location"));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(12.8f));  //Interval between 2.0 and 21.0
+    }
+
+    private void getNearbyMarkerFromCurrentLocation(LatLng latLng) {
+        Location location = new Location("target");
+        location.setLatitude(latLng.latitude);
+        location.setLongitude(latLng.longitude);
+        if (currentLocation.distanceTo(location) < 5000){
+           Timber.d("%f and %f",latLng.latitude,latLng.longitude);
+        }
     }
 
 

@@ -129,7 +129,7 @@
                     android:layout_weight="2.5"
                     android:background="@drawable/border_circular"
                     android:drawableLeft="@drawable/ic_share_white_24dp"
-                    android:paddingLeft="@dimen/spacing_10"
+                    android:paddingLeft="@dimen/spacing_8"
                     android:text="share"
                     android:textColor="@color/white"></Button>
 
@@ -222,21 +222,20 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/line2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/layout_info"
-            android:layout_marginLeft="@dimen/spacing_10"
-            android:layout_marginTop="@dimen/spacing_10"
-            android:layout_marginRight="@dimen/spacing_10"
-            android:background="@color/bgColor" />
+<!--        <View-->
+<!--            android:id="@+id/line2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_below="@id/layout_info"-->
+<!--            android:layout_marginLeft="@dimen/spacing_10"-->
+<!--            android:layout_marginTop="@dimen/spacing_10"-->
+<!--            android:layout_marginRight="@dimen/spacing_10"-->
+<!--            android:background="@color/bgColor" />-->
 
         <RelativeLayout
             android:id="@+id/layout_field_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/line2"
             android:padding="@dimen/spacing_10">
 
         </RelativeLayout>
