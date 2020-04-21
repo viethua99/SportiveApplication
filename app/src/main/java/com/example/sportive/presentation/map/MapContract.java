@@ -1,6 +1,9 @@
 package com.example.sportive.presentation.map;
 
+import android.location.Location;
+
 import com.example.domain.model.DistrictLocation;
+import com.example.domain.model.SportField;
 import com.example.sportive.presentation.base.BasePresenter;
 import com.example.sportive.presentation.base.BaseView;
 
@@ -12,10 +15,10 @@ import java.util.List;
 public interface MapContract {
 
     interface View extends BaseView {
-        void showMarkerForEachDistrict(List<DistrictLocation> districtLocationList);
+        void showNearbySportFieldList(List<SportField> sportFieldList);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void retrieveDistrictLocationList();
+        void getNearbySportFieldList(Location currentLocation);
     }
 }

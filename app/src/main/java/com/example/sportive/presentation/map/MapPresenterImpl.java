@@ -1,9 +1,15 @@
 package com.example.sportive.presentation.map;
 
+import android.location.Location;
+
 import com.example.domain.interactor.districtlocation.GetDistrictLocationListUseCase;
+import com.example.domain.interactor.sportfield.GetSportFieldListUseCase;
 import com.example.domain.model.DistrictLocation;
 import com.example.domain.model.EmptyParam;
+import com.example.domain.model.SportField;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,7 +25,10 @@ public class MapPresenterImpl implements MapContract.Presenter {
     @Inject
     GetDistrictLocationListUseCase getDistrictLocationListUseCase;
 
+    @Inject
+    GetSportFieldListUseCase getSportFieldListUseCase;
     MapContract.View mView;
+    private Location currentLocation;
 
     @Inject
     public MapPresenterImpl() {
@@ -38,15 +47,34 @@ public class MapPresenterImpl implements MapContract.Presenter {
     }
 
     @Override
-    public void retrieveDistrictLocationList() {
-        getDistrictLocationListUseCase.execute(new GetDistrictLocationListObserver(), new EmptyParam());
+    public void getNearbySportFieldList(Location currentLocation) {
+        Timber.d("getNearbySportListField: %s", currentLocation);
+        this.currentLocation = currentLocation;
+        getSportFieldListUseCase.execute(new GetSportFieldListObserver(), new EmptyParam());
     }
 
-    private class GetDistrictLocationListObserver extends DisposableMaybeObserver<List<DistrictLocation>> {
+    private boolean checkIfSportFieldIsNearby(SportField sportField) {
+        Timber.d("checkIfSportFieldIsNearby");
+        Location target = new Location("target");
+        target.setLatitude(sportField.getLatitude());
+        target.setLongitude(sportField.getLongitude());
+        if (currentLocation.distanceTo(target) < 6000) {
+            return true;
+        }
+        return false;
+    }
+
+    private class GetSportFieldListObserver extends DisposableMaybeObserver<List<SportField>> {
         @Override
-        public void onSuccess(List<DistrictLocation> districtLocationList) {
-            Timber.d("onSuccess: %s", districtLocationList);
-            mView.showMarkerForEachDistrict(districtLocationList);
+        public void onSuccess(List<SportField> sportFields) {
+            Timber.d("onSuccess: %s", sportFields);
+            List<SportField> nearbySportFieldList = new ArrayList<>();
+            for (SportField sportField : sportFields) {
+                if (checkIfSportFieldIsNearby(sportField)) {
+                    nearbySportFieldList.add(sportField);
+                }
+            }
+            mView.showNearbySportFieldList(nearbySportFieldList);
         }
 
         @Override

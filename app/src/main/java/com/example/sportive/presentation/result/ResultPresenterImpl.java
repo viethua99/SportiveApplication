@@ -122,7 +122,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         target.setLongitude(sportField.getLongitude());
         anchor.setLatitude(mSearchFieldConfig.getLatitude());
         anchor.setLongitude(mSearchFieldConfig.getLongitude());
-        if (anchor.distanceTo(target) < 2000) {
+        if (anchor.distanceTo(target) < 6000) {
             return true;
         }
         return false;

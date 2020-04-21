@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.domain.model.DistrictLocation;
+import com.example.domain.model.SportField;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
 import com.google.android.gms.common.api.PendingResult;
@@ -86,7 +87,6 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
-        presenter.retrieveDistrictLocationList();
     }
 
     @Override
@@ -127,16 +127,14 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
 
 
     @Override
-    public void showMarkerForEachDistrict(List<DistrictLocation> districtLocationList) {
-        Timber.d("showMarkerForEachDistrict: %s", districtLocationList);
-        for (DistrictLocation districtLocation : districtLocationList) {
-            LatLng latLng = new LatLng(districtLocation.getLatitude(), districtLocation.getLongitude());
+    public void showNearbySportFieldList(List<SportField> sportFieldList) {
+        Timber.d("showNearbySportFieldList: %s", sportFieldList);
+        for (SportField sportField : sportFieldList) {
+            LatLng latLng = new LatLng(sportField.getLatitude(), sportField.getLongitude());
             mGoogleMap.addMarker(new MarkerOptions()
                     .position(latLng)
-                    .title(districtLocation.getName())
+                    .title(sportField.getName())
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-            getNearbyMarkerFromCurrentLocation(latLng);
-
         }
     }
 
@@ -156,6 +154,7 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
 
                         } else {
                             currentLocation = location;
+                            presenter.getNearbySportFieldList(currentLocation);
                             addMarkerAtCurrentLocation(location);
                         }
                     }
@@ -230,14 +229,6 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(12.8f));  //Interval between 2.0 and 21.0
     }
 
-    private void getNearbyMarkerFromCurrentLocation(LatLng latLng) {
-        Location location = new Location("target");
-        location.setLatitude(latLng.latitude);
-        location.setLongitude(latLng.longitude);
-        if (currentLocation.distanceTo(location) < 5000){
-           Timber.d("%f and %f",latLng.latitude,latLng.longitude);
-        }
-    }
 
 
 }
