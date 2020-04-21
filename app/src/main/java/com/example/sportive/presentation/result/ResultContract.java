@@ -13,6 +13,7 @@ import java.util.List;
 public interface ResultContract {
     interface View extends BaseView {
         void showAvailableSportFieldData(SportField sportField);
+        void showCannotFindAnyThing();
         void hideLoading();
     }
 

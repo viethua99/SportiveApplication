@@ -48,6 +48,11 @@ public class SportFieldRepositoryImpl implements SportFieldRepository {
     }
 
     @Override
+    public Maybe<List<String>> getSportFieldIdList() {
+        return sportFieldDataRemote.getSportFieldIdList();
+    }
+
+    @Override
     public Completable addSportField(SportField sportField) {
         return sportFieldDataRemote.addSportField(sportFieldEntityMapper.mapToEntity(sportField));
     }

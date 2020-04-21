@@ -101,15 +101,21 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     public void showAvailableSportFieldData(SportField sportField) {
         Timber.d("showAvailableSportFieldData");
         resultRecyclerViewAdapter.addData(sportField);
-        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showCannotFindAnyThing() {
+        Timber.d("showCannotFindAnyThing :%d",resultRecyclerViewAdapter.getItemCount());
+        if (resultRecyclerViewAdapter.getItemCount() == 0) {
+            showToastMessage("Can't find anything");
+        }
+
     }
 
     @Override
     public void hideLoading() {
+        Timber.d("hideLoading");
         progressBar.setVisibility(View.GONE);
-        if (resultRecyclerViewAdapter.getItemCount() == 0) {
-            showToastMessage("Can't find anything");
-        }
     }
 
     private void setupViews() {

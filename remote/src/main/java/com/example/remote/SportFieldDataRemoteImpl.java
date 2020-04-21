@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,16 +59,30 @@ public class SportFieldDataRemoteImpl implements SportFieldDataRemote {
         });
     }
 
+    @Override
+    public Maybe<List<String>> getSportFieldIdList() {
+        Query query = firebaseDatabase.child(Constants.KEY_FIELD);
+        return RxFirebaseDatabase.observeSingleValueEvent(query, new Function<DataSnapshot, List<String>>() {
+            @Override
+            public List<String> apply(DataSnapshot dataSnapshot) throws Exception {
+                List<String> sportFieldId = new ArrayList<>();
+                for (DataSnapshot subSnapShot : dataSnapshot.getChildren()) {
+                    sportFieldId.add(subSnapShot.getKey());
+                }
+                return sportFieldId;
+            }
+        });
+    }
 
     @Override
     public Completable addSportField(SportFieldEntity sportFieldEntity) {
         String key = firebaseDatabase.push().getKey();
         DatabaseReference fieldDatabase = firebaseDatabase.child(Constants.KEY_BOOKINGS).child(key);
         Map<String, Object> data = new HashMap<>();
-        data.put("fieldId","-M4dLq0KRVjwD69P6VXw");
-        data.put("miniFieldId","-M4iXRzscTTS59VJA9ih");
-        data.put("startTime",900);
-        data.put("finishTime",1200);
+        data.put("fieldId", "-M4dLq0KRVjwD69P6VXw");
+        data.put("miniFieldId", "-M4iXRzscTTS59VJA9ih");
+        data.put("startTime", 900);
+        data.put("finishTime", 1200);
         return RxFirebaseDatabase.setValue(fieldDatabase, data);
     }
 
