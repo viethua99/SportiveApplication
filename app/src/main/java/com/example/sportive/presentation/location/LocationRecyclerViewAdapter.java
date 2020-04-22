@@ -63,7 +63,7 @@ public class LocationRecyclerViewAdapter extends BaseRecyclerViewAdapter<Distric
         }
 
         private void renderUI(DistrictLocation data) {
-            tvDistrict.setText(data.getName());
+            tvDistrict.setText(data.getName().replace("Q.","Quận "));
         }
     }
 

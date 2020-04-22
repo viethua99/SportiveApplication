@@ -111,7 +111,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         if (requestCode == LocationActivity.DISTRICT_LOCATION_REQUEST_CODE) {
             if (resultCode == getActivity().RESULT_OK) {
                 DistrictLocation districtLocation = (DistrictLocation) data.getSerializableExtra(LocationActivity.KEY_DISTRICT_LOCATION);
-                edtLocation.setText(districtLocation.getName());
+                edtLocation.setText(districtLocation.getName().replace("Q.","Quận "));
                 presenter.saveDistrictLocation(districtLocation.getLatitude(), districtLocation.getLongitude(), districtLocation.getName());
             }
         }

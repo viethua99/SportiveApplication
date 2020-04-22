@@ -131,7 +131,7 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
         Glide.with(this).load("https://cdn.pixabay.com/photo/2017/06/23/23/49/youth-2436343_960_720.jpg").into(imgField3);
         tvFieldName.setText(sportField.getName());
         tvFieldPrice.setText(SportiveUtils.getPricePerHourFormat(sportField.getPrice()));
-        tvFieldAddress.setText(sportField.getSportFieldAddress().getStreet());
+        tvFieldAddress.setText(String.format("%s, %s", sportField.getSportFieldAddress().getStreet(), sportField.getSportFieldAddress().getDistrict()));
         ratingBar.setRating(sportField.getRating());
         detailLayout.setVisibility(View.VISIBLE);
     }
