@@ -65,6 +65,8 @@ dependencies {
 //    //Google map libs
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.maps.android:android-maps-utils:0.4.4'
+
     //Import module
     implementation project(':Domain')
     implementation project(':Data')

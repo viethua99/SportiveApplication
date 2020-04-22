@@ -6,11 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,33 +37,45 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.android.ui.IconGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import dagger.android.AndroidInjection;
 import timber.log.Timber;
+import utils.SportiveUtils;
 
 /**
  * Created by Viet Hua on 04/19/2020.
  */
-public class MapActivity extends BaseActivity implements MapContract.View, OnMapReadyCallback {
+public class MapActivity extends BaseActivity implements MapContract.View,
+        OnMapReadyCallback,
+        GoogleMap.OnCameraMoveStartedListener,
+        GoogleMap.OnCameraMoveListener,
+        GoogleMap.OnCameraIdleListener {
 
     private static final int LOCATION_PERMISSION_ID = 40;
     @Inject
     MapContract.Presenter presenter;
 
+    LinearLayout linearLayout;
     private GoogleMap mGoogleMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location currentLocation;
+    BitmapDescriptor bitmapDescriptor;
+    private Marker centerMarker;
 
     public static void startMapActivity(AppCompatActivity activity) {
         Timber.d("startMapActivity");
@@ -78,6 +94,15 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
         Timber.d("onCreate");
         AndroidInjection.inject(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        linearLayout = (LinearLayout) this.getLayoutInflater().inflate(R.layout.item_map_marker, null, false);
+        linearLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        linearLayout.layout(0, 0, linearLayout.getMeasuredWidth(), linearLayout.getMeasuredHeight());
+
+        linearLayout.setDrawingCacheEnabled(true);
+        linearLayout.buildDrawingCache();
+        Bitmap bm = linearLayout.getDrawingCache();
+        bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(bm);
         setupMap();
 
     }
@@ -122,19 +147,70 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
     public void onMapReady(GoogleMap googleMap) {
         Timber.d("onMapReady");
         this.mGoogleMap = googleMap;
+        mGoogleMap.setOnCameraMoveStartedListener(this);
+        mGoogleMap.setOnCameraMoveListener(this);
+        mGoogleMap.setOnCameraIdleListener(this);
         getLastLocation();
     }
 
+    @Override
+    public void onCameraMoveStarted(int i) {
+        if (i == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
+            Timber.d("onCameraMoveStarted: GESTURE");
+            if (!markerList.isEmpty()) {
+                Timber.d("Clear old marker");
+                for (Marker marker : markerList) {
+                    marker.remove();
+                }
+                markerList.clear();
+            }
+        } else if (i == GoogleMap.OnCameraMoveStartedListener
+                .REASON_API_ANIMATION) {
+            Timber.d("onCameraMoveStarted: TYPE");
+        } else if (i == GoogleMap.OnCameraMoveStartedListener
+                .REASON_DEVELOPER_ANIMATION) {
+            Timber.d("onCameraMoveStarted: MOVED");
+
+        }
+
+    }
+
+    @Override
+    public void onCameraMove() {
+        Timber.d("onCameraMove");
+    }
+
+    @Override
+    public void onCameraIdle() {
+        Timber.d("onCameraIdle");
+        LatLng center = mGoogleMap.getCameraPosition().target;
+        if (centerMarker != null) {
+            centerMarker.remove();
+            centerMarker = mGoogleMap.addMarker(new MarkerOptions().position(center).title("Center").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+            Location test = new Location("center");
+            test.setLatitude(center.latitude);
+            test.setLongitude(center.longitude);
+            presenter.getNearbySportFieldList(test);
+
+        }
+    }
+
+    List<Marker> markerList = new ArrayList<>();
 
     @Override
     public void showNearbySportFieldList(List<SportField> sportFieldList) {
         Timber.d("showNearbySportFieldList: %s", sportFieldList);
+        IconGenerator iconGenerator = new IconGenerator(this);
         for (SportField sportField : sportFieldList) {
             LatLng latLng = new LatLng(sportField.getLatitude(), sportField.getLongitude());
-            mGoogleMap.addMarker(new MarkerOptions()
+            Marker marker = mGoogleMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(sportField.getName())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                    .icon(BitmapDescriptorFactory
+                            .fromBitmap(iconGenerator
+                            .makeIcon(String.format("%s\n%s", sportField.getName(),
+                                    SportiveUtils.getPricePerHourFormat(sportField.getPrice()))))));
+            markerList.add(marker);
         }
     }
 
@@ -154,7 +230,6 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
 
                         } else {
                             currentLocation = location;
-                            presenter.getNearbySportFieldList(currentLocation);
                             addMarkerAtCurrentLocation(location);
                         }
                     }
@@ -224,11 +299,10 @@ public class MapActivity extends BaseActivity implements MapContract.View, OnMap
     private void addMarkerAtCurrentLocation(Location currentLocation) {
         Timber.d("addMarkerAtLocation");
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title("Your Location"));
+        centerMarker = mGoogleMap.addMarker(new MarkerOptions().position(latLng).title("Your Location"));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(12.8f));  //Interval between 2.0 and 21.0
     }
-
 
 
 }

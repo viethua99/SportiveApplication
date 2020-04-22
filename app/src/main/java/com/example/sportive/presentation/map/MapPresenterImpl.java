@@ -58,7 +58,7 @@ public class MapPresenterImpl implements MapContract.Presenter {
         Location target = new Location("target");
         target.setLatitude(sportField.getLatitude());
         target.setLongitude(sportField.getLongitude());
-        if (currentLocation.distanceTo(target) < 6000) {
+        if (currentLocation.distanceTo(target) < 4000) {
             return true;
         }
         return false;
