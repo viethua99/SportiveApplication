@@ -95,7 +95,7 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
 
         public void renderUI(SportField data) {
             tvFieldName.setText(data.getName());
-            tvFieldLocation.setText(data.getAddress());
+            tvFieldLocation.setText(data.getSportFieldAddress().getStreet());
             tvFieldPrice.setText(SportiveUtils.getPricePerHourFormat(data.getPrice()));
             tvTotalPrice.setText(SportiveUtils.getTotalPriceFormat(data.getPrice() * duration));
             Glide.with(context).load(data.getImgPath()).into(imgField);

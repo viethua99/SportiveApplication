@@ -12,13 +12,15 @@ public class SearchFieldConfig implements Serializable {
     private long finishTime;
     private float latitude;
     private float longitude;
+    private String districtName;
 
-    public SearchFieldConfig(int duration, long startTime, long finishTime, float latitude, float longitude) {
+    public SearchFieldConfig(int duration, long startTime, long finishTime, float latitude, float longitude, String districtName) {
         this.duration = duration;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.districtName = districtName;
     }
 
     public long getStartTime() {
@@ -62,6 +64,14 @@ public class SearchFieldConfig implements Serializable {
         this.longitude = longitude;
     }
 
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,12 +81,13 @@ public class SearchFieldConfig implements Serializable {
                 startTime == that.startTime &&
                 finishTime == that.finishTime &&
                 Float.compare(that.latitude, latitude) == 0 &&
-                Float.compare(that.longitude, longitude) == 0;
+                Float.compare(that.longitude, longitude) == 0 &&
+                Objects.equals(districtName, that.districtName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(duration, startTime, finishTime, latitude, longitude);
+        return Objects.hash(duration, startTime, finishTime, latitude, longitude, districtName);
     }
 
     @Override
@@ -87,6 +98,7 @@ public class SearchFieldConfig implements Serializable {
                 ", finishTime=" + finishTime +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", districtName='" + districtName + '\'' +
                 '}';
     }
 }

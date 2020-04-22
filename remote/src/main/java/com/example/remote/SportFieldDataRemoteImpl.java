@@ -1,5 +1,7 @@
 package com.example.remote;
 
+import android.util.Log;
+
 import com.example.data.entity.SportFieldEntity;
 import com.example.data.repository.SportFieldDataRemote;
 import com.example.remote.mapper.SportFieldModelMapper;
@@ -38,13 +40,26 @@ public class SportFieldDataRemoteImpl implements SportFieldDataRemote {
     @Override
     public Maybe<List<SportFieldEntity>> getSportFieldList() {
         Query query = firebaseDatabase.child(Constants.KEY_FIELD);
-        return RxFirebaseDatabase.observeSingleValueEvent(query, DataSnapshotMapper.listOf(SportFieldModel.class))
-                .map(new Function<List<SportFieldModel>, List<SportFieldEntity>>() {
-                    @Override
-                    public List<SportFieldEntity> apply(List<SportFieldModel> sportFieldModels) throws Exception {
-                        return sportFieldModelMapper.mapFromModels(sportFieldModels);
-                    }
-                });
+        return RxFirebaseDatabase.observeSingleValueEvent(query, new Function<DataSnapshot, List<SportFieldEntity>>() {
+            @Override
+            public List<SportFieldEntity> apply(DataSnapshot dataSnapshot) throws Exception {
+                List<SportFieldModel> sportFieldModelList = new ArrayList<>();
+                for (DataSnapshot subSnapshot : dataSnapshot.getChildren()) {
+                    SportFieldModel sportFieldModel = new SportFieldModel();
+                    sportFieldModel.setFieldId(subSnapshot.getKey());
+                    sportFieldModel.setName(subSnapshot.child("name").getValue(String.class));
+                    sportFieldModel.setImgPath(subSnapshot.child("imgPath").getValue(String.class));
+                    sportFieldModel.setRating(((Long) subSnapshot.child("rating").getValue()).intValue());
+                    sportFieldModel.setPrice(((Long) subSnapshot.child("price").getValue()).intValue());
+                    sportFieldModel.setLatitude(subSnapshot.child("latitude").getValue(Float.class));
+                    sportFieldModel.setLongitude(subSnapshot.child("longitude").getValue(Float.class));
+                    sportFieldModel.getSportFieldAddressModel().setStreet(subSnapshot.child("address").child("street").getValue(String.class));
+                    sportFieldModel.getSportFieldAddressModel().setDistrict(subSnapshot.child("address").child("district").getValue(String.class));
+                    sportFieldModelList.add(sportFieldModel);
+                }
+                return sportFieldModelMapper.mapFromModels(sportFieldModelList);
+            }
+        });
     }
 
     @Override
@@ -53,7 +68,16 @@ public class SportFieldDataRemoteImpl implements SportFieldDataRemote {
         return RxFirebaseDatabase.observeSingleValueEvent(query, new Function<DataSnapshot, SportFieldEntity>() {
             @Override
             public SportFieldEntity apply(DataSnapshot dataSnapshot) throws Exception {
-                SportFieldModel sportFieldModel = dataSnapshot.getValue(SportFieldModel.class);
+                SportFieldModel sportFieldModel = new SportFieldModel();
+                sportFieldModel.setFieldId(dataSnapshot.getKey());
+                sportFieldModel.setName(dataSnapshot.child("name").getValue(String.class));
+                sportFieldModel.setImgPath(dataSnapshot.child("imgPath").getValue(String.class));
+                sportFieldModel.setRating(((Long) dataSnapshot.child("rating").getValue()).intValue());
+                sportFieldModel.setPrice(((Long) dataSnapshot.child("price").getValue()).intValue());
+                sportFieldModel.setLatitude(dataSnapshot.child("latitude").getValue(Float.class));
+                sportFieldModel.setLongitude(dataSnapshot.child("longitude").getValue(Float.class));
+                sportFieldModel.getSportFieldAddressModel().setStreet(dataSnapshot.child("address").child("street").getValue(String.class));
+                sportFieldModel.getSportFieldAddressModel().setDistrict(dataSnapshot.child("address").child("district").getValue(String.class));
                 return sportFieldModelMapper.mapFromModel(sportFieldModel);
             }
         });
@@ -75,15 +99,19 @@ public class SportFieldDataRemoteImpl implements SportFieldDataRemote {
     }
 
     @Override
-    public Completable addSportField(SportFieldEntity sportFieldEntity) {
-        String key = firebaseDatabase.push().getKey();
-        DatabaseReference fieldDatabase = firebaseDatabase.child(Constants.KEY_BOOKINGS).child(key);
-        Map<String, Object> data = new HashMap<>();
-        data.put("fieldId", "-M4dLq0KRVjwD69P6VXw");
-        data.put("miniFieldId", "-M4iXRzscTTS59VJA9ih");
-        data.put("startTime", 900);
-        data.put("finishTime", 1200);
-        return RxFirebaseDatabase.setValue(fieldDatabase, data);
+    public Maybe<List<String>> getSportFieldIdListByDistrict(final String district) {
+        Query query = firebaseDatabase.child(Constants.KEY_FIELD);
+        return RxFirebaseDatabase.observeSingleValueEvent(query, new Function<DataSnapshot, List<String>>() {
+            @Override
+            public List<String> apply(DataSnapshot dataSnapshot) throws Exception {
+                List<String> sportFieldIdList = new ArrayList<>();
+                for (DataSnapshot subSnapshot : dataSnapshot.getChildren()) {
+                    if (subSnapshot.child("address").child("district").getValue().equals(district)) {
+                        sportFieldIdList.add(subSnapshot.getKey());
+                    }
+                }
+                return sportFieldIdList;
+            }
+        });
     }
-
 }

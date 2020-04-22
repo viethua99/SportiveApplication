@@ -112,7 +112,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             if (resultCode == getActivity().RESULT_OK) {
                 DistrictLocation districtLocation = (DistrictLocation) data.getSerializableExtra(LocationActivity.KEY_DISTRICT_LOCATION);
                 edtLocation.setText(districtLocation.getName());
-                presenter.saveLatitudeAndLongitude(districtLocation.getLatitude(), districtLocation.getLongitude());
+                presenter.saveDistrictLocation(districtLocation.getLatitude(), districtLocation.getLongitude(), districtLocation.getName());
             }
         }
     }
@@ -159,7 +159,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 presenter.getStartTime(),
                 presenter.getFinishTime(),
                 presenter.getLatitude(),
-                presenter.getLongitude()
+                presenter.getLongitude(),
+                presenter.getDistrictName()
         );
         ResultActivity.startResultActivity((AppCompatActivity) getActivity(), searchFieldConfig);
 

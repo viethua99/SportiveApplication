@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.example.domain.model.DistrictLocation;
 import com.example.domain.model.SportField;
-import com.example.domain.model.TestModel;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseRecyclerViewAdapter;
 import com.example.sportive.presentation.base.ItemClickListener;

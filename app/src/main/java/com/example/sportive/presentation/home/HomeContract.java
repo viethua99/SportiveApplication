@@ -27,8 +27,10 @@ public interface HomeContract {
 
         float getLongitude();
 
+        String getDistrictName();
+
         void saveDurationTime(int duration);
 
-        void saveLatitudeAndLongitude(float latitude, float longitude);
+        void saveDistrictLocation(float latitude, float longitude,String districtName);
     }
 }

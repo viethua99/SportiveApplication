@@ -14,5 +14,5 @@ public interface SportFieldDataRemote {
     Maybe<List<SportFieldEntity>> getSportFieldList();
     Maybe<SportFieldEntity> getSportFieldById(String id);
     Maybe<List<String>> getSportFieldIdList();
-    Completable addSportField(SportFieldEntity sportFieldEntity);
+    Maybe<List<String>> getSportFieldIdListByDistrict(String district);
 }

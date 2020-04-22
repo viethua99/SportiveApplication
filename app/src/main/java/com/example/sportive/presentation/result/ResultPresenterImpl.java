@@ -4,6 +4,7 @@ import android.location.Location;
 
 import com.example.domain.interactor.fieldbooking.GetFieldBookingListUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldByIdUseCase;
+import com.example.domain.interactor.sportfield.GetSportFieldIdListByDistrictUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldIdListUseCase;
 import com.example.domain.model.EmptyParam;
 import com.example.domain.model.FieldBooking;
@@ -35,6 +36,9 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
     GetSportFieldByIdUseCase getSportFieldByIdUseCase;
     @Inject
     GetSportFieldIdListUseCase getSportFieldIdListUseCase;
+
+    @Inject
+    GetSportFieldIdListByDistrictUseCase getSportFieldIdListByDistrictUseCase;
 
     private SearchFieldConfig mSearchFieldConfig;
     private List<String> mSportFieldIdList;
@@ -90,29 +94,6 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         return availableSportFieldIdList;
     }
 
-    private List<String> handleOverlappingBooking(List<FieldBooking> fieldBookingList, long startTime, long finishTime) {
-        Timber.d("handleOverlappingBooking: %s    , %s", startTime, finishTime);
-        List<String> availableFieldId = new ArrayList<>();
-
-        //REMOVE ALL OVERRLAPPED PLAY TIME
-        Iterator<FieldBooking> iter = fieldBookingList.iterator();
-        while (iter.hasNext()) {
-            FieldBooking fieldBooking = iter.next();
-            if (fieldBooking.getStartTime() < finishTime && fieldBooking.getFinishTime() > startTime) {
-                Timber.e("REMOVED");
-                iter.remove();
-            }
-        }
-
-        for (FieldBooking fieldBooking : fieldBookingList) {
-            availableFieldId.add(fieldBooking.getFieldId());
-        }
-        //GET ALL UNIQUE FIELD ID
-        Set<String> fieldBookingSet = new HashSet<>();
-        fieldBookingSet.addAll(availableFieldId);
-        List<String> availableUniqueFieldId = new ArrayList<>(fieldBookingSet);
-        return availableUniqueFieldId;
-    }
 
     private boolean checkIfSportFieldIsNearby(SportField sportField) {
         Timber.d("checkIfSportFieldIsNearby");
@@ -137,13 +118,10 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
                     fieldBookingList,
                     mSearchFieldConfig.getStartTime(),
                     mSearchFieldConfig.getFinishTime());
-            Timber.d("overlapped: %s",overlappedSportFieldIdList);
-            getSportFieldIdListUseCase.execute(new GetSportFieldIdListObserver(), new EmptyParam());//            List<String> availableUniqueFieldIdList = handleOverlappingBooking(fieldBookingList,
-//                    mSearchFieldConfig.getStartTime(),
-//                    mSearchFieldConfig.getFinishTime());
-//            for (String fieldId : availableUniqueFieldIdList) {
-//                getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), fieldId);
-//            }
+            Timber.d("overlapped: %s", overlappedSportFieldIdList);
+            getSportFieldIdListUseCase.execute(new GetSportFieldIdListObserver(), new EmptyParam());
+            Timber.e("TEST: %s", mSearchFieldConfig.getDistrictName());
+            getSportFieldIdListByDistrictUseCase.execute(new GetSportFieldIdListByDistrictObserver(), mSearchFieldConfig.getDistrictName());
         }
 
         @Override
@@ -162,9 +140,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         public void onSuccess(SportField sportField) {
             mView.hideLoading();
             Timber.d("onSuccess: %s", sportField.toString());
-            if (checkIfSportFieldIsNearby(sportField)) {
-                mView.showAvailableSportFieldData(sportField);
-            }
+            mView.showAvailableSportFieldData(sportField);
 //            mView.showCannotFindAnyThing();
         }
 
@@ -185,11 +161,11 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onSuccess(List<String> sportFieldIdList) {
             Timber.d("onSuccess: %s", sportFieldIdList);
-            mSportFieldIdList = sportFieldIdList;
-            List<String> test = getAvailableSportFieldIdList();
-            for (String s : test) {
-                getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), s);
-            }
+//            mSportFieldIdList = sportFieldIdList;
+//            List<String> test = getAvailableSportFieldIdList();
+//            for (String s : test) {
+//                getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), s);
+//            }
         }
 
         @Override
@@ -203,4 +179,30 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         }
     }
 
+    private class GetSportFieldIdListByDistrictObserver extends DisposableMaybeObserver<List<String>> {
+        @Override
+        public void onSuccess(List<String> strings) {
+            Timber.d("onSuccess : %s", strings);
+            mView.hideLoading();
+            if (strings.isEmpty()) {
+                mView.showCannotFindAnyThing();
+            } else {
+                mSportFieldIdList = strings;
+                List<String> test = getAvailableSportFieldIdList();
+                for (String s : test) {
+                    getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), s);
+                }
+            }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Timber.e(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            Timber.d("onComplete");
+        }
+    }
 }

@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.domain.model.DistrictLocation;
-import com.example.domain.model.TestModel;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
 import com.example.sportive.presentation.base.ItemClickListener;

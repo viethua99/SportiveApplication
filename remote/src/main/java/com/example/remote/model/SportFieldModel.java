@@ -7,12 +7,16 @@ public class SportFieldModel {
     private String fieldId;
     private String name;
     private String imgPath;
-    private String address;
+    private SportFieldAddressModel sportFieldAddressModel;
     private int rating;
     private int price;
     private float latitude;
     private float longitude;
 
+
+    public SportFieldModel() {
+        sportFieldAddressModel = new SportFieldAddressModel();
+    }
 
     public String getFieldId() {
         return fieldId;
@@ -38,20 +42,12 @@ public class SportFieldModel {
         this.imgPath = imgPath;
     }
 
-    public String getAddress() {
-        return address;
+    public SportFieldAddressModel getSportFieldAddressModel() {
+        return sportFieldAddressModel;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
+    public void setSportFieldAddressModel(SportFieldAddressModel sportFieldAddressModel) {
+        this.sportFieldAddressModel = sportFieldAddressModel;
     }
 
     public int getRating() {
@@ -60,6 +56,14 @@ public class SportFieldModel {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public float getLatitude() {
@@ -84,11 +88,12 @@ public class SportFieldModel {
                 "fieldId='" + fieldId + '\'' +
                 ", name='" + name + '\'' +
                 ", imgPath='" + imgPath + '\'' +
-                ", address='" + address + '\'' +
+                ", sportFieldAddressModel=" + sportFieldAddressModel +
                 ", rating=" + rating +
                 ", price=" + price +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 '}';
     }
+
 }

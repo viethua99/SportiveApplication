@@ -14,5 +14,5 @@ public interface SportFieldRepository {
     Maybe<List<SportField>> getSportFieldList();
     Maybe<SportField> getSportFieldById(String id);
     Maybe<List<String>> getSportFieldIdList();
-    Completable addSportField(SportField sportField);
+    Maybe<List<String>> getSportFieldIdListByDistrict(String district);
 }
