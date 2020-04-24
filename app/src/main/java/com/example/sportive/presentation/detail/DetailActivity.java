@@ -35,6 +35,7 @@ import utils.SportiveUtils;
  */
 public class DetailActivity extends BaseActivity implements DetailContract.View {
     public static final String KEY_FIELD_ID = "KEY_FIELD_ID";
+    public static final String KEY_DURATION_TIME = "KEY_DURATION_TIME";
     private static final int VIEW_FLIPPER_TIME = 3000;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -50,6 +51,10 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
     TextView tvFieldAddress;
     @BindView(R.id.txt_field_price)
     TextView tvFieldPrice;
+    @BindView(R.id.txt_total_price)
+    TextView tvTotalPrice;
+    @BindView(R.id.txt_duration)
+    TextView tvDuration;
     @BindView(R.id.rating_bar)
     RatingBar ratingBar;
     @BindView(R.id.progress_bar)
@@ -64,11 +69,13 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
     DetailContract.Presenter presenter;
 
     private String fieldId;
+    private int duration;
 
-    public static void startDetailActivity(AppCompatActivity activity, String fieldId) {
+    public static void startDetailActivity(AppCompatActivity activity, String fieldId, int duration) {
         Timber.d("startDetailActivity");
         Intent intent = new Intent(activity, DetailActivity.class);
         intent.putExtra(KEY_FIELD_ID, fieldId);
+        intent.putExtra(KEY_DURATION_TIME, duration);
         activity.startActivity(intent);
     }
 
@@ -83,8 +90,7 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
         Timber.d("onCreate");
         AndroidInjection.inject(this);
 
-        Bundle bundle = getIntent().getExtras();
-        fieldId = bundle.getString(KEY_FIELD_ID);
+        getBundleData();
         setupToolbar();
         setupViewFlipper();
     }
@@ -125,9 +131,21 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
         Glide.with(this).load("https://cdn.pixabay.com/photo/2017/06/23/23/49/youth-2436343_960_720.jpg").into(imgField3);
         tvFieldName.setText(sportField.getName());
         tvFieldPrice.setText(SportiveUtils.getPricePerHourFormat(sportField.getPrice()));
-        tvFieldAddress.setText(sportField.getAddress());
+        tvFieldAddress.setText(String.format("%s, %s", sportField.getSportFieldAddress().getStreet(), sportField.getSportFieldAddress().getDistrict()));
         ratingBar.setRating(sportField.getRating());
         detailLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showTotalPrice(int pricePerHour) {
+        tvTotalPrice.setText(SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(pricePerHour * duration));
+        tvDuration.setText(SportiveUtils.getDurationFormat(duration));
+    }
+
+    private void getBundleData() {
+        Bundle bundle = getIntent().getExtras();
+        fieldId = bundle.getString(KEY_FIELD_ID);
+        duration = bundle.getInt(KEY_DURATION_TIME);
     }
 
     private void setupToolbar() {

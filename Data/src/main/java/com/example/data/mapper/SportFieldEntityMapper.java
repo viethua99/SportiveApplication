@@ -16,10 +16,13 @@ public class SportFieldEntityMapper implements BaseMapper<SportFieldEntity, Spor
         SportFieldEntity sportFieldEntity = new SportFieldEntity();
         sportFieldEntity.setFieldId(sportField.getFieldId());
         sportFieldEntity.setName(sportField.getName());
-        sportFieldEntity.setAddress(sportField.getAddress());
+        sportFieldEntity.getSportFieldAddressEntity().setDistrict(sportField.getSportFieldAddress().getDistrict());
+        sportFieldEntity.getSportFieldAddressEntity().setStreet(sportField.getSportFieldAddress().getStreet());
         sportFieldEntity.setPrice(sportField.getPrice());
         sportFieldEntity.setImgPath(sportField.getImgPath());
         sportFieldEntity.setRating(sportField.getRating());
+        sportFieldEntity.setLatitude(sportField.getLatitude());
+        sportFieldEntity.setLongitude(sportField.getLongitude());
         return sportFieldEntity;
     }
 
@@ -28,10 +31,13 @@ public class SportFieldEntityMapper implements BaseMapper<SportFieldEntity, Spor
         SportField sportField = new SportField();
         sportField.setFieldId(sportFieldEntity.getFieldId());
         sportField.setName(sportFieldEntity.getName());
-        sportField.setAddress(sportFieldEntity.getAddress());
+        sportField.getSportFieldAddress().setStreet(sportFieldEntity.getSportFieldAddressEntity().getStreet());
+        sportField.getSportFieldAddress().setDistrict(sportFieldEntity.getSportFieldAddressEntity().getDistrict());
         sportField.setPrice(sportFieldEntity.getPrice());
         sportField.setImgPath(sportFieldEntity.getImgPath());
         sportField.setRating(sportFieldEntity.getRating());
+        sportField.setLatitude(sportFieldEntity.getLatitude());
+        sportField.setLongitude(sportFieldEntity.getLongitude());
         return sportField;
 
     }

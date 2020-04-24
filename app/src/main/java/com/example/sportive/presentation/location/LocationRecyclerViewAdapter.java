@@ -5,8 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.domain.model.SportField;
-import com.example.domain.model.TestModel;
+import com.example.domain.model.DistrictLocation;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseRecyclerViewAdapter;
 import com.example.sportive.presentation.base.ItemClickListener;
@@ -14,10 +13,12 @@ import com.example.sportive.presentation.base.ItemClickListener;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import utils.SportiveUtils;
+
 /**
  * Created by Viet Hua on 4/8/2020
  */
-public class LocationRecyclerViewAdapter extends BaseRecyclerViewAdapter<TestModel, LocationRecyclerViewAdapter.ViewHolder> {
+public class LocationRecyclerViewAdapter extends BaseRecyclerViewAdapter<DistrictLocation, LocationRecyclerViewAdapter.ViewHolder> {
     public LocationRecyclerViewAdapter(Context context, ItemClickListener listener) {
         super(context);
         mListener = listener;
@@ -32,7 +33,7 @@ public class LocationRecyclerViewAdapter extends BaseRecyclerViewAdapter<TestMod
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TestModel testModel = mListData.get(position);
+        DistrictLocation testModel = mListData.get(position);
         holder.renderUI(testModel);
     }
 
@@ -62,10 +63,8 @@ public class LocationRecyclerViewAdapter extends BaseRecyclerViewAdapter<TestMod
             return false;
         }
 
-        private void renderUI(TestModel data) {
-            tvDistrict.setText(data.getDistrict());
-            tvCity.setText(data.getCity());
-            tvNumber.setText(data.getNumber());
+        private void renderUI(DistrictLocation data) {
+            tvDistrict.setText(SportiveUtils.convertShortNameFormatToFullName(data.getName()));
         }
     }
 

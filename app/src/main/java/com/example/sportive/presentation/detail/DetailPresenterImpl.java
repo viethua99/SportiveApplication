@@ -20,6 +20,7 @@ public class DetailPresenterImpl implements DetailContract.Presenter {
     DetailContract.View mView;
 
 
+
     @Inject
     public DetailPresenterImpl() {
 
@@ -42,11 +43,13 @@ public class DetailPresenterImpl implements DetailContract.Presenter {
         getSportFieldByIdUseCase.execute(new GetSportFieldDataByIdObserver(), id);
     }
 
+
     private class GetSportFieldDataByIdObserver extends DisposableMaybeObserver<SportField> {
         @Override
         public void onSuccess(SportField sportField) {
             Timber.d("onSuccess: %s", sportField);
             mView.showSportField(sportField);
+            mView.showTotalPrice(sportField.getPrice());
         }
 
         @Override

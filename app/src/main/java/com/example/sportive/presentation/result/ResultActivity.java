@@ -66,7 +66,6 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         Timber.d("onCreate");
         AndroidInjection.inject(this);
         searchFieldConfig = (SearchFieldConfig) getIntent().getSerializableExtra(HANDLE_SEARCH_FIELD);
-
         presenter.attachView(this);
         presenter.getFieldBookingList(searchFieldConfig);
 
@@ -98,11 +97,27 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     }
 
 
-
     @Override
     public void showAvailableSportFieldData(SportField sportField) {
-        Timber.d("showAvailableSpotFieldData");
+        Timber.d("showAvailableSportFieldData");
         resultRecyclerViewAdapter.addData(sportField);
+        if(resultRecyclerViewAdapter.getItemCount() == 0){
+            showToastMessage("Cant find anything");
+        }
+    }
+
+    @Override
+    public void showCannotFindAnyThing() {
+        Timber.d("showCannotFindAnyThing :%d",resultRecyclerViewAdapter.getItemCount());
+        if (resultRecyclerViewAdapter.getItemCount() == 0) {
+            showToastMessage("Can't find anything");
+        }
+
+    }
+
+    @Override
+    public void hideLoading() {
+        Timber.d("hideLoading");
         progressBar.setVisibility(View.GONE);
     }
 
@@ -123,6 +138,7 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         resultRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         resultRecyclerViewAdapter = new ResultRecyclerViewAdapter(this, resultItemListener);
         resultRecyclerViewAdapter.setButtonClickListener(detailButtonClickListener, bookingButtonClickListener);
+        resultRecyclerViewAdapter.setDuration(searchFieldConfig.getDuration());
         resultRecyclerView.setAdapter(resultRecyclerViewAdapter);
     }
 
@@ -144,7 +160,7 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         public void onClickListener(int position) {
             Timber.d("onDetailButtonClick: %d", position);
             String sportFieldId = resultRecyclerViewAdapter.getItem(position).getFieldId();
-            DetailActivity.startDetailActivity(ResultActivity.this, sportFieldId);
+            DetailActivity.startDetailActivity(ResultActivity.this, sportFieldId, searchFieldConfig.getDuration());
 
         }
 

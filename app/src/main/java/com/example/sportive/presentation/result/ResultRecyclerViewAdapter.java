@@ -17,6 +17,7 @@ import com.example.sportive.presentation.base.ItemClickListener;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import utils.SportiveUtils;
 
 /**
@@ -26,6 +27,7 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
 
     private ItemClickListener onDetailButtonClickListener;
     private ItemClickListener onBookingButtonClickListener;
+    private int duration;
 
     public ResultRecyclerViewAdapter(Context context, ItemClickListener listener) {
         super(context);
@@ -51,9 +53,13 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
         this.onBookingButtonClickListener = bookingButtonClickListener;
     }
 
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         Button btnBooking, btnDetail;
-        TextView tvFieldName, tvFieldLocation, tvTime, tvPrice;
+        TextView tvFieldName, tvFieldLocation, tvTime, tvFieldPrice, tvTotalPrice;
         RatingBar ratingBar;
         ImageView imgField;
 
@@ -64,7 +70,8 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
             tvFieldName = itemView.findViewById(R.id.txt_field_name);
             tvFieldLocation = itemView.findViewById(R.id.txt_field_location);
             tvTime = itemView.findViewById(R.id.txt_time);
-            tvPrice = itemView.findViewById(R.id.txt_field_price);
+            tvFieldPrice = itemView.findViewById(R.id.txt_field_price);
+            tvTotalPrice = itemView.findViewById(R.id.txt_total_price);
             imgField = itemView.findViewById(R.id.img_field);
             ratingBar = itemView.findViewById(R.id.rating_bar);
             itemView.setOnClickListener(this);
@@ -88,8 +95,9 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
 
         public void renderUI(SportField data) {
             tvFieldName.setText(data.getName());
-            tvFieldLocation.setText(data.getAddress());
-            tvPrice.setText(SportiveUtils.getTotalPriceFormat(data.getPrice()));
+            tvFieldLocation.setText(String.format("%s, %s", data.getSportFieldAddress().getStreet(), data.getSportFieldAddress().getDistrict()));
+            tvFieldPrice.setText(SportiveUtils.getPricePerHourFormat(data.getPrice()));
+            tvTotalPrice.setText(SportiveUtils.getTotalPriceFormat(data.getPrice() * duration));
             Glide.with(context).load(data.getImgPath()).into(imgField);
             ratingBar.setRating(data.getRating());
 

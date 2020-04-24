@@ -2,6 +2,7 @@ package com.example.sportive.presentation.home;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
@@ -10,11 +11,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.domain.model.DistrictLocation;
 import com.example.domain.model.SearchFieldConfig;
-import com.example.domain.model.SportField;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
 import com.example.sportive.presentation.location.LocationActivity;
+import com.example.sportive.presentation.map.MapActivity;
 import com.example.sportive.presentation.result.ResultActivity;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -31,6 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 import timber.log.Timber;
+import utils.SportiveUtils;
 
 /**
  * Created By Viet Hua on 4/7/2020
@@ -38,8 +41,8 @@ import timber.log.Timber;
 public class HomeFragment extends BaseFragment implements HomeContract.View {
     public static final String TAG = HomeFragment.class.getSimpleName();
     private final Calendar myCalendar = Calendar.getInstance();
-    @BindView(R.id.edt_near_field)
-    EditText edtNearField;
+    @BindView(R.id.edt_location)
+    EditText edtLocation;
     @BindView(R.id.edt_play_hour)
     EditText edtPlayHour;
     @BindView(R.id.edt_play_date)
@@ -51,7 +54,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     HomeContract.Presenter presenter;
 
     Context mContext;
-
 
     public static HomeFragment getInstance() {
         Timber.d("getInstance");
@@ -103,6 +105,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         mContext = context;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Timber.d("onActivityResult");
+        if (requestCode == LocationActivity.DISTRICT_LOCATION_REQUEST_CODE) {
+            if (resultCode == getActivity().RESULT_OK) {
+                DistrictLocation districtLocation = (DistrictLocation) data.getSerializableExtra(LocationActivity.KEY_DISTRICT_LOCATION);
+                edtLocation.setText(SportiveUtils.convertShortNameFormatToFullName(districtLocation.getName()));
+                presenter.saveDistrictLocation(districtLocation.getLatitude(), districtLocation.getLongitude(), districtLocation.getName());
+            }
+        }
+    }
 
     private void setupDatePickerDialog() {
         Timber.d("setupDatePickerDialog");
@@ -141,7 +155,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @OnClick(R.id.btn_search)
     public void onSearchClick() {
         Timber.d("onSearchClick");
-        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime());
+        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(
+                presenter.getDurationTime(),
+                presenter.getStartTime(),
+                presenter.getFinishTime(),
+                presenter.getLatitude(),
+                presenter.getLongitude(),
+                presenter.getDistrictName()
+        );
         ResultActivity.startResultActivity((AppCompatActivity) getActivity(), searchFieldConfig);
 
     }
@@ -149,23 +170,22 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @OnClick(R.id.btn_select)
     public void onSelectClick() {
         Timber.d("onSelectClick");
-        SearchFieldConfig searchFieldConfig = new SearchFieldConfig(presenter.getStartTime(), presenter.getFinishTime());
-        ResultActivity.startResultActivity((AppCompatActivity) getActivity(), searchFieldConfig);
 
     }
 
-    @OnClick(R.id.btn_location)
+    @OnClick(R.id.btn_current_location)
+    public void onCurrentLocationClick() {
+        Timber.d("onCurrentLocationClick");
+        edtLocation.setText(getString(R.string.field_near_you));
+    }
+
+    @OnClick(R.id.edt_location)
     public void onLocationClick() {
         Timber.d("onLocationClick");
-        edtNearField.setText(getString(R.string.field_near_you));
-    }
-
-    @OnClick(R.id.edt_near_field)
-    public void onNearFieldClick() {
-        Timber.d("onNearFieldClick");
-        LocationActivity.startLocationActivity((AppCompatActivity) getActivity());
+        LocationActivity.startLocationActivityForResult(this);
 
     }
+
 
     @OnClick(R.id.edt_play_date)
     public void onPlayDateClick() {
@@ -181,14 +201,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     @OnClick(R.id.btn_map)
     public void onMapButtonClick() {
-        SportField sportFieldModel = new SportField();
-        sportFieldModel.setFieldId("123");
-        sportFieldModel.setName("Hoa Binh");
-        sportFieldModel.setPrice(500000);
-        sportFieldModel.setAddress("Quan 12");
-        sportFieldModel.setRating(4);
-        sportFieldModel.setImgPath("https://cdn.pixabay.com/photo/2016/06/15/01/11/soccer-1457988_1280.jpg");
-        presenter.saveSportFieldData(sportFieldModel);
+        MapActivity.startMapActivity((AppCompatActivity) getActivity());
     }
 
     private DatePickerDialog.OnDateSetListener dataPickerDialogListener = new DatePickerDialog.OnDateSetListener() {

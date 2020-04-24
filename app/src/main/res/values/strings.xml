@@ -17,6 +17,7 @@
     <string name="played_history">Lịch sử đá</string>
     <string name="fast_booking">Chọn sân nhanh</string>
     <string name="choose_play_time">Chọn giờ bắt đầu</string>
+    <string name="district">Quận</string>
     <string name="detail">Chi tiết</string>
 
     <!-- Duration Spinner List -->
@@ -28,4 +29,5 @@
         <item>5 Giờ</item>
         <item>6 Giờ</item>
     </string-array>
+    <string name="title_activity_test">Map</string>
 </resources>

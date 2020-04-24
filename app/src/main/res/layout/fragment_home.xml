@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/btn_location"
+                android:layout_toLeftOf="@id/btn_current_location"
 
                 android:orientation="vertical">
 
@@ -92,11 +92,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_10"
                     android:text="@string/field_position"
-                    android:textSize="@dimen/font_16_subtitle"></TextView>
+                    android:textSize="@dimen/font_16_subtitle"/>
 
 
                 <EditText
-                    android:id="@+id/edt_near_field"
+                    android:id="@+id/edt_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -110,7 +110,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/btn_location"
+                android:id="@+id/btn_current_location"
                 android:layout_width="30dp"
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"

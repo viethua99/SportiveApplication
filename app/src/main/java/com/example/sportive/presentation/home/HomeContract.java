@@ -18,8 +18,19 @@ public interface HomeContract {
         String getFormattedHour(int hourOfDay);
 
         long getStartTime();
+
         long getFinishTime();
+
+        int getDurationTime();
+
+        float getLatitude();
+
+        float getLongitude();
+
+        String getDistrictName();
+
         void saveDurationTime(int duration);
-        void saveSportFieldData(SportField sportField);
+
+        void saveDistrictLocation(float latitude, float longitude,String districtName);
     }
 }

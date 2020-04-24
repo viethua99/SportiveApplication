@@ -53,7 +53,7 @@ public class FieldBookingModel {
     @Override
     public String toString() {
         return "FieldBookingModel{" +
-                "fieldBookingId='" + fieldBookingId + '\'' +
+//                "fieldBookingId='" + fieldBookingId + '\'' +
                 ", fieldId='" + fieldId + '\'' +
                 ", startTime=" + startTime +
                 ", finishTime=" + finishTime +

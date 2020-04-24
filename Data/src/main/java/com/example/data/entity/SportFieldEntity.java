@@ -7,10 +7,15 @@ public class SportFieldEntity {
     private String fieldId;
     private String name;
     private String imgPath;
-    private String address;
+    private SportFieldAddressEntity sportFieldAddressEntity;
     private int rating;
     private int price;
+    private float latitude;
+    private float longitude;
 
+    public SportFieldEntity() {
+        sportFieldAddressEntity = new SportFieldAddressEntity();
+    }
 
     public String getFieldId() {
         return fieldId;
@@ -36,20 +41,12 @@ public class SportFieldEntity {
         this.imgPath = imgPath;
     }
 
-    public String getAddress() {
-        return address;
+    public SportFieldAddressEntity getSportFieldAddressEntity() {
+        return sportFieldAddressEntity;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
+    public void setSportFieldAddressEntity(SportFieldAddressEntity sportFieldAddressEntity) {
+        this.sportFieldAddressEntity = sportFieldAddressEntity;
     }
 
     public int getRating() {
@@ -60,15 +57,41 @@ public class SportFieldEntity {
         this.rating = rating;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public String toString() {
-        return "SportField{" +
+        return "SportFieldEntity{" +
                 "fieldId='" + fieldId + '\'' +
                 ", name='" + name + '\'' +
                 ", imgPath='" + imgPath + '\'' +
-                ", address='" + address + '\'' +
+                ", sportFieldAddressEntity=" + sportFieldAddressEntity +
                 ", rating=" + rating +
                 ", price=" + price +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }
