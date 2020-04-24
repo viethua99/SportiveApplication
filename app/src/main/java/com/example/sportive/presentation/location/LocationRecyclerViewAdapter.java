@@ -6,13 +6,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.domain.model.DistrictLocation;
-import com.example.domain.model.SportField;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseRecyclerViewAdapter;
 import com.example.sportive.presentation.base.ItemClickListener;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import utils.SportiveUtils;
 
 /**
  * Created by Viet Hua on 4/8/2020
@@ -63,7 +64,7 @@ public class LocationRecyclerViewAdapter extends BaseRecyclerViewAdapter<Distric
         }
 
         private void renderUI(DistrictLocation data) {
-            tvDistrict.setText(data.getName().replace("Q.","Quận "));
+            tvDistrict.setText(SportiveUtils.convertShortNameFormatToFullName(data.getName()));
         }
     }
 

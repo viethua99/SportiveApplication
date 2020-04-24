@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 import timber.log.Timber;
+import utils.SportiveUtils;
 
 /**
  * Created By Viet Hua on 4/7/2020
@@ -111,7 +112,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         if (requestCode == LocationActivity.DISTRICT_LOCATION_REQUEST_CODE) {
             if (resultCode == getActivity().RESULT_OK) {
                 DistrictLocation districtLocation = (DistrictLocation) data.getSerializableExtra(LocationActivity.KEY_DISTRICT_LOCATION);
-                edtLocation.setText(districtLocation.getName().replace("Q.","Quận "));
+                edtLocation.setText(SportiveUtils.convertShortNameFormatToFullName(districtLocation.getName()));
                 presenter.saveDistrictLocation(districtLocation.getLatitude(), districtLocation.getLongitude(), districtLocation.getName());
             }
         }

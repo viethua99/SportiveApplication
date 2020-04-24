@@ -26,7 +26,6 @@ import timber.log.Timber;
  * Created by Viet Hua on 4/10/2020
  */
 public class ResultPresenterImpl implements ResultContract.Presenter {
-
     ResultContract.View mView;
 
 
@@ -34,9 +33,6 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
     GetFieldBookingListUseCase getFieldBookingListUseCase;
     @Inject
     GetSportFieldByIdUseCase getSportFieldByIdUseCase;
-    @Inject
-    GetSportFieldIdListUseCase getSportFieldIdListUseCase;
-
     @Inject
     GetSportFieldIdListByDistrictUseCase getSportFieldIdListByDistrictUseCase;
 
@@ -57,6 +53,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
     @Override
     public void dropView() {
         getFieldBookingListUseCase.dispose();
+        getSportFieldIdListByDistrictUseCase.dispose();
         getSportFieldByIdUseCase.dispose();
         mView = null;
     }
@@ -94,22 +91,6 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         return availableSportFieldIdList;
     }
 
-
-    private boolean checkIfSportFieldIsNearby(SportField sportField) {
-        Timber.d("checkIfSportFieldIsNearby");
-        Location target = new Location("target");
-        Location anchor = new Location("anchor");
-        target.setLatitude(sportField.getLatitude());
-        target.setLongitude(sportField.getLongitude());
-        anchor.setLatitude(mSearchFieldConfig.getLatitude());
-        anchor.setLongitude(mSearchFieldConfig.getLongitude());
-        if (anchor.distanceTo(target) < 6000) {
-            return true;
-        }
-        return false;
-    }
-
-
     private class GetFieldBookingListObserver extends DisposableMaybeObserver<List<FieldBooking>> {
         @Override
         public void onSuccess(List<FieldBooking> fieldBookingList) {
@@ -118,9 +99,6 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
                     fieldBookingList,
                     mSearchFieldConfig.getStartTime(),
                     mSearchFieldConfig.getFinishTime());
-            Timber.d("overlapped: %s", overlappedSportFieldIdList);
-            getSportFieldIdListUseCase.execute(new GetSportFieldIdListObserver(), new EmptyParam());
-            Timber.e("TEST: %s", mSearchFieldConfig.getDistrictName());
             getSportFieldIdListByDistrictUseCase.execute(new GetSportFieldIdListByDistrictObserver(), mSearchFieldConfig.getDistrictName());
         }
 
@@ -141,7 +119,6 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
             mView.hideLoading();
             Timber.d("onSuccess: %s", sportField.toString());
             mView.showAvailableSportFieldData(sportField);
-//            mView.showCannotFindAnyThing();
         }
 
         @Override
@@ -154,43 +131,21 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
             Timber.d("onComplete");
             mView.hideLoading();
 
-        }
-    }
-
-    private class GetSportFieldIdListObserver extends DisposableMaybeObserver<List<String>> {
-        @Override
-        public void onSuccess(List<String> sportFieldIdList) {
-            Timber.d("onSuccess: %s", sportFieldIdList);
-//            mSportFieldIdList = sportFieldIdList;
-//            List<String> test = getAvailableSportFieldIdList();
-//            for (String s : test) {
-//                getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), s);
-//            }
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Timber.e(e.getMessage());
-        }
-
-        @Override
-        public void onComplete() {
-            Timber.d("onComplete");
         }
     }
 
     private class GetSportFieldIdListByDistrictObserver extends DisposableMaybeObserver<List<String>> {
         @Override
-        public void onSuccess(List<String> strings) {
-            Timber.d("onSuccess : %s", strings);
+        public void onSuccess(List<String> sportFieldIdList) {
+            Timber.d("onSuccess : %s", sportFieldIdList);
             mView.hideLoading();
-            if (strings.isEmpty()) {
+            if (sportFieldIdList.isEmpty()) {
                 mView.showCannotFindAnyThing();
             } else {
-                mSportFieldIdList = strings;
-                List<String> test = getAvailableSportFieldIdList();
-                for (String s : test) {
-                    getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), s);
+                mSportFieldIdList = sportFieldIdList;
+                List<String> availableSportFieldIdList = getAvailableSportFieldIdList();
+                for (String sportFieldId : availableSportFieldIdList) {
+                    getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), sportFieldId);
                 }
             }
         }

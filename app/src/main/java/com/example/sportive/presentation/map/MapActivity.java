@@ -6,38 +6,28 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
-import android.provider.Settings;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
-import com.example.domain.model.DistrictLocation;
 import com.example.domain.model.SportField;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -48,11 +38,9 @@ import com.google.maps.android.ui.IconGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import dagger.android.AndroidInjection;
 import timber.log.Timber;
 import utils.SportiveUtils;
@@ -69,13 +57,11 @@ public class MapActivity extends BaseActivity implements MapContract.View,
     private static final int LOCATION_PERMISSION_ID = 40;
     @Inject
     MapContract.Presenter presenter;
-
-    LinearLayout linearLayout;
     private GoogleMap mGoogleMap;
+    List<Marker> SportFieldMarkerList = new ArrayList<>();
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location currentLocation;
-    BitmapDescriptor bitmapDescriptor;
-    private Marker centerMarker;
+
 
     public static void startMapActivity(AppCompatActivity activity) {
         Timber.d("startMapActivity");
@@ -94,15 +80,6 @@ public class MapActivity extends BaseActivity implements MapContract.View,
         Timber.d("onCreate");
         AndroidInjection.inject(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        linearLayout = (LinearLayout) this.getLayoutInflater().inflate(R.layout.item_map_marker, null, false);
-        linearLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        linearLayout.layout(0, 0, linearLayout.getMeasuredWidth(), linearLayout.getMeasuredHeight());
-
-        linearLayout.setDrawingCacheEnabled(true);
-        linearLayout.buildDrawingCache();
-        Bitmap bm = linearLayout.getDrawingCache();
-        bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(bm);
         setupMap();
 
     }
@@ -157,12 +134,12 @@ public class MapActivity extends BaseActivity implements MapContract.View,
     public void onCameraMoveStarted(int i) {
         if (i == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
             Timber.d("onCameraMoveStarted: GESTURE");
-            if (!markerList.isEmpty()) {
+            if (!SportFieldMarkerList.isEmpty()) {
                 Timber.d("Clear old marker");
-                for (Marker marker : markerList) {
+                for (Marker marker : SportFieldMarkerList) {
                     marker.remove();
                 }
-                markerList.clear();
+                SportFieldMarkerList.clear();
             }
         } else if (i == GoogleMap.OnCameraMoveStartedListener
                 .REASON_API_ANIMATION) {
@@ -184,18 +161,14 @@ public class MapActivity extends BaseActivity implements MapContract.View,
     public void onCameraIdle() {
         Timber.d("onCameraIdle");
         LatLng center = mGoogleMap.getCameraPosition().target;
-        if (centerMarker != null) {
-            centerMarker.remove();
-            centerMarker = mGoogleMap.addMarker(new MarkerOptions().position(center).title("Center").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-            Location test = new Location("center");
-            test.setLatitude(center.latitude);
-            test.setLongitude(center.longitude);
-            presenter.getNearbySportFieldList(test);
+            Location centerLocation = new Location("center");
+            centerLocation.setLatitude(center.latitude);
+            centerLocation.setLongitude(center.longitude);
+            presenter.getNearbySportFieldList(centerLocation);
 
-        }
     }
 
-    List<Marker> markerList = new ArrayList<>();
+
 
     @Override
     public void showNearbySportFieldList(List<SportField> sportFieldList) {
@@ -210,7 +183,7 @@ public class MapActivity extends BaseActivity implements MapContract.View,
                             .fromBitmap(iconGenerator
                             .makeIcon(String.format("%s\n%s", sportField.getName(),
                                     SportiveUtils.getPricePerHourFormat(sportField.getPrice()))))));
-            markerList.add(marker);
+            SportFieldMarkerList.add(marker);
         }
     }
 
@@ -299,7 +272,7 @@ public class MapActivity extends BaseActivity implements MapContract.View,
     private void addMarkerAtCurrentLocation(Location currentLocation) {
         Timber.d("addMarkerAtLocation");
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        centerMarker = mGoogleMap.addMarker(new MarkerOptions().position(latLng).title("Your Location"));
+        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title("Your Location"));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(12.8f));  //Interval between 2.0 and 21.0
     }
