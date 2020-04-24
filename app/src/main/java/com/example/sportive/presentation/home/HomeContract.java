@@ -23,8 +23,14 @@ public interface HomeContract {
 
         int getDurationTime();
 
+        float getLatitude();
+
+        float getLongitude();
+
+        String getDistrictName();
+
         void saveDurationTime(int duration);
 
-        void saveSportFieldData(SportField sportField);
+        void saveDistrictLocation(float latitude, float longitude,String districtName);
     }
 }

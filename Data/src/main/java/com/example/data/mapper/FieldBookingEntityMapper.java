@@ -25,7 +25,7 @@ public class FieldBookingEntityMapper implements BaseMapper<FieldBookingEntity, 
     @Override
     public FieldBooking mapFromEntity(FieldBookingEntity fieldBookingEntity) {
         FieldBooking fieldBooking = new FieldBooking();
-        fieldBooking.setFieldBookingId(fieldBookingEntity.getFieldBookingId());
+       fieldBooking.setFieldBookingId(fieldBookingEntity.getFieldBookingId());
         fieldBooking.setFieldId(fieldBookingEntity.getFieldId());
         fieldBooking.setStartTime(fieldBookingEntity.getStartTime());
         fieldBooking.setFinishTime(fieldBookingEntity.getFinishTime());

@@ -6,6 +6,8 @@ import com.example.sportive.presentation.location.LocationActivity;
 import com.example.sportive.presentation.location.LocationModule;
 import com.example.sportive.presentation.main.MainActivity;
 import com.example.sportive.presentation.main.MainModule;
+import com.example.sportive.presentation.map.MapActivity;
+import com.example.sportive.presentation.map.MapModule;
 import com.example.sportive.presentation.result.ResultActivity;
 import com.example.sportive.presentation.result.ResultModule;
 import com.example.sportive.presentation.splash.SplashActivity;
@@ -33,5 +35,8 @@ public abstract class AppBindingModule {
 
     @ContributesAndroidInjector(modules = SplashModule.class)
     public abstract SplashActivity splashActivity();
+
+    @ContributesAndroidInjector(modules = MapModule.class)
+    public abstract MapActivity mapActivity();
 
 }

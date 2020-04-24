@@ -1,12 +1,7 @@
 package com.example.sportive.presentation.home;
 
-import com.example.domain.interactor.sportfield.AddSportFieldUsecase;
-import com.example.domain.model.SportField;
-
 import javax.inject.Inject;
 
-import io.reactivex.observers.DisposableCompletableObserver;
-import timber.log.Timber;
 import utils.TimeUtils;
 
 /**
@@ -19,9 +14,10 @@ public class HomePresenterImpl implements HomeContract.Presenter {
     private int dayOfMonth = TimeUtils.getCurrentDayOfMonth();
     private int hourOfDay = TimeUtils.getCurrentHour() + 1;
     private int duration = 1;
+    private float latitude;
+    private float longitude;
+    private String districtName;
 
-    @Inject
-    AddSportFieldUsecase addSportFieldUsecase;
 
     @Inject
     public HomePresenterImpl() {
@@ -30,7 +26,6 @@ public class HomePresenterImpl implements HomeContract.Presenter {
 
     @Override
     public void attachView(HomeContract.View view) {
-        addSportFieldUsecase.dispose();
         mView = view;
     }
 
@@ -49,10 +44,6 @@ public class HomePresenterImpl implements HomeContract.Presenter {
         return TimeUtils.getDateFormat(this.year, this.month, this.dayOfMonth);
     }
 
-    @Override
-    public void saveSportFieldData(SportField sportField) {
-        addSportFieldUsecase.execute(new AddSportFieldDataObserver(), sportField);
-    }
 
     @Override
     public String getFormattedHour(int hourOfDay) {
@@ -85,15 +76,25 @@ public class HomePresenterImpl implements HomeContract.Presenter {
         return finishTime;
     }
 
-    private class AddSportFieldDataObserver extends DisposableCompletableObserver {
-        @Override
-        public void onComplete() {
-            Timber.d("onComplete");
-        }
+    @Override
+    public float getLatitude() {
+        return this.latitude;
+    }
 
-        @Override
-        public void onError(Throwable e) {
-            Timber.e(e.getMessage());
-        }
+    @Override
+    public float getLongitude() {
+        return this.longitude;
+    }
+
+    @Override
+    public String getDistrictName() {
+        return this.districtName;
+    }
+
+    @Override
+    public void saveDistrictLocation(float latitude, float longitude, String districtName) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.districtName = districtName;
     }
 }
