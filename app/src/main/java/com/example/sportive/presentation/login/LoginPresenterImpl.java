@@ -7,9 +7,13 @@ import javax.inject.Inject;
  */
 public class LoginPresenterImpl implements LoginContract.Presenter {
 
+    LoginContract.View mView;
 
     @Inject
-    public LoginContract.View mView;
+    public LoginPresenterImpl() {
+
+    }
+
 
     @Override
     public void attachView(LoginContract.View view) {

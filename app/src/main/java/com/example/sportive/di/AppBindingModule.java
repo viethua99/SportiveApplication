@@ -5,6 +5,7 @@ import com.example.sportive.presentation.detail.DetailModule;
 import com.example.sportive.presentation.location.LocationActivity;
 import com.example.sportive.presentation.location.LocationModule;
 import com.example.sportive.presentation.login.LoginActivity;
+import com.example.sportive.presentation.login.LoginModule;
 import com.example.sportive.presentation.main.MainActivity;
 import com.example.sportive.presentation.main.MainModule;
 import com.example.sportive.presentation.map.MapActivity;
@@ -45,7 +46,7 @@ public abstract class AppBindingModule {
     @ContributesAndroidInjector(modules = RegisterModule.class)
     public abstract RegisterActivity registerActivity();
 
-    @ContributesAndroidInjector(modules = LoginActivity.class)
+    @ContributesAndroidInjector(modules = LoginModule.class)
     public abstract LoginActivity loginActivity();
 
 }

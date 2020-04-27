@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Sportive</string>
     <string name="home">Trang chủ</string>
+    <string name="booking">Lịch đặt</string>
     <string name="profile">Cá nhân</string>
     <string name="online_field_booking">Đặt sân trực tuyến </string>
     <string name="played_field">Sân chơi trước đây</string>

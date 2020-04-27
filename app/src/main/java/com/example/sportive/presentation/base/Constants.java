@@ -7,4 +7,5 @@ public class Constants {
     //FRAGMENT TAG
     public static final String TAG_HOME = "TAG_HOME";
     public static final String TAG_PROFILE = "TAG_PROFILE";
+    public static final String TAG_BOOKING = "TAG_BOOKING";
 }

@@ -97,7 +97,7 @@
             android:text="@string/you_dont_have_account" />
 
         <TextView
-            android:id="@+id/txt_sign_in_here"
+            android:id="@+id/txt_sign_up_here"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_4"

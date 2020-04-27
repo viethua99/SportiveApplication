@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
 import com.example.sportive.presentation.base.Constants;
+import com.example.sportive.presentation.booking.BookingFragment;
 import com.example.sportive.presentation.home.HomeFragment;
 import com.example.sportive.presentation.profile.ProfileFragment;
 import com.google.android.material.appbar.AppBarLayout;
@@ -21,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import butterknife.BindView;
 import dagger.android.AndroidInjection;
 import timber.log.Timber;
@@ -114,6 +116,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             case Constants.TAG_PROFILE:
                 replaceFragment(ProfileFragment.getInstance(), ProfileFragment.TAG, R.id.fragment_container);
                 break;
+            case Constants.TAG_BOOKING:
+                replaceFragment(BookingFragment.getInstance(), BookingFragment.TAG, R.id.fragment_container);
+                break;
         }
         appBarLayout.setVisibility(tag.equals(Constants.TAG_PROFILE) ? View.GONE : View.VISIBLE);
     }
@@ -134,6 +139,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     break;
                 case R.id.item_profile:
                     openScreenByTag(Constants.TAG_PROFILE);
+                    break;
+                case R.id.item_booking:
+                    openScreenByTag(Constants.TAG_BOOKING);
                     break;
             }
             return true;

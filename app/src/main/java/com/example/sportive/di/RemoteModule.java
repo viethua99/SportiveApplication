@@ -1,8 +1,10 @@
 package com.example.sportive.di;
 
+import com.example.data.repository.AuthenticationDataRemote;
 import com.example.data.repository.DistrictLocationDataRemote;
 import com.example.data.repository.FieldBookingDataRemote;
 import com.example.data.repository.SportFieldDataRemote;
+import com.example.remote.AuthenticationDataRemoteImpl;
 import com.example.remote.DistrictLocationDataRemoteImpl;
 import com.example.remote.FieldBookingDataRemoteImpl;
 import com.example.remote.SportFieldDataRemoteImpl;
@@ -24,4 +26,7 @@ public abstract class RemoteModule {
 
     @Binds
     public abstract DistrictLocationDataRemote bindDistrictLocationDataRemote(DistrictLocationDataRemoteImpl impl);
+
+    @Binds
+    public abstract AuthenticationDataRemote bindAuthenticationDataRemote(AuthenticationDataRemoteImpl impl);
 }

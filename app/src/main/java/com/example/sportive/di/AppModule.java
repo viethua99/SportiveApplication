@@ -42,4 +42,5 @@ public class AppModule {
     public FirebaseAuth provideFirebaseAuth() {
         return FirebaseAuth.getInstance();
     }
+
 }

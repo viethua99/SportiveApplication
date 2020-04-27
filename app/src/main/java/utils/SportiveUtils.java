@@ -23,18 +23,7 @@ public class SportiveUtils {
     }
 
     public static String convertShortNameFormatToFullName(String name) {
-        String formattedName = "";
-        switch (name) {
-            case "Q.":
-                formattedName.replace(name, "Quận ");
-                break;
-            case "Đ.":
-                formattedName.replace(name, "Đường");
-                break;
-            default:
-                formattedName = "*****";
-                break;
-        }
+        String formattedName = name.replace("Q.","Quận ");
         return formattedName;
     }
 }
