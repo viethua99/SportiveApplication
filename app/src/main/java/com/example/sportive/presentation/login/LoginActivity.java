@@ -2,6 +2,7 @@ package com.example.sportive.presentation.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -22,6 +23,11 @@ import timber.log.Timber;
  * Created by Viet Hua on 04/27/2020.
  */
 public class LoginActivity extends BaseActivity implements LoginContract.View {
+
+    @BindView(R.id.edt_email)
+    EditText edtEmail;
+    @BindView(R.id.edt_password)
+    EditText edtPassword;
 
     @Inject
     LoginContract.Presenter presenter;
@@ -61,5 +67,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @OnClick(R.id.txt_sign_up_here)
     public void onSignUpHereClick() {
         RegisterActivity.startRegisterActivity(this);
+    }
+
+    @OnClick(R.id.btn_login)
+    public void onLoginClick() {
+        String email = edtEmail.getText().toString();
+        String password = edtPassword.getText().toString();
+        presenter.login(email, password);
     }
 }

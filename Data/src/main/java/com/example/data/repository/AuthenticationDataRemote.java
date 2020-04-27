@@ -8,4 +8,5 @@ import io.reactivex.Maybe;
  */
 public interface AuthenticationDataRemote {
     Maybe<String> registerAccount(String email, String phoneNumber, String password);
+    Maybe<String> loginWithEmailAndPassword(String email,String password);
 }

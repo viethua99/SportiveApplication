@@ -23,4 +23,9 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
     public Maybe<String> registerAccount(String email, String phoneNumber, String password) {
         return authenticationDataRemote.registerAccount(email, phoneNumber, password);
     }
+
+    @Override
+    public Maybe<String> loginWithEmailAndPassword(String email, String password) {
+        return authenticationDataRemote.loginWithEmailAndPassword(email, password);
+    }
 }
