@@ -3,6 +3,7 @@ package com.example.sportive.presentation.login;
 
 import com.example.domain.interactor.auth.LoginUseCase;
 import com.example.domain.model.UserInfo;
+import com.example.sportive.di.SportiveManager;
 
 import javax.inject.Inject;
 
@@ -16,6 +17,8 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
 
     @Inject
     LoginUseCase loginUseCase;
+    @Inject
+    SportiveManager sportiveManager;
 
     LoginContract.View mView;
 
@@ -43,8 +46,9 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
     private class LoginObserver extends DisposableMaybeObserver<UserInfo> {
         @Override
         public void onSuccess(UserInfo userInfo) {
-
-            Timber.d("onSuccess: %s", userInfo);
+            sportiveManager.setUserInfo(userInfo);
+            sportiveManager.createUserSession();
+            mView.finish();
         }
 
         @Override

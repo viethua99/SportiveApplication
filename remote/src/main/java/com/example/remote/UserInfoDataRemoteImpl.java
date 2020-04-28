@@ -46,12 +46,13 @@ public class UserInfoDataRemoteImpl implements UserInfoDataRemote {
     }
 
     @Override
-    public Maybe<UserInfoEntity> getUserInfoById(String userId) {
+    public Maybe<UserInfoEntity> getUserInfoById(final String userId) {
         Query query = databaseReference.child(Constants.KEY_USERS).child(userId);
         return RxFirebaseDatabase.observeSingleValueEvent(query, new Function<DataSnapshot, UserInfoEntity>() {
             @Override
             public UserInfoEntity apply(DataSnapshot dataSnapshot) throws Exception {
                 UserInfoModel userInfoModel = dataSnapshot.getValue(UserInfoModel.class);
+                userInfoModel.setUid(userId);
                 return userInfoModelMapper.mapFromModel(userInfoModel);
             }
         });
