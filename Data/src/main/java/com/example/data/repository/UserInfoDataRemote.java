@@ -9,4 +9,5 @@ import io.reactivex.Maybe;
  */
 public interface UserInfoDataRemote {
     Maybe<String> saveUserInfo(UserInfoEntity userInfoEntity);
+    Maybe<UserInfoEntity> getUserInfoById(String userId);
 }

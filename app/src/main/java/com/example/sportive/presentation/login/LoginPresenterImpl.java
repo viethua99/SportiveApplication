@@ -2,6 +2,7 @@ package com.example.sportive.presentation.login;
 
 
 import com.example.domain.interactor.auth.LoginUseCase;
+import com.example.domain.model.UserInfo;
 
 import javax.inject.Inject;
 
@@ -39,10 +40,11 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
         loginUseCase.execute(new LoginObserver(), new LoginUseCase.Param(email, password));
     }
 
-    private class LoginObserver extends DisposableMaybeObserver<String> {
+    private class LoginObserver extends DisposableMaybeObserver<UserInfo> {
         @Override
-        public void onSuccess(String s) {
-            Timber.d("onSuccess: %s", s);
+        public void onSuccess(UserInfo userInfo) {
+
+            Timber.d("onSuccess: %s", userInfo);
         }
 
         @Override
