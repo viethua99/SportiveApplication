@@ -25,12 +25,12 @@ public class AuthenticationDataRemoteImpl implements AuthenticationDataRemote {
     }
 
     @Override
-    public Maybe<String> registerAccount(String email, String phoneNumber, String password) {
+    public Maybe<String> registerAccount(String email, String password) {
         return RxFirebaseAuth.createUserWithEmailAndPassword(firebaseAuth, email, password)
                 .map(new Function<AuthResult, String>() {
                     @Override
                     public String apply(AuthResult authResult) throws Exception {
-                        return authResult.toString();
+                        return authResult.getUser().getUid();
                     }
                 });
     }

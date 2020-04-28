@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/spacing_12">
@@ -55,10 +56,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_12"
         android:layout_marginBottom="@dimen/spacing_12"
+        app:passwordToggleEnabled="true"
         android:hint="@string/password">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_password"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>

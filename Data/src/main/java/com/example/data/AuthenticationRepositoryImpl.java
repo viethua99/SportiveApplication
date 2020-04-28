@@ -20,8 +20,8 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
     }
 
     @Override
-    public Maybe<String> registerAccount(String email, String phoneNumber, String password) {
-        return authenticationDataRemote.registerAccount(email, phoneNumber, password);
+    public Maybe<String> registerAccount(String email, String password) {
+        return authenticationDataRemote.registerAccount(email, password);
     }
 
     @Override

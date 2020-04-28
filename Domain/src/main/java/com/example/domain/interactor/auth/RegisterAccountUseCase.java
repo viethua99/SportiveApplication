@@ -3,12 +3,16 @@ package com.example.domain.interactor.auth;
 import com.example.domain.executor.ExecutionThread;
 import com.example.domain.interactor.base.CompletableUseCase;
 import com.example.domain.interactor.base.MaybeUseCase;
+import com.example.domain.model.UserInfo;
 import com.example.domain.repository.AuthenticationRepository;
+import com.example.domain.repository.UserInfoRepository;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
+import io.reactivex.MaybeSource;
+import io.reactivex.functions.Function;
 
 /**
  * Created by Viet Hua on 04/27/2020.
@@ -16,16 +20,26 @@ import io.reactivex.Maybe;
 public class RegisterAccountUseCase extends MaybeUseCase<RegisterAccountUseCase.Param> {
 
     AuthenticationRepository authenticationRepository;
+    UserInfoRepository userInfoRepository;
 
     @Inject
-    public RegisterAccountUseCase(ExecutionThread executionThread, AuthenticationRepository authenticationRepository) {
+    public RegisterAccountUseCase(ExecutionThread executionThread, AuthenticationRepository authenticationRepository,
+                                  UserInfoRepository userInfoRepository) {
         super(executionThread);
         this.authenticationRepository = authenticationRepository;
+        this.userInfoRepository = userInfoRepository;
     }
 
     @Override
     protected Maybe buildUseCase(Param param) {
-        return authenticationRepository.registerAccount(param.email, param.phoneNumber, param.password);
+        return authenticationRepository.registerAccount(param.email, param.password)
+                .flatMap(new Function<String, MaybeSource<?>>() {
+                    @Override
+                    public MaybeSource<?> apply(String userId) throws Exception {
+                        UserInfo userInfo = new UserInfo(userId, param.phoneNumber, param.email);
+                        return userInfoRepository.saveUserInfo(userInfo);
+                    }
+                });
     }
 
     public static class Param {
