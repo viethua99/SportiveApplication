@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.HasAndroidInjector;
+import utils.AndroidDialogUtils;
 
 /**
  * Created by Viet Hua on 4/7/2020
@@ -73,4 +74,13 @@ public abstract class BaseFragment extends Fragment {
     public void showToastMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
+
+    public void showLoading() {
+        AndroidDialogUtils.getInstance().showLoadingDialog(getContext(), "");
+    }
+
+    public void hideLoading() {
+        AndroidDialogUtils.getInstance().hideLoadingDialog();
+    }
+
 }

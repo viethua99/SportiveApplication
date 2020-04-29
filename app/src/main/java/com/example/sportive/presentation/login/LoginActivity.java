@@ -78,6 +78,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @OnClick(R.id.txt_sign_up_here)
     public void onSignUpHereClick() {
         RegisterActivity.startRegisterActivity(this);
+        finish();
     }
 
     @OnClick(R.id.btn_login)

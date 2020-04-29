@@ -40,12 +40,14 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
 
     @Override
     public void login(String email, String password) {
+        mView.showLoading();
         loginUseCase.execute(new LoginObserver(), new LoginUseCase.Param(email, password));
     }
 
     private class LoginObserver extends DisposableMaybeObserver<UserInfo> {
         @Override
         public void onSuccess(UserInfo userInfo) {
+            mView.hideLoading();
             sportiveManager.setUserInfo(userInfo);
             sportiveManager.createUserSession();
             mView.showSuccessLogin();
@@ -53,6 +55,7 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
 
         @Override
         public void onError(Throwable e) {
+            mView.hideLoading();
             Timber.e(e.getMessage());
             mView.showFailureLogin();
         }

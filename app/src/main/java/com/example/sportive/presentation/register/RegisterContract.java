@@ -8,7 +8,8 @@ import com.example.sportive.presentation.base.BaseView;
  */
 public interface RegisterContract {
     interface View extends BaseView {
-
+       void showMainScreen();
+       void showRegisterFailed();
     }
 
     interface Presenter extends BasePresenter<View> {

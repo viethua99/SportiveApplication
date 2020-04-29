@@ -44,4 +44,8 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
             }
         });
     }
+    @Override
+    public Completable logout() {
+        return authenticationDataRemote.logout();
+    }
 }

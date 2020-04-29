@@ -37,7 +37,18 @@ public class RegisterAccountUseCase extends MaybeUseCase<RegisterAccountUseCase.
                     @Override
                     public MaybeSource<?> apply(String userId) throws Exception {
                         UserInfo userInfo = new UserInfo(userId, param.username, param.phoneNumber, param.email);
-                        return userInfoRepository.saveUserInfo(userInfo);
+                        return userInfoRepository.saveUserInfo(userInfo).flatMap(new Function<String, MaybeSource<?>>() {
+                            @Override
+                            public MaybeSource<?> apply(String s) throws Exception {
+                                return authenticationRepository.loginWithEmailAndPassword(param.email, param.password) //Auto login
+                                        .flatMap(new Function<String, MaybeSource<?>>() {
+                                            @Override
+                                            public MaybeSource<?> apply(String userId) throws Exception {
+                                                return userInfoRepository.getUserInfoById(userId);
+                                            }
+                                        });
+                            }
+                        });
                     }
                 });
     }

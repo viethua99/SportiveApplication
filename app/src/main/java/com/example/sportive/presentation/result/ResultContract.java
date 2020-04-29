@@ -12,6 +12,7 @@ import java.util.List;
  */
 public interface ResultContract {
     interface View extends BaseView {
+        void showSaveSuccessfully();
         void showNotLoggedIn();
         void showAvailableSportFieldData(SportField sportField);
         void showCannotFindAnyThing();

@@ -110,12 +110,11 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         Timber.d("getAvailableSportFieldIdList");
         List<String> availableSportFieldIdList;
         availableSportFieldIdList = new ArrayList<>(mSportFieldIdList);
-        if (overlappedSportFieldIdList != null) {
-            availableSportFieldIdList.addAll(overlappedSportFieldIdList);
-            List<String> intersection = new ArrayList<>(mSportFieldIdList);
-            intersection.retainAll(overlappedSportFieldIdList);
-            availableSportFieldIdList.removeAll(intersection);
-        }
+        availableSportFieldIdList.addAll(overlappedSportFieldIdList);
+        List<String> intersection = new ArrayList<>(mSportFieldIdList);
+        intersection.retainAll(overlappedSportFieldIdList);
+        availableSportFieldIdList.removeAll(intersection);
+
         return availableSportFieldIdList;
     }
 
@@ -168,11 +167,15 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         public void onSuccess(List<String> sportFieldIdList) {
             Timber.d("onSuccess : %s", sportFieldIdList);
             mView.hideLoading();
+            List<String> availableSportFieldIdList = sportFieldIdList;
             if (sportFieldIdList.isEmpty()) {
                 mView.showCannotFindAnyThing();
             } else {
                 mSportFieldIdList = sportFieldIdList;
-                List<String> availableSportFieldIdList = getAvailableSportFieldIdList();
+                if (overlappedSportFieldIdList != null) {
+                    availableSportFieldIdList = getAvailableSportFieldIdList();
+                }
+
                 for (String sportFieldId : availableSportFieldIdList) {
                     getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), sportFieldId);
                 }
@@ -194,6 +197,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onComplete() {
             Timber.d("onComplete");
+            mView.showSaveSuccessfully();
         }
 
         @Override

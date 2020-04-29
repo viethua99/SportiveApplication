@@ -67,10 +67,21 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
         presenter.dropView();
     }
 
+    @Override
+    public void showMainScreen() {
+        finish();
+    }
+
+    @Override
+    public void showRegisterFailed() {
+        showToastMessage("Lỗi khi đăng kí");
+    }
+
     @OnClick(R.id.txt_sign_in_here)
     public void onSignInHereClick() {
         Timber.d("onSignInHereClick");
         LoginActivity.startLoginActivity(this);
+        finish();
     }
 
     @OnClick(R.id.btn_register)

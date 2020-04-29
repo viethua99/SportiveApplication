@@ -107,11 +107,18 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     }
 
     @Override
+    public void showSaveSuccessfully() {
+        showToastMessage("Đặt sân thành công");
+    }
+
+    @Override
     public void showCannotFindAnyThing() {
         Timber.d("showCannotFindAnyThing :%d", resultRecyclerViewAdapter.getItemCount());
         if (resultRecyclerViewAdapter.getItemCount() == 0) {
             showToastMessage("Can't find anything");
         }
+
+
 
     }
 

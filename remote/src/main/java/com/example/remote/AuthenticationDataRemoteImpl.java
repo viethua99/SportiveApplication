@@ -9,6 +9,8 @@ import javax.inject.Inject;
 
 import durdinapps.rxfirebase2.RxFirebaseAuth;
 import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
 import io.reactivex.CompletableSource;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
@@ -58,6 +60,17 @@ public class AuthenticationDataRemoteImpl implements AuthenticationDataRemote {
                 String userId = result ? firebaseAuth.getCurrentUser().getUid() : "";
                 IsLoggedEntity isLoggedEntity = new IsLoggedEntity(result, userId);
                 emitter.onSuccess(isLoggedEntity);
+            }
+        });
+    }
+
+    @Override
+    public Completable logout() {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter emitter) throws Exception {
+                firebaseAuth.signOut();
+                emitter.onComplete();
             }
         });
     }

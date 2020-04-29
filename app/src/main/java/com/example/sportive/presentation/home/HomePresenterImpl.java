@@ -2,6 +2,7 @@ package com.example.sportive.presentation.home;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
 import utils.TimeUtils;
 
 /**
@@ -47,6 +48,7 @@ public class HomePresenterImpl implements HomeContract.Presenter {
 
     @Override
     public String getFormattedHour(int hourOfDay) {
+        Timber.d("getFormattedHour: %d",hourOfDay);
         if (hourOfDay != 0) {
             this.hourOfDay = hourOfDay;
         }
@@ -71,7 +73,7 @@ public class HomePresenterImpl implements HomeContract.Presenter {
 
     @Override
     public long getFinishTime() {
-        int finishHour = this.hourOfDay + duration;
+        int finishHour = hourOfDay + duration;
         long finishTime = TimeUtils.getDateFormatInMilliseconds(this.year, this.month, this.dayOfMonth, finishHour);
         return finishTime;
     }
