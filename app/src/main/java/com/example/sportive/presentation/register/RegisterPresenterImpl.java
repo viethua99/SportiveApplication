@@ -35,16 +35,16 @@ public class RegisterPresenterImpl implements RegisterContract.Presenter {
     }
 
     @Override
-    public void registerAccount(String email, String phoneNumber, String password) {
+    public void registerAccount(String username, String email, String phoneNumber, String password) {
         registerAccountUseCase.execute(new RegisterAccountObserver(),
-                new RegisterAccountUseCase.Param(email, phoneNumber, password));
+                new RegisterAccountUseCase.Param(username,email, phoneNumber, password));
     }
 
     private class RegisterAccountObserver extends DisposableMaybeObserver<String> {
 
         @Override
         public void onSuccess(String s) {
-            Timber.d("onSuccess: %s",s);
+            Timber.d("onSuccess: %s", s);
         }
 
         @Override

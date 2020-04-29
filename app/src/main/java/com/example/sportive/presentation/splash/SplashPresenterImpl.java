@@ -3,6 +3,8 @@ package com.example.sportive.presentation.splash;
 import com.example.domain.interactor.auth.CheckLoggedInUseCase;
 import com.example.domain.model.EmptyParam;
 import com.example.domain.model.IsLogged;
+import com.example.domain.model.UserInfo;
+import com.example.sportive.di.SportiveManager;
 
 import javax.inject.Inject;
 
@@ -16,7 +18,8 @@ public class SplashPresenterImpl implements SplashContract.Presenter {
 
     SplashContract.View mView;
 
-
+    @Inject
+    SportiveManager sportiveManager;
     @Inject
     CheckLoggedInUseCase checkLoggedInUseCase;
 
@@ -40,10 +43,12 @@ public class SplashPresenterImpl implements SplashContract.Presenter {
         checkLoggedInUseCase.execute(new CheckLoggedInObserver(), new EmptyParam());
     }
 
-    private class CheckLoggedInObserver extends DisposableMaybeObserver<IsLogged> {
+    private class CheckLoggedInObserver extends DisposableMaybeObserver<UserInfo> {
         @Override
-        public void onSuccess(IsLogged isLogged) {
-            Timber.d("Onsuccess: %s", isLogged.toString());
+        public void onSuccess(UserInfo userInfo) {
+            Timber.d("onSuccess: %s", userInfo.toString());
+            sportiveManager.setUserInfo(userInfo);
+            sportiveManager.createUserSession();
         }
 
         @Override

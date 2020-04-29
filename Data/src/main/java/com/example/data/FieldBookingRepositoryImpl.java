@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.functions.Function;
 
@@ -45,5 +46,10 @@ public class FieldBookingRepositoryImpl implements FieldBookingRepository {
                         return fieldBookingEntityMapper.mapFromEntities(fieldBookingEntities);
                     }
                 });
+    }
+
+    @Override
+    public Completable saveFieldBooking(FieldBooking fieldBooking) {
+        return fieldBookingDataRemote.saveFieldBooking(fieldBookingEntityMapper.mapToEntity(fieldBooking));
     }
 }

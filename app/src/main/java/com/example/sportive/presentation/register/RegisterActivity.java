@@ -29,6 +29,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     EditText edtPhoneNumber;
     @BindView(R.id.edt_password)
     EditText edtPassword;
+    @BindView(R.id.edt_username)
+    EditText edtUsername;
 
     @Inject
     RegisterContract.Presenter presenter;
@@ -77,6 +79,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
         String email = edtEmail.getText().toString();
         String phoneNumber = edtPhoneNumber.getText().toString();
         String password = edtPassword.getText().toString();
-        presenter.registerAccount(email, phoneNumber, password);
+        String username = edtUsername.getText().toString();
+        presenter.registerAccount(username,email, phoneNumber, password);
     }
 }

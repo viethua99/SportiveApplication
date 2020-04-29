@@ -4,6 +4,7 @@ import com.example.domain.model.FieldBooking;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 
 /**
@@ -12,4 +13,5 @@ import io.reactivex.Maybe;
 public interface FieldBookingRepository {
     Maybe<List<FieldBooking>> getFieldBookingList();
     Maybe<List<FieldBooking>> getFieldBookingListById(String userId);
+    Completable saveFieldBooking(FieldBooking fieldBooking);
 }

@@ -15,7 +15,8 @@ public class UserInfo {
 
     }
 
-    public UserInfo(String uid, String phoneNumber, String email) {
+    public UserInfo(String uid, String name, String phoneNumber, String email) {
+        this.name = name;
         this.uid = uid;
         this.phoneNumber = phoneNumber;
         this.email = email;

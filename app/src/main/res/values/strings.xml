@@ -21,6 +21,7 @@
     <string name="district">Quận</string>
     <string name="detail">Chi tiết</string>
     <string name="email">Gmail</string>
+    <string name="username">Họ tên</string>
     <string name="password">Mật khẩu</string>
     <string name="phone_number">Số điện thoại</string>
     <string name="register">Đăng ký</string>

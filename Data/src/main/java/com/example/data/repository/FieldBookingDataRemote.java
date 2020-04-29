@@ -4,6 +4,7 @@ import com.example.data.entity.FieldBookingEntity;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 
 /**
@@ -12,5 +13,8 @@ import io.reactivex.Maybe;
 public interface FieldBookingDataRemote {
 
     Maybe<List<FieldBookingEntity>> getFieldBookingList();
+
     Maybe<List<FieldBookingEntity>> getFieldBookingListById(String userId);
+
+    Completable saveFieldBooking(FieldBookingEntity fieldBookingEntity);
 }

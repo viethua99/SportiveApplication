@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import durdinapps.rxfirebase2.DataSnapshotMapper;
 import durdinapps.rxfirebase2.RxFirebaseDatabase;
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.functions.Function;
 
@@ -60,5 +61,12 @@ public class FieldBookingDataRemoteImpl implements FieldBookingDataRemote {
                 return fieldBookingEntityList;
             }
         });
+    }
+
+    @Override
+    public Completable saveFieldBooking(FieldBookingEntity fieldBookingEntity) {
+        DatabaseReference reference = firebaseDatabase.child(Constants.KEY_BOOKINGS).push();
+        FieldBookingModel fieldBookingModel = fieldBookingModelMapper.mapToModel(fieldBookingEntity);
+        return RxFirebaseDatabase.setValue(reference, fieldBookingModel);
     }
 }

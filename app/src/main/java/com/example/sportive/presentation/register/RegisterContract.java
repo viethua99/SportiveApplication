@@ -12,7 +12,7 @@ public interface RegisterContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void registerAccount(String email, String phoneNumber, String password);
+        void registerAccount(String username,String email, String phoneNumber, String password);
     }
 
 }

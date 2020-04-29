@@ -36,18 +36,20 @@ public class RegisterAccountUseCase extends MaybeUseCase<RegisterAccountUseCase.
                 .flatMap(new Function<String, MaybeSource<?>>() {
                     @Override
                     public MaybeSource<?> apply(String userId) throws Exception {
-                        UserInfo userInfo = new UserInfo(userId, param.phoneNumber, param.email);
+                        UserInfo userInfo = new UserInfo(userId, param.username, param.phoneNumber, param.email);
                         return userInfoRepository.saveUserInfo(userInfo);
                     }
                 });
     }
 
     public static class Param {
+        String username;
         String email;
         String phoneNumber;
         String password;
 
-        public Param(String email, String phoneNumber, String password) {
+        public Param(String username, String email, String phoneNumber, String password) {
+            this.username = username;
             this.email = email;
             this.phoneNumber = phoneNumber;
             this.password = password;

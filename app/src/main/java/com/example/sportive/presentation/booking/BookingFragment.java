@@ -7,10 +7,16 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.domain.model.FieldBooking;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
+import com.example.sportive.presentation.base.ItemClickListener;
 import com.example.sportive.presentation.login.LoginActivity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -27,10 +33,14 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
     public static final String TAG = BookingFragment.class.getSimpleName();
     @BindView(R.id.ll_not_login)
     LinearLayout llNotlogin;
+
+
     @Inject
     BookingContract.Presenter presenter;
 
     Context mContext;
+    private RecyclerView recyclerView;
+    private BookingRecyclerViewAdapter bookingRecyclerViewAdapter;
 
     public static BookingFragment getInstance() {
         Timber.d("getInstance");
@@ -48,6 +58,7 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
     @Override
     protected void onMyCreatedView(View view) {
         Timber.d("onMyCreatedView");
+        setUpRecyclerView(view);
     }
 
     @Override
@@ -83,9 +94,33 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
     }
 
     @Override
-    public void showBookingList() {
+    public void showBookingList(List<FieldBooking> fieldBookingList) {
+        Timber.d("showBookingList");
         llNotlogin.setVisibility(View.INVISIBLE);
+        bookingRecyclerViewAdapter.setData(fieldBookingList);
+
     }
+
+    private void setUpRecyclerView(View view) {
+        Timber.d("setupRecyclerView");
+        recyclerView = view.findViewById(R.id.rv_booking);
+        bookingRecyclerViewAdapter = new BookingRecyclerViewAdapter(getContext(), listener);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(bookingRecyclerViewAdapter);
+    }
+
+    private ItemClickListener listener = new ItemClickListener() {
+        @Override
+        public void onClickListener(int position) {
+
+        }
+
+        @Override
+        public void onLongClickListener(int position) {
+
+        }
+    };
+
 
     @OnClick(R.id.btn_login)
     public void onLoginClick() {

@@ -2,20 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:padding="@dimen/spacing_10">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_booking"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
-        android:visibility="invisible"
         android:id="@+id/ll_not_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bạn chưa đăng nhập, vui lòng đăng " />
+            android:text="Bạn chưa đăng nhập, vui lòng đăng nhập " />
 
         <Button
             android:id="@+id/btn_login"
@@ -27,5 +36,6 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
+
 
 </RelativeLayout>

@@ -1,7 +1,10 @@
 package com.example.sportive.presentation.booking;
 
+import com.example.domain.model.FieldBooking;
 import com.example.sportive.presentation.base.BasePresenter;
 import com.example.sportive.presentation.base.BaseView;
+
+import java.util.List;
 
 /**
  * Created by Viet Hua on 04/27/2020.
@@ -9,7 +12,8 @@ import com.example.sportive.presentation.base.BaseView;
 public interface BookingContract {
     interface View extends BaseView {
         void showNotLoginView();
-        void showBookingList();
+
+        void showBookingList(List<FieldBooking> fieldBookingList);
     }
 
     interface Presenter extends BasePresenter<View> {
