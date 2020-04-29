@@ -8,10 +8,11 @@ import com.example.sportive.presentation.base.BaseView;
  */
 public interface BookingContract {
     interface View extends BaseView {
-
+        void showNotLoginView();
+        void showBookingList();
     }
 
     interface Presenter extends BasePresenter<View> {
-
+        void checkIfUserIsLoggedIn();
     }
 }

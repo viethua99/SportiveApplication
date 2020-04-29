@@ -4,9 +4,11 @@ import com.example.data.entity.FieldBookingEntity;
 import com.example.data.repository.FieldBookingDataRemote;
 import com.example.remote.mapper.FieldBookingModelMapper;
 import com.example.remote.model.FieldBookingModel;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,5 +42,23 @@ public class FieldBookingDataRemoteImpl implements FieldBookingDataRemote {
                         return fieldBookingModelMapper.mapFromModels(fieldBookingModelList);
                     }
                 });
+    }
+
+    @Override
+    public Maybe<List<FieldBookingEntity>> getFieldBookingListById(final String userId) {
+        Query query = firebaseDatabase.child(Constants.KEY_BOOKINGS);
+        return RxFirebaseDatabase.observeSingleValueEvent(query, new Function<DataSnapshot, List<FieldBookingEntity>>() {
+            @Override
+            public List<FieldBookingEntity> apply(DataSnapshot dataSnapshot) throws Exception {
+                List<FieldBookingEntity> fieldBookingEntityList = new ArrayList<>();
+                for (DataSnapshot subSnapshot : dataSnapshot.getChildren()) {
+                    if (subSnapshot.child("userId").getValue().equals(userId)) {
+                        FieldBookingModel fieldBookingModel = subSnapshot.getValue(FieldBookingModel.class);
+                        fieldBookingEntityList.add(fieldBookingModelMapper.mapFromModel(fieldBookingModel));
+                    }
+                }
+                return fieldBookingEntityList;
+            }
+        });
     }
 }

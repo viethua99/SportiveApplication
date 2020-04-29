@@ -48,12 +48,13 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
         public void onSuccess(UserInfo userInfo) {
             sportiveManager.setUserInfo(userInfo);
             sportiveManager.createUserSession();
-            mView.finish();
+            mView.showSuccessLogin();
         }
 
         @Override
         public void onError(Throwable e) {
             Timber.e(e.getMessage());
+            mView.showFailureLogin();
         }
 
         @Override

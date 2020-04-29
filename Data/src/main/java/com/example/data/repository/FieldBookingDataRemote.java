@@ -12,4 +12,5 @@ import io.reactivex.Maybe;
 public interface FieldBookingDataRemote {
 
     Maybe<List<FieldBookingEntity>> getFieldBookingList();
+    Maybe<List<FieldBookingEntity>> getFieldBookingListById(String userId);
 }

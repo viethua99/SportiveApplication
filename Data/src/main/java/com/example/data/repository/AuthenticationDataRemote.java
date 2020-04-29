@@ -1,6 +1,8 @@
 package com.example.data.repository;
 
 
+import com.example.data.entity.IsLoggedEntity;
+
 import io.reactivex.Maybe;
 
 /**
@@ -9,4 +11,5 @@ import io.reactivex.Maybe;
 public interface AuthenticationDataRemote {
     Maybe<String> registerAccount(String email, String password);
     Maybe<String> loginWithEmailAndPassword(String email,String password);
+    Maybe<IsLoggedEntity> checkLoggedIn();
 }

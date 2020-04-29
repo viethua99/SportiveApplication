@@ -8,7 +8,8 @@ import com.example.sportive.presentation.base.BaseView;
  */
 public interface LoginContract {
     interface View extends BaseView{
-        void finish();
+        void showSuccessLogin();
+        void showFailureLogin();
     }
 
     interface Presenter extends BasePresenter<View>{

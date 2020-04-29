@@ -1,5 +1,6 @@
 package com.example.remote;
 
+import com.example.data.entity.IsLoggedEntity;
 import com.example.data.repository.AuthenticationDataRemote;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -10,6 +11,8 @@ import durdinapps.rxfirebase2.RxFirebaseAuth;
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
 import io.reactivex.Maybe;
+import io.reactivex.MaybeEmitter;
+import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.functions.Function;
 
 /**
@@ -44,5 +47,18 @@ public class AuthenticationDataRemoteImpl implements AuthenticationDataRemote {
                         return authResult.getUser().getUid();
                     }
                 });
+    }
+
+    @Override
+    public Maybe<IsLoggedEntity> checkLoggedIn() {
+        return Maybe.create(new MaybeOnSubscribe<IsLoggedEntity>() {
+            @Override
+            public void subscribe(MaybeEmitter<IsLoggedEntity> emitter) throws Exception {
+                boolean result = firebaseAuth != null && firebaseAuth.getCurrentUser() != null;
+                String userId = result ? firebaseAuth.getCurrentUser().getUid() : "";
+                IsLoggedEntity isLoggedEntity = new IsLoggedEntity(result, userId);
+                emitter.onSuccess(isLoggedEntity);
+            }
+        });
     }
 }

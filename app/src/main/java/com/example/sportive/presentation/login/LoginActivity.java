@@ -64,7 +64,16 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         presenter.dropView();
     }
 
+    @Override
+    public void showSuccessLogin() {
+        showToastMessage("Login Successfully");
+        finish();
+    }
 
+    @Override
+    public void showFailureLogin() {
+        showToastMessage("Login Failed");
+    }
 
     @OnClick(R.id.txt_sign_up_here)
     public void onSignUpHereClick() {

@@ -3,6 +3,7 @@ package com.example.sportive.presentation.booking;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,9 @@ import com.example.sportive.presentation.login.LoginActivity;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.OnClick;
+import dagger.Binds;
 import dagger.android.support.AndroidSupportInjection;
 import timber.log.Timber;
 
@@ -22,6 +25,8 @@ import timber.log.Timber;
  */
 public class BookingFragment extends BaseFragment implements BookingContract.View {
     public static final String TAG = BookingFragment.class.getSimpleName();
+    @BindView(R.id.ll_not_login)
+    LinearLayout llNotlogin;
     @Inject
     BookingContract.Presenter presenter;
 
@@ -62,6 +67,7 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
+        presenter.checkIfUserIsLoggedIn();
     }
 
     @Override
@@ -69,6 +75,16 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
         super.onDestroy();
         Timber.d("onDestroy");
         presenter.dropView();
+    }
+
+    @Override
+    public void showNotLoginView() {
+        llNotlogin.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showBookingList() {
+        llNotlogin.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.btn_login)
