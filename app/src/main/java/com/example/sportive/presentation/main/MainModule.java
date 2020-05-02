@@ -1,5 +1,8 @@
 package com.example.sportive.presentation.main;
 
+import com.example.sportive.presentation.booking.BookingContract;
+import com.example.sportive.presentation.booking.BookingFragment;
+import com.example.sportive.presentation.booking.BookingPresenterImpl;
 import com.example.sportive.presentation.home.HomeContract;
 import com.example.sportive.presentation.home.HomeFragment;
 import com.example.sportive.presentation.home.HomePresenterImpl;
@@ -19,6 +22,9 @@ public abstract class MainModule {
     @ContributesAndroidInjector
     public abstract ProfileFragment profileFragment();
 
+    @ContributesAndroidInjector
+    public abstract BookingFragment bookingFragment();
+
 
     @Binds
     public abstract MainContract.Presenter mainPresenter(MainPresenterImpl impl);
@@ -28,4 +34,7 @@ public abstract class MainModule {
 
     @Binds
     public abstract ProfileContract.Presenter profilePresenter(ProfilePresenterImpl impl);
+
+    @Binds
+    public abstract BookingContract.Presenter bookingPresenter(BookingPresenterImpl impl);
 }

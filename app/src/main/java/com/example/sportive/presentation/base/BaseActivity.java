@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.AndroidInjector;
@@ -81,4 +82,14 @@ public abstract class BaseActivity extends AppCompatActivity implements HasAndro
                 .addToBackStack(tag)
                 .commit();
     }
+
+    public void showLoading() {
+        AndroidDialogUtils.getInstance().showLoadingDialog(this, "");
+    }
+
+    public void hideLoading() {
+        AndroidDialogUtils.getInstance().hideLoadingDialog();
+    }
+
+
 }

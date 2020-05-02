@@ -10,6 +10,8 @@ import com.example.sportive.presentation.base.BaseFragment;
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
+
+import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 import timber.log.Timber;
 
@@ -65,5 +67,16 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @Override
     protected void onAttachToContext(Context context) {
         mContext = context;
+    }
+
+    @Override
+    public void showSignOutSuccess() {
+        showToastMessage("Log out successfully");
+    }
+
+    @OnClick(R.id.txt_logout)
+    public void onLogOutClick() {
+        Timber.d("onLogoutClick");
+        presenter.logout();
     }
 }

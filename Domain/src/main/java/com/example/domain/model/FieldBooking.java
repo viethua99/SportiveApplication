@@ -6,26 +6,26 @@ import java.util.Objects;
  * Created by Viet Hua on 4/13/2020
  */
 public class FieldBooking {
-    private String fieldBookingId;
-    private String fieldId;
-    private String miniFieldId;
     private long startTime;
     private long finishTime;
+    private String userId;
+    private String fieldId;
+    private String fieldName;
+    private String fieldImg;
+    private int totalPrice;
 
-    public String getFieldBookingId() {
-        return fieldBookingId;
+    public FieldBooking(){
+
     }
 
-    public void setFieldBookingId(String fieldBookingId) {
-        this.fieldBookingId = fieldBookingId;
-    }
-
-    public String getFieldId() {
-        return fieldId;
-    }
-
-    public void setFieldId(String fieldId) {
+    public FieldBooking(long startTime, long finishTime, String userId, String fieldId, String fieldName, String fieldImg, int totalPrice) {
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+        this.userId = userId;
         this.fieldId = fieldId;
+        this.fieldName = fieldName;
+        this.fieldImg = fieldImg;
+        this.totalPrice = totalPrice;
     }
 
     public long getStartTime() {
@@ -44,12 +44,44 @@ public class FieldBooking {
         this.finishTime = finishTime;
     }
 
-    public String getMiniFieldId() {
-        return miniFieldId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setMiniFieldId(String miniFieldId) {
-        this.miniFieldId = miniFieldId;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getFieldId() {
+        return fieldId;
+    }
+
+    public void setFieldId(String fieldId) {
+        this.fieldId = fieldId;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public String getFieldImg() {
+        return fieldImg;
+    }
+
+    public void setFieldImg(String fieldImg) {
+        this.fieldImg = fieldImg;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     @Override
@@ -59,24 +91,28 @@ public class FieldBooking {
         FieldBooking that = (FieldBooking) o;
         return startTime == that.startTime &&
                 finishTime == that.finishTime &&
-                Objects.equals(fieldBookingId, that.fieldBookingId) &&
+                totalPrice == that.totalPrice &&
+                Objects.equals(userId, that.userId) &&
                 Objects.equals(fieldId, that.fieldId) &&
-                Objects.equals(miniFieldId, that.miniFieldId);
+                Objects.equals(fieldName, that.fieldName) &&
+                Objects.equals(fieldImg, that.fieldImg);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fieldBookingId, fieldId, miniFieldId, startTime, finishTime);
+        return Objects.hash(startTime, finishTime, userId, fieldId, fieldName, fieldImg, totalPrice);
     }
 
     @Override
     public String toString() {
         return "FieldBooking{" +
-                "fieldBookingId='" + fieldBookingId + '\'' +
-                ", fieldId='" + fieldId + '\'' +
-                ", miniFieldId='" + miniFieldId + '\'' +
-                ", startTime=" + startTime +
+                "startTime=" + startTime +
                 ", finishTime=" + finishTime +
+                ", userId='" + userId + '\'' +
+                ", fieldId='" + fieldId + '\'' +
+                ", fieldName='" + fieldName + '\'' +
+                ", fieldImg='" + fieldImg + '\'' +
+                ", totalPrice=" + totalPrice +
                 '}';
     }
 }

@@ -101,17 +101,24 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     public void showAvailableSportFieldData(SportField sportField) {
         Timber.d("showAvailableSportFieldData");
         resultRecyclerViewAdapter.addData(sportField);
-        if(resultRecyclerViewAdapter.getItemCount() == 0){
+        if (resultRecyclerViewAdapter.getItemCount() == 0) {
             showToastMessage("Cant find anything");
         }
     }
 
     @Override
+    public void showSaveSuccessfully() {
+        showToastMessage("Đặt sân thành công");
+    }
+
+    @Override
     public void showCannotFindAnyThing() {
-        Timber.d("showCannotFindAnyThing :%d",resultRecyclerViewAdapter.getItemCount());
+        Timber.d("showCannotFindAnyThing :%d", resultRecyclerViewAdapter.getItemCount());
         if (resultRecyclerViewAdapter.getItemCount() == 0) {
             showToastMessage("Can't find anything");
         }
+
+
 
     }
 
@@ -119,6 +126,11 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     public void hideLoading() {
         Timber.d("hideLoading");
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showNotLoggedIn() {
+        showToastMessage("Please Login your account");
     }
 
     private void setupViews() {
@@ -174,7 +186,9 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         @Override
         public void onClickListener(int position) {
             Timber.d("onBookingButtonClick: %d", position);
-            showToastMessage("Đặt sân thành công");
+            SportField sportField = resultRecyclerViewAdapter.getItem(position);
+            presenter.saveFieldBookingData(sportField.getName(), sportField.getImgPath(),
+                    sportField.getFieldId(), sportField.getPrice());
             finish();
 
         }

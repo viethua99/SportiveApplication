@@ -14,22 +14,26 @@ public class FieldBookingEntityMapper implements BaseMapper<FieldBookingEntity, 
     @Override
     public FieldBookingEntity mapToEntity(FieldBooking fieldBooking) {
         FieldBookingEntity fieldBookingEntity = new FieldBookingEntity();
-        fieldBookingEntity.setFieldBookingId(fieldBooking.getFieldBookingId());
+        fieldBookingEntity.setUserId(fieldBooking.getUserId());
         fieldBookingEntity.setFieldId(fieldBooking.getFieldId());
+        fieldBookingEntity.setFieldName(fieldBooking.getFieldName());
         fieldBookingEntity.setStartTime(fieldBooking.getStartTime());
         fieldBookingEntity.setFinishTime(fieldBooking.getFinishTime());
-        fieldBookingEntity.setMiniFieldId(fieldBooking.getMiniFieldId());
+        fieldBookingEntity.setTotalPrice(fieldBooking.getTotalPrice());
+        fieldBookingEntity.setFieldImg(fieldBooking.getFieldImg());
         return fieldBookingEntity;
     }
 
     @Override
     public FieldBooking mapFromEntity(FieldBookingEntity fieldBookingEntity) {
         FieldBooking fieldBooking = new FieldBooking();
-       fieldBooking.setFieldBookingId(fieldBookingEntity.getFieldBookingId());
+        fieldBooking.setUserId(fieldBookingEntity.getUserId());
         fieldBooking.setFieldId(fieldBookingEntity.getFieldId());
         fieldBooking.setStartTime(fieldBookingEntity.getStartTime());
         fieldBooking.setFinishTime(fieldBookingEntity.getFinishTime());
-        fieldBooking.setMiniFieldId(fieldBookingEntity.getMiniFieldId());
+        fieldBooking.setTotalPrice(fieldBookingEntity.getTotalPrice());
+        fieldBooking.setFieldName(fieldBookingEntity.getFieldName());
+        fieldBooking.setFieldImg(fieldBookingEntity.getFieldImg());
         return fieldBooking;
     }
 

@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface ResultContract {
     interface View extends BaseView {
+        void showSaveSuccessfully();
+        void showNotLoggedIn();
         void showAvailableSportFieldData(SportField sportField);
         void showCannotFindAnyThing();
         void hideLoading();
@@ -19,5 +21,6 @@ public interface ResultContract {
 
     interface Presenter extends BasePresenter<View> {
         void getFieldBookingList(SearchFieldConfig searchFieldConfig);
+        void saveFieldBookingData(String sportFieldName, String fieldImg, String fieldId, int price);
     }
 }

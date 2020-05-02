@@ -33,8 +33,6 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         Timber.d("onCreate");
         AndroidInjection.inject(this);
 
-        changeToMainActivityAfterDelayTime();
-
     }
 
     @Override
@@ -42,6 +40,8 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
+        presenter.checkLoggedIn();
+        changeToMainActivityAfterDelayTime();
     }
 
     @Override

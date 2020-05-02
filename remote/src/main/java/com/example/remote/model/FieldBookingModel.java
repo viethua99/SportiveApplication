@@ -4,27 +4,13 @@ package com.example.remote.model;
  * Created by Viet Hua on 4/13/2020
  */
 public class FieldBookingModel {
-    private String fieldBookingId;
-    private String fieldId;
-    private String miniFieldId;
     private long startTime;
     private long finishTime;
-
-    public String getFieldBookingId() {
-        return fieldBookingId;
-    }
-
-    public void setFieldBookingId(String fieldBookingId) {
-        this.fieldBookingId = fieldBookingId;
-    }
-
-    public String getFieldId() {
-        return fieldId;
-    }
-
-    public void setFieldId(String fieldId) {
-        this.fieldId = fieldId;
-    }
+    private String userId;
+    private String fieldId;
+    private String fieldName;
+    private String fieldImg;
+    private int totalPrice;
 
     public long getStartTime() {
         return startTime;
@@ -42,21 +28,56 @@ public class FieldBookingModel {
         this.finishTime = finishTime;
     }
 
-    public String getMiniFieldId() {
-        return miniFieldId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setMiniFieldId(String miniFieldId) {
-        this.miniFieldId = miniFieldId;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getFieldId() {
+        return fieldId;
+    }
+
+    public void setFieldId(String fieldId) {
+        this.fieldId = fieldId;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public String getFieldImg() {
+        return fieldImg;
+    }
+
+    public void setFieldImg(String fieldImg) {
+        this.fieldImg = fieldImg;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     @Override
     public String toString() {
         return "FieldBookingModel{" +
-//                "fieldBookingId='" + fieldBookingId + '\'' +
-                ", fieldId='" + fieldId + '\'' +
-                ", startTime=" + startTime +
+                "startTime=" + startTime +
                 ", finishTime=" + finishTime +
+                ", userId='" + userId + '\'' +
+                ", fieldId='" + fieldId + '\'' +
+                ", fieldName='" + fieldName + '\'' +
+                ", fieldImg='" + fieldImg + '\'' +
+                ", totalPrice=" + totalPrice +
                 '}';
     }
 }

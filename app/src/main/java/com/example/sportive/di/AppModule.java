@@ -16,7 +16,7 @@ import dagger.Provides;
 /**
  * Created By Viet Hua on 4/7/2020
  */
-@Module
+@Module(subcomponents = UserComponent.class)
 public class AppModule {
     @Provides
     @Singleton
@@ -42,4 +42,5 @@ public class AppModule {
     public FirebaseAuth provideFirebaseAuth() {
         return FirebaseAuth.getInstance();
     }
+
 }
