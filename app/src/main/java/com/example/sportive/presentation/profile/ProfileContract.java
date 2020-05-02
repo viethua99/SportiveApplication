@@ -8,10 +8,10 @@ import com.example.sportive.presentation.base.BaseView;
  */
 public interface ProfileContract {
     interface View extends BaseView {
-
+        void showSignOutSuccess();
     }
 
     interface Presenter extends BasePresenter<View> {
-
+        void logout();
     }
 }

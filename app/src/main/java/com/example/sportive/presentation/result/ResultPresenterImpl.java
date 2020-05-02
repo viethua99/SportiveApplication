@@ -3,6 +3,7 @@ package com.example.sportive.presentation.result;
 import android.location.Location;
 
 import com.example.domain.interactor.fieldbooking.GetFieldBookingListUseCase;
+import com.example.domain.interactor.fieldbooking.SaveFieldBookingUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldByIdUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldIdListByDistrictUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldIdListUseCase;
@@ -10,6 +11,7 @@ import com.example.domain.model.EmptyParam;
 import com.example.domain.model.FieldBooking;
 import com.example.domain.model.SearchFieldConfig;
 import com.example.domain.model.SportField;
+import com.example.sportive.di.SportiveManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,8 +21,10 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import timber.log.Timber;
+import utils.SportiveUtils;
 
 /**
  * Created by Viet Hua on 4/10/2020
@@ -35,6 +39,10 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
     GetSportFieldByIdUseCase getSportFieldByIdUseCase;
     @Inject
     GetSportFieldIdListByDistrictUseCase getSportFieldIdListByDistrictUseCase;
+    @Inject
+    SaveFieldBookingUseCase saveFieldBookingUseCase;
+    @Inject
+    SportiveManager sportiveManager;
 
     private SearchFieldConfig mSearchFieldConfig;
     private List<String> mSportFieldIdList;
@@ -64,6 +72,25 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         mSearchFieldConfig = searchFieldConfig;
         getFieldBookingListUseCase.execute(new GetFieldBookingListObserver(), new EmptyParam());
 
+    }
+
+    @Override
+    public void saveFieldBookingData(String sportFieldName, String fieldImg, String fieldId, int price) {
+        if (sportiveManager.getUserInfo() != null) {
+            FieldBooking fieldBooking = new FieldBooking(
+                    mSearchFieldConfig.getStartTime(),
+                    mSearchFieldConfig.getFinishTime(),
+                    sportiveManager.getUserInfo().getUid(),
+                    fieldId,
+                    sportFieldName,
+                    fieldImg,
+                    price * mSearchFieldConfig.getDuration()
+            );
+            saveFieldBookingUseCase.execute(new SaveFieldBookingObserver(), fieldBooking);
+
+        } else {
+            mView.showNotLoggedIn();
+        }
     }
 
     private List<String> getOverlappedSportFieldList(List<FieldBooking> fieldBookingList, long startTime, long finishTime) {
@@ -110,6 +137,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onComplete() {
             Timber.d("onComplete");
+            getSportFieldIdListByDistrictUseCase.execute(new GetSportFieldIdListByDistrictObserver(), mSearchFieldConfig.getDistrictName());
         }
     }
 
@@ -139,11 +167,15 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         public void onSuccess(List<String> sportFieldIdList) {
             Timber.d("onSuccess : %s", sportFieldIdList);
             mView.hideLoading();
+            List<String> availableSportFieldIdList = sportFieldIdList;
             if (sportFieldIdList.isEmpty()) {
                 mView.showCannotFindAnyThing();
             } else {
                 mSportFieldIdList = sportFieldIdList;
-                List<String> availableSportFieldIdList = getAvailableSportFieldIdList();
+                if (overlappedSportFieldIdList != null) {
+                    availableSportFieldIdList = getAvailableSportFieldIdList();
+                }
+
                 for (String sportFieldId : availableSportFieldIdList) {
                     getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), sportFieldId);
                 }
@@ -158,6 +190,19 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onComplete() {
             Timber.d("onComplete");
+        }
+    }
+
+    private class SaveFieldBookingObserver extends DisposableCompletableObserver {
+        @Override
+        public void onComplete() {
+            Timber.d("onComplete");
+            mView.showSaveSuccessfully();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Timber.e(e.getMessage());
         }
     }
 }

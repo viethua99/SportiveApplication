@@ -1,6 +1,7 @@
 package utils;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 
 /**
@@ -36,5 +37,19 @@ public class AndroidDialogUtils {
         alertDialog = builder.create();
         alertDialog.show();
     }
+    private ProgressDialog mProgressDialog = null;
+
+    public void showLoadingDialog(Context ctx, String message) {
+        hideLoadingDialog();
+        mProgressDialog = ProgressDialog.show(ctx, null, message, false, false);
+
+    }
+
+    public void hideLoadingDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
 
 }

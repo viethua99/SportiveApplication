@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Sportive</string>
     <string name="home">Trang chủ</string>
+    <string name="booking">Lịch đặt</string>
     <string name="profile">Cá nhân</string>
     <string name="online_field_booking">Đặt sân trực tuyến </string>
     <string name="played_field">Sân chơi trước đây</string>
@@ -19,6 +20,16 @@
     <string name="choose_play_time">Chọn giờ bắt đầu</string>
     <string name="district">Quận</string>
     <string name="detail">Chi tiết</string>
+    <string name="email">Gmail</string>
+    <string name="username">Họ tên</string>
+    <string name="password">Mật khẩu</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="register">Đăng ký</string>
+    <string name="login">Đăng nhập</string>
+    <string name="you_have_account">Bạn đã có tài khoản?</string>
+    <string name="you_dont_have_account">Bạn chưa có tài khoản?</string>
+    <string name="sign_up_here">Hãy đăng ký</string>
+    <string name="sign_in_here">Hãy đăng nhập</string>
 
     <!-- Duration Spinner List -->
     <string-array name="duration_spinner_list">
