@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +35,10 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
     public static final String TAG = BookingFragment.class.getSimpleName();
     @BindView(R.id.ll_not_login)
     LinearLayout llNotlogin;
+    @BindView(R.id.txt_empty_booking_message)
+    TextView tvEmptyMessage;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
 
     @Inject
@@ -90,15 +96,25 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
 
     @Override
     public void showNotLoginView() {
+        Timber.d("showNotLoginView");
+        progressBar.setVisibility(View.INVISIBLE);
         llNotlogin.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showBookingList(List<FieldBooking> fieldBookingList) {
         Timber.d("showBookingList");
+        progressBar.setVisibility(View.INVISIBLE);
         llNotlogin.setVisibility(View.INVISIBLE);
         bookingRecyclerViewAdapter.setData(fieldBookingList);
+    }
 
+    @Override
+    public void showEmptyListMessage() {
+        Timber.d("showEmptyListMessage");
+        progressBar.setVisibility(View.INVISIBLE);
+        llNotlogin.setVisibility(View.INVISIBLE);
+        tvEmptyMessage.setVisibility(View.VISIBLE);
     }
 
     private void setUpRecyclerView(View view) {

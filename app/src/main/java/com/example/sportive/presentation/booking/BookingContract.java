@@ -14,6 +14,8 @@ public interface BookingContract {
         void showNotLoginView();
 
         void showBookingList(List<FieldBooking> fieldBookingList);
+
+        void showEmptyListMessage();
     }
 
     interface Presenter extends BasePresenter<View> {

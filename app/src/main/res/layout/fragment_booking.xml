@@ -37,5 +37,24 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:minWidth="50dp"
+        android:minHeight="50dp"/>
+
+    <TextView
+        android:id="@+id/txt_empty_booking_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Bạn chưa có lịch đặt nào"
+        android:textSize="@dimen/font_18_title"
+        android:visibility="invisible" />
+
 
 </RelativeLayout>

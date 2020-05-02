@@ -55,7 +55,12 @@ public class BookingPresenterImpl implements BookingContract.Presenter {
         @Override
         public void onSuccess(List<FieldBooking> fieldBookings) {
             Timber.e("onSuccess: %s", fieldBookings);
-            mView.showBookingList(fieldBookings);
+            if (!fieldBookings.isEmpty()) {
+                mView.showBookingList(fieldBookings);
+            } else {
+                mView.showEmptyListMessage();
+            }
+
         }
 
         @Override

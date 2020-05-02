@@ -5,8 +5,6 @@ import com.example.domain.model.EmptyParam;
 import com.example.sportive.di.SportiveManager;
 
 import javax.inject.Inject;
-
-import io.reactivex.Completable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import timber.log.Timber;
 
