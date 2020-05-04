@@ -1,198 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/scrollview_profile"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:fillViewport="true">
 
-        <ImageView
-            android:id="@+id/card_1"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-
-            android:background="@color/blue_500"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/card_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:src="@mipmap/ic_launcher_round"
-            app:layout_constraintBottom_toBottomOf="@+id/card_1"
-            app:layout_constraintLeft_toLeftOf="@+id/card_1"
-            app:layout_constraintRight_toRightOf="@+id/card_1"
-            app:layout_constraintTop_toBottomOf="@+id/card_1">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@mipmap/ic_launcher_round"></ImageView>
+                android:id="@+id/card_1"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
 
-            <TextView
+                android:background="@color/blue_500"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/card_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hoàng Việt"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_30"
-                android:textStyle="bold"></TextView>
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:src="@mipmap/ic_launcher_round"
+                app:layout_constraintBottom_toBottomOf="@+id/card_1"
+                app:layout_constraintLeft_toLeftOf="@+id/card_1"
+                app:layout_constraintRight_toRightOf="@+id/card_1"
+                app:layout_constraintTop_toBottomOf="@+id/card_1">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/ic_launcher_round"></ImageView>
+
+                <TextView
+                    android:id="@+id/txt_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_30"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Số lần hủy sân: 100"
+                    android:textSize="@dimen/font_16_subtitle"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Số lần hủy sân: 100"
-                android:textSize="@dimen/font_16_subtitle"></TextView>
-        </LinearLayout>
+                android:layout_marginTop="@dimen/spacing_32"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/spacing_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_2">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TÀI KHOẢN"
+                    android:textColor="@color/blue_500"
+                    android:textSize="@dimen/font_20"
+                    android:textStyle="bold"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_24"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_edit_black_24dp"></ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/spacing_20"
+                        android:text="Chỉnh sửa tài khoản"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_20"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_exit_to_app_black_24dp"></ImageView>
+
+                    <TextView
+                        android:id="@+id/txt_logout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/spacing_20"
+                        android:clickable="true"
+                        android:text="Đăng xuất"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_20"></TextView>
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    android:background="@color/bgColor" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    android:text="THÔNG TIN"
+                    android:textColor="@color/blue_500"
+                    android:textSize="@dimen/font_20"
+                    android:textStyle="bold"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_24"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_info_black_24dp"></ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/spacing_20"
+                        android:text="Giới thiệu"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_20"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_star_black_24dp"></ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/spacing_20"
+                        android:text="Đánh giá ứng dụng"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_20"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_supervisor_account_black_24dp"></ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/spacing_20"
+                        android:text="Hỗ trợ và góp ý"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_20"></TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_not_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_32"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/spacing_20"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_2">
+            android:text="Bạn chưa đăng nhập, vui lòng đăng nhập " />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TÀI KHOẢN"
-                android:textColor="@color/blue_500"
-                android:textSize="@dimen/font_20"
-                android:textStyle="bold"></TextView>
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_10"
+            android:background="@drawable/border_circular"
+            android:text="@string/login"
+            android:textColor="@color/white" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_24"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_edit_black_24dp"></ImageView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_20"
-                    android:text="Chỉnh sửa tài khoản"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_20"></TextView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_32"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_exit_to_app_black_24dp"></ImageView>
-
-                <TextView
-                    android:id="@+id/txt_logout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_20"
-                    android:clickable="true"
-                    android:text="Đăng xuất"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_20"></TextView>
-            </LinearLayout>
+    </LinearLayout>
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/spacing_20"
-                android:background="@color/bgColor" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_20"
-                android:text="THÔNG TIN"
-                android:textColor="@color/blue_500"
-                android:textSize="@dimen/font_20"
-                android:textStyle="bold"></TextView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_24"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_info_black_24dp"></ImageView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_20"
-                    android:text="Giới thiệu"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_20"></TextView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_32"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_star_black_24dp"></ImageView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_20"
-                    android:text="Đánh giá ứng dụng"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_20"></TextView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_32"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_supervisor_account_black_24dp"></ImageView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_20"
-                    android:text="Hỗ trợ và góp ý"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_20"></TextView>
-            </LinearLayout>
-        </LinearLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</RelativeLayout>

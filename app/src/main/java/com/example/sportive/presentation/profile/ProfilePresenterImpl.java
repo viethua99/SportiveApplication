@@ -35,8 +35,21 @@ public class ProfilePresenterImpl implements ProfileContract.Presenter {
         mView = null;
     }
 
+
+    @Override
+    public void checkIfUserIsLoggedIn() {
+        Timber.d("checkIfUserIsLoggedIn");
+        if(sportiveManager.getUserInfo() !=null){
+            mView.showUserInfo(sportiveManager.getUserInfo());
+        } else {
+            Timber.e(new Throwable("User null"));
+            mView.showNotLoggedInView();
+        }
+    }
+
     @Override
     public void logout() {
+        Timber.d("logout");
         mView.showLoading();
         logoutUseCase.execute(new LogoutObserver(), new EmptyParam());
     }
