@@ -1,5 +1,7 @@
 package com.example.remote;
 
+import android.util.Log;
+
 import com.example.data.entity.IsLoggedEntity;
 import com.example.data.repository.AuthenticationDataRemote;
 import com.google.firebase.auth.AuthResult;
@@ -11,7 +13,6 @@ import durdinapps.rxfirebase2.RxFirebaseAuth;
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.CompletableOnSubscribe;
-import io.reactivex.CompletableSource;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -41,11 +42,13 @@ public class AuthenticationDataRemoteImpl implements AuthenticationDataRemote {
     }
 
     @Override
-    public Maybe<String> loginWithEmailAndPassword(String email, String password) {
+    public Maybe<String> loginWithEmailAndPassword(final String email, String password) {
         return RxFirebaseAuth.signInWithEmailAndPassword(firebaseAuth, email, password)
                 .map(new Function<AuthResult, String>() {
                     @Override
                     public String apply(AuthResult authResult) throws Exception {
+                        Log.e("test",email);
+                        LatestEmailPrefs.setLatestEmail(email);
                         return authResult.getUser().getUid();
                     }
                 });

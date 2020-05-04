@@ -2,12 +2,15 @@ package com.example.sportive.presentation.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.remote.LatestEmailPrefs;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
 import com.example.sportive.presentation.register.RegisterActivity;
@@ -56,6 +59,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
+        edtEmail.setText(LatestEmailPrefs.getLatestEmail());
     }
 
     @Override
@@ -75,6 +79,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void showFailureLogin() {
         showToastMessage("Login Failed");
     }
+
 
     @OnClick(R.id.txt_sign_up_here)
     public void onSignUpHereClick() {
