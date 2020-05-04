@@ -109,4 +109,13 @@
             android:text="@string/sign_up_here"
             android:textColor="@color/blue_900" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_forgot_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/forgot_password"
+        android:textColor="@color/blue_900"></TextView>
 </LinearLayout>

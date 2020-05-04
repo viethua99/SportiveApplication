@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
 import com.example.sportive.presentation.register.RegisterActivity;
+import com.example.sportive.presentation.resetpassword.ResetPasswordActivity;
 
 import javax.inject.Inject;
 
@@ -79,6 +80,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void onSignUpHereClick() {
         RegisterActivity.startRegisterActivity(this);
         finish();
+    }
+
+    @OnClick(R.id.txt_forgot_password)
+    public void onForgotPasswordClick() {
+        ResetPasswordActivity.startResetPasswordActivity(this);
     }
 
     @OnClick(R.id.btn_login)

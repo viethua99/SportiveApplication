@@ -74,4 +74,9 @@ public class AuthenticationDataRemoteImpl implements AuthenticationDataRemote {
             }
         });
     }
+
+    @Override
+    public Completable resetPasswordFromEmail(final String email) {
+        return RxFirebaseAuth.sendPasswordResetEmail(firebaseAuth, email);
+    }
 }

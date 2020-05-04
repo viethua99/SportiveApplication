@@ -30,6 +30,8 @@
     <string name="you_dont_have_account">Bạn chưa có tài khoản?</string>
     <string name="sign_up_here">Hãy đăng ký</string>
     <string name="sign_in_here">Hãy đăng nhập</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="reset_password">Reset Mật khẩu</string>
 
     <!-- Duration Spinner List -->
     <string-array name="duration_spinner_list">

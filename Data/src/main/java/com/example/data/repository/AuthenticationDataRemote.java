@@ -14,4 +14,5 @@ public interface AuthenticationDataRemote {
     Maybe<String> loginWithEmailAndPassword(String email,String password);
     Maybe<IsLoggedEntity> checkLoggedIn();
     Completable logout();
+    Completable resetPasswordFromEmail(String email);
 }
