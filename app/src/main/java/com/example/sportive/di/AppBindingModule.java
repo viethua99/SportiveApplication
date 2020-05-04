@@ -12,6 +12,8 @@ import com.example.sportive.presentation.map.MapActivity;
 import com.example.sportive.presentation.map.MapModule;
 import com.example.sportive.presentation.register.RegisterActivity;
 import com.example.sportive.presentation.register.RegisterModule;
+import com.example.sportive.presentation.resetpassword.ResetPasswordActivity;
+import com.example.sportive.presentation.resetpassword.ResetPasswordModule;
 import com.example.sportive.presentation.result.ResultActivity;
 import com.example.sportive.presentation.result.ResultModule;
 import com.example.sportive.presentation.splash.SplashActivity;
@@ -48,5 +50,8 @@ public abstract class AppBindingModule {
 
     @ContributesAndroidInjector(modules = LoginModule.class)
     public abstract LoginActivity loginActivity();
+
+    @ContributesAndroidInjector(modules = ResetPasswordModule.class)
+    public abstract ResetPasswordActivity resetPasswordActivity();
 
 }

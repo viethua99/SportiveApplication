@@ -43,15 +43,14 @@ public class BookingRecyclerViewAdapter extends BaseRecyclerViewAdapter<FieldBoo
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgField;
-        TextView tvFieldName, tvPlayDate, tvStartTime, tvFinishTime, tvTotalPrice;
+        TextView tvFieldName, tvPlayDate, tvPlayTime, tvTotalPrice;
 
         public ViewHolder(View view) {
             super(view);
             imgField = view.findViewById(R.id.img_field);
             tvFieldName = view.findViewById(R.id.txt_field_name);
             tvPlayDate = view.findViewById(R.id.txt_play_date);
-            tvStartTime = view.findViewById(R.id.txt_start_time);
-            tvFinishTime = view.findViewById(R.id.txt_finish_time);
+            tvPlayTime = view.findViewById(R.id.txt_finish_time);
             tvTotalPrice = view.findViewById(R.id.txt_total_price);
         }
 
@@ -60,8 +59,9 @@ public class BookingRecyclerViewAdapter extends BaseRecyclerViewAdapter<FieldBoo
             tvFieldName.setText(fieldBooking.getFieldName());
             tvPlayDate.setText(String.format("Ngày đá: %s",TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime())));
             tvTotalPrice.setText(SportiveUtils.getTotalPriceFormat(fieldBooking.getTotalPrice()));
-            tvStartTime.setText(String.format("Giờ bắt đầu: %s", TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getStartTime())));
-            tvFinishTime.setText(String.format("Giờ kết thúc: %s", TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getFinishTime())));
+            tvPlayTime.setText(String.format("Giờ chơi: %s - %s",
+                    TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getStartTime()),
+                    TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getFinishTime())));
         }
     }
 

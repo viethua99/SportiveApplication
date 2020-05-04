@@ -59,7 +59,7 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         Button btnBooking, btnDetail;
-        TextView tvFieldName, tvFieldLocation, tvTime, tvFieldPrice, tvTotalPrice;
+        TextView tvFieldName, tvFieldLocation, tvFieldPrice, tvTotalPrice;
         RatingBar ratingBar;
         ImageView imgField;
 
@@ -69,7 +69,6 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
             btnDetail = itemView.findViewById(R.id.btn_field_detail);
             tvFieldName = itemView.findViewById(R.id.txt_field_name);
             tvFieldLocation = itemView.findViewById(R.id.txt_field_location);
-            tvTime = itemView.findViewById(R.id.txt_time);
             tvFieldPrice = itemView.findViewById(R.id.txt_field_price);
             tvTotalPrice = itemView.findViewById(R.id.txt_total_price);
             imgField = itemView.findViewById(R.id.img_field);

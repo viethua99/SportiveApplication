@@ -44,8 +44,14 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
             }
         });
     }
+
     @Override
     public Completable logout() {
         return authenticationDataRemote.logout();
+    }
+
+    @Override
+    public Completable resetPasswordFromEmail(String email) {
+        return authenticationDataRemote.resetPasswordFromEmail(email);
     }
 }

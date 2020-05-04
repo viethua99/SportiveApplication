@@ -2,6 +2,7 @@ package com.example.sportive.myapp;
 
 import android.app.Application;
 
+import com.example.remote.LatestEmailPrefs;
 import com.example.sportive.BuildConfig;
 import com.example.sportive.di.AppComponent;
 import com.example.sportive.di.DaggerAppComponent;
@@ -26,6 +27,7 @@ public class MyApp extends Application implements HasAndroidInjector {
         super.onCreate();
         if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree()); //Plant Timber
         initDagger();
+        LatestEmailPrefs.initSharedPreferences(this);
     }
 
     @Override

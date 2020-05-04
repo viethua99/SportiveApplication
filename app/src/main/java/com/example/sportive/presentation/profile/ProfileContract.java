@@ -1,5 +1,6 @@
 package com.example.sportive.presentation.profile;
 
+import com.example.domain.model.UserInfo;
 import com.example.sportive.presentation.base.BasePresenter;
 import com.example.sportive.presentation.base.BaseView;
 
@@ -9,9 +10,15 @@ import com.example.sportive.presentation.base.BaseView;
 public interface ProfileContract {
     interface View extends BaseView {
         void showSignOutSuccess();
+
+        void showNotLoggedInView();
+
+        void showUserInfo(UserInfo userInfo);
     }
 
     interface Presenter extends BasePresenter<View> {
+        void checkIfUserIsLoggedIn();
+
         void logout();
     }
 }
