@@ -1,5 +1,6 @@
 package com.example.sportive.presentation.bookingdetail;
 
+import com.example.domain.interactor.fieldbooking.DeleteBookingByIdUseCase;
 import com.example.domain.interactor.fieldbooking.GetBookingDataByIdUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldByIdUseCase;
 import com.example.domain.model.FieldBooking;
@@ -7,6 +8,7 @@ import com.example.domain.model.SportField;
 
 import javax.inject.Inject;
 
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import timber.log.Timber;
 
@@ -21,6 +23,8 @@ public class BookingDetailPresenterImpl implements BookingDetailContract.Present
     GetBookingDataByIdUseCase getBookingDataByIdUseCase;
     @Inject
     GetSportFieldByIdUseCase getSportFieldByIdUseCase;
+    @Inject
+    DeleteBookingByIdUseCase deleteBookingByIdUseCase;
 
     @Inject
     public BookingDetailPresenterImpl() {
@@ -39,7 +43,14 @@ public class BookingDetailPresenterImpl implements BookingDetailContract.Present
 
     @Override
     public void getBookingDataById(String bookingId) {
+        Timber.d("getBookingDataById: %s", bookingId);
         getBookingDataByIdUseCase.execute(new GetBookingDataByIdObserver(), bookingId);
+    }
+
+    @Override
+    public void deleteBookingById(String bookingId) {
+        Timber.d("deleteBookingById: %s", bookingId);
+        deleteBookingByIdUseCase.execute(new DeleteBookingByIdObserver(), bookingId);
     }
 
     private class GetBookingDataByIdObserver extends DisposableMaybeObserver<FieldBooking> {
@@ -76,6 +87,18 @@ public class BookingDetailPresenterImpl implements BookingDetailContract.Present
         @Override
         public void onComplete() {
             Timber.e("onComplete");
+        }
+    }
+
+    private class DeleteBookingByIdObserver extends DisposableCompletableObserver {
+        @Override
+        public void onComplete() {
+            Timber.d("onComplete");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Timber.e(e.getMessage());
         }
     }
 }

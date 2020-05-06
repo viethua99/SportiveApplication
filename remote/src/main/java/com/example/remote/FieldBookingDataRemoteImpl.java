@@ -18,6 +18,8 @@ import javax.inject.Inject;
 import durdinapps.rxfirebase2.DataSnapshotMapper;
 import durdinapps.rxfirebase2.RxFirebaseDatabase;
 import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
 import io.reactivex.Maybe;
 import io.reactivex.functions.Function;
 
@@ -111,9 +113,20 @@ public class FieldBookingDataRemoteImpl implements FieldBookingDataRemote {
 
     @Override
     public Completable saveFieldBooking(FieldBookingEntity fieldBookingEntity) {
-        Log.d("TEST", String.format("test: %s", fieldBookingEntity.getDuration()));
         DatabaseReference reference = firebaseDatabase.child(Constants.KEY_BOOKINGS).push();
         FieldBookingModel fieldBookingModel = fieldBookingModelMapper.mapToModel(fieldBookingEntity);
         return RxFirebaseDatabase.setValue(reference, fieldBookingModel);
+    }
+
+    @Override
+    public Completable deleteBookingById(final String bookingId) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter emitter) throws Exception {
+                firebaseDatabase.child(Constants.KEY_BOOKINGS).child(bookingId).removeValue();
+                emitter.onComplete();
+            }
+        });
+
     }
 }

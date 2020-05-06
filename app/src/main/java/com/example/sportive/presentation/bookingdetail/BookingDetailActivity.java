@@ -26,6 +26,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 import timber.log.Timber;
 import utils.SportiveUtils;
@@ -165,5 +166,10 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
         viewFlipper.setOutAnimation(this, android.R.anim.slide_out_right);
     }
 
+    @OnClick(R.id.btn_field_canceling)
+    public void onFieldCancelingClick() {
+        presenter.deleteBookingById(bookingId);
+        finish();
+    }
 
 }

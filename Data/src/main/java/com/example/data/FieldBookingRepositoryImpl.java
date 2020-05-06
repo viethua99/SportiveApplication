@@ -63,4 +63,9 @@ public class FieldBookingRepositoryImpl implements FieldBookingRepository {
     public Completable saveFieldBooking(FieldBooking fieldBooking) {
         return fieldBookingDataRemote.saveFieldBooking(fieldBookingEntityMapper.mapToEntity(fieldBooking));
     }
+
+    @Override
+    public Completable deleteBookingById(String bookingId) {
+        return fieldBookingDataRemote.deleteBookingById(bookingId);
+    }
 }

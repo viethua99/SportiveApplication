@@ -19,4 +19,6 @@ public interface FieldBookingDataRemote {
     Maybe<FieldBookingEntity> getBookingDataById(String bookingId);
 
     Completable saveFieldBooking(FieldBookingEntity fieldBookingEntity);
+
+    Completable deleteBookingById(String bookingId);
 }

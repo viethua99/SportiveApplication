@@ -11,10 +11,13 @@ import com.example.sportive.presentation.base.BaseView;
 public interface BookingDetailContract {
     interface View extends BaseView {
         void showBookingData(FieldBooking fieldBooking);
+
         void showFieldData(SportField sportField);
     }
 
     interface Presenter extends BasePresenter<View> {
         void getBookingDataById(String bookingId);
+
+        void deleteBookingById(String bookingId);
     }
 }
