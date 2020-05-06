@@ -11,7 +11,7 @@ import com.example.sportive.presentation.base.BaseView;
 public interface BookingDetailContract {
     interface View extends BaseView {
         void showBookingData(FieldBooking fieldBooking);
-
+        void showDeleteBookingSuccess();
         void showFieldData(SportField sportField);
     }
 

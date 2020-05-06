@@ -146,6 +146,12 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
         rlDetail.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showDeleteBookingSuccess() {
+        Timber.d("showDeleteBookingSuccess");
+        showToastMessage("Huỷ thành công");
+    }
+
     private void getBundleData() {
         Timber.d("getBundleData");
         Bundle bundle = getIntent().getExtras();

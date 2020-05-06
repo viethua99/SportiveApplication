@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +26,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import dagger.Binds;
 import dagger.android.support.AndroidSupportInjection;
 import timber.log.Timber;
 
@@ -118,21 +118,61 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
         tvEmptyMessage.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showDeleteBookingSuccess() {
+        Timber.d("showDeleteBookingSuccess");
+        showToastMessage("Huỷ thành công");
+        presenter.checkIfUserIsLoggedIn();
+    }
+
+
     private void setUpRecyclerView(View view) {
         Timber.d("setupRecyclerView");
         recyclerView = view.findViewById(R.id.rv_booking);
         bookingRecyclerViewAdapter = new BookingRecyclerViewAdapter(getContext(), listener);
+        bookingRecyclerViewAdapter.setOnButtonClickListener(shareButtonClickListener, cancelButtonClickListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(bookingRecyclerViewAdapter);
+    }
+
+    @Override
+    public void refreshFragment() {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.detach(this).attach(this).commit();
     }
 
     private ItemClickListener listener = new ItemClickListener() {
         @Override
         public void onClickListener(int position) {
-            Timber.d("onClickListener: %s",position);
+            Timber.d("onClickListener: %s", position);
             String fieldBookingId = bookingRecyclerViewAdapter.getItem(position).getBookingId();
             BookingDetailActivity.startBookingDetailActivity((AppCompatActivity) getActivity(), fieldBookingId);
 
+        }
+
+        @Override
+        public void onLongClickListener(int position) {
+
+        }
+    };
+    private ItemClickListener shareButtonClickListener = new ItemClickListener() {
+        @Override
+        public void onClickListener(int position) {
+            Timber.d("onShareButtonClick: %s", position);
+        }
+
+        @Override
+        public void onLongClickListener(int position) {
+
+        }
+    };
+
+    private ItemClickListener cancelButtonClickListener = new ItemClickListener() {
+        @Override
+        public void onClickListener(int position) {
+            Timber.d("onCancelButtonClick: %s", position);
+            String bookingId = bookingRecyclerViewAdapter.getItem(position).getBookingId();
+            presenter.deleteBookingById(bookingId);
         }
 
         @Override

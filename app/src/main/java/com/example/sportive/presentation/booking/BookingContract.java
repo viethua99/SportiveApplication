@@ -16,9 +16,13 @@ public interface BookingContract {
         void showBookingList(List<FieldBooking> fieldBookingList);
 
         void showEmptyListMessage();
+
+        void showDeleteBookingSuccess();
+        void refreshFragment();
     }
 
     interface Presenter extends BasePresenter<View> {
         void checkIfUserIsLoggedIn();
+        void deleteBookingById(String bookingId);
     }
 }

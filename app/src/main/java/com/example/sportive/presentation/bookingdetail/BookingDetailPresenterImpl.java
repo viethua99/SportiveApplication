@@ -94,6 +94,7 @@ public class BookingDetailPresenterImpl implements BookingDetailContract.Present
         @Override
         public void onComplete() {
             Timber.d("onComplete");
+            mView.showDeleteBookingSuccess();
         }
 
         @Override

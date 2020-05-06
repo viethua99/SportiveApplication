@@ -107,7 +107,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/btn_field_detail"
+                        android:id="@+id/btn_share"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/spacing_10"
@@ -118,7 +118,7 @@
                     </Button>
 
                     <Button
-                        android:id="@+id/btn_field_booking"
+                        android:id="@+id/btn_field_canceling"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border_circular_red"
