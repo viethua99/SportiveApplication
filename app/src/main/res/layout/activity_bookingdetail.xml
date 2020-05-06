@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:minWidth="50dp"
+        android:minHeight="50dp" />
+
+    <RelativeLayout
+        android:id="@+id/layout_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <RelativeLayout
+            android:id="@+id/layout_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ViewFlipper
+                android:id="@+id/view_flipper"
+                android:layout_width="match_parent"
+                android:layout_height="220dp">
+
+                <ImageView
+                    android:id="@+id/img_field1"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_test">
+
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/img_field2"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_test">
+
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/img_field3"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_test">
+
+                </ImageView>
+            </ViewFlipper>
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                android:theme="@style/ToolbarTheme" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_image"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_field_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sân banh Hòa Bình"
+                        android:textColor="@color/blue_500"
+                        android:textSize="@dimen/font_26"
+                        android:textStyle="bold"></TextView>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_share"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.5"
+                    android:background="@drawable/border_circular"
+                    android:drawableLeft="@drawable/ic_share_white_24dp"
+                    android:paddingLeft="@dimen/spacing_8"
+                    android:text="share"
+                    android:textColor="@color/white"></Button>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_location_on_black_24dp"></ImageView>
+
+                <TextView
+                    android:id="@+id/txt_field_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/spacing_10"
+                    android:text="Phường Tân Chánh Hiệp, quận 12"
+                    android:textSize="@dimen/font_18_title"></TextView>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_10"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_perm_contact_calendar_black_24dp"></ImageView>
+
+                        <TextView
+                            android:id="@+id/txt_play_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/spacing_10"
+                            android:textSize="@dimen/font_18_title"></TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_10"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_access_time_black_24dp"></ImageView>
+
+                        <TextView
+                            android:id="@+id/txt_play_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/spacing_10"
+                            android:textSize="@dimen/font_18_title"></TextView>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_change_booking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/border_circular"
+                    android:text="@string/change_time"
+                    android:textColor="@color/white">
+
+                </Button>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@id/layout_price"
+            android:layout_marginLeft="@dimen/spacing_10"
+            android:layout_marginTop="@dimen/spacing_10"
+            android:layout_marginRight="@dimen/spacing_10"
+            android:background="@color/bgColor" />
+
+        <RelativeLayout
+            android:id="@+id/layout_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_10">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_total_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_10"
+                    android:text="480.000đ"
+                    android:textColor="@color/blue_500"
+                    android:textSize="@dimen/font_30"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/txt_duration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4 giờ"
+                    android:textSize="@dimen/font_20"
+                    android:textStyle="bold"></TextView>
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_field_canceling"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/spacing_10"
+                android:layout_marginRight="@dimen/spacing_10"
+                android:background="@drawable/border_circular_red"
+                android:padding="@dimen/spacing_20"
+                android:text="@string/field_canceling"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_20"></Button>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

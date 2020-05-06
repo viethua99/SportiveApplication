@@ -80,6 +80,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
             FieldBooking fieldBooking = new FieldBooking(
                     mSearchFieldConfig.getStartTime(),
                     mSearchFieldConfig.getFinishTime(),
+                    mSearchFieldConfig.getDuration(),
                     sportiveManager.getUserInfo().getUid(),
                     fieldId,
                     sportFieldName,

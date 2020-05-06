@@ -4,6 +4,7 @@ package com.example.data.entity;
  * Created by Viet Hua on 4/13/2020
  */
 public class FieldBookingEntity {
+    private String bookingId;
     private long startTime;
     private long finishTime;
     private String userId;
@@ -11,6 +12,7 @@ public class FieldBookingEntity {
     private String fieldName;
     private String fieldImg;
     private int totalPrice;
+    private int duration;
 
     public long getStartTime() {
         return startTime;
@@ -66,6 +68,22 @@ public class FieldBookingEntity {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
     }
 
     @Override

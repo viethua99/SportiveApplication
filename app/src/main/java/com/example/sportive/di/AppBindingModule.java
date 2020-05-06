@@ -1,5 +1,7 @@
 package com.example.sportive.di;
 
+import com.example.sportive.presentation.bookingdetail.BookingDetailActivity;
+import com.example.sportive.presentation.bookingdetail.BookingDetailModule;
 import com.example.sportive.presentation.detail.DetailActivity;
 import com.example.sportive.presentation.detail.DetailModule;
 import com.example.sportive.presentation.location.LocationActivity;
@@ -53,5 +55,8 @@ public abstract class AppBindingModule {
 
     @ContributesAndroidInjector(modules = ResetPasswordModule.class)
     public abstract ResetPasswordActivity resetPasswordActivity();
+
+    @ContributesAndroidInjector(modules = BookingDetailModule.class)
+    public abstract BookingDetailActivity bookingDetailActivity();
 
 }

@@ -16,6 +16,7 @@ import com.example.domain.model.FieldBooking;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
 import com.example.sportive.presentation.base.ItemClickListener;
+import com.example.sportive.presentation.bookingdetail.BookingDetailActivity;
 import com.example.sportive.presentation.login.LoginActivity;
 
 import java.util.List;
@@ -128,6 +129,9 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
     private ItemClickListener listener = new ItemClickListener() {
         @Override
         public void onClickListener(int position) {
+            Timber.d("onClickListener: %s",position);
+            String fieldBookingId = bookingRecyclerViewAdapter.getItem(position).getBookingId();
+            BookingDetailActivity.startBookingDetailActivity((AppCompatActivity) getActivity(), fieldBookingId);
 
         }
 

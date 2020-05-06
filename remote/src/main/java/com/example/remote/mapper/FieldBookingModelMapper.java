@@ -14,10 +14,12 @@ public class FieldBookingModelMapper implements BaseMapper<FieldBookingEntity, F
     @Override
     public FieldBookingModel mapToModel(FieldBookingEntity fieldBookingEntity) {
         FieldBookingModel fieldBookingModel = new FieldBookingModel();
+        fieldBookingModel.setBookingId(fieldBookingEntity.getBookingId());
         fieldBookingModel.setUserId(fieldBookingEntity.getUserId());
         fieldBookingModel.setFieldId(fieldBookingEntity.getFieldId());
         fieldBookingModel.setStartTime(fieldBookingEntity.getStartTime());
         fieldBookingModel.setFinishTime(fieldBookingEntity.getFinishTime());
+        fieldBookingModel.setDuration(fieldBookingEntity.getDuration());
         fieldBookingModel.setFieldName(fieldBookingEntity.getFieldName());
         fieldBookingModel.setFieldImg(fieldBookingEntity.getFieldImg());
         fieldBookingModel.setTotalPrice(fieldBookingEntity.getTotalPrice());
@@ -27,10 +29,12 @@ public class FieldBookingModelMapper implements BaseMapper<FieldBookingEntity, F
     @Override
     public FieldBookingEntity mapFromModel(FieldBookingModel fieldBookingModel) {
         FieldBookingEntity fieldBookingEntity = new FieldBookingEntity();
+        fieldBookingEntity.setBookingId(fieldBookingModel.getBookingId());
         fieldBookingEntity.setUserId(fieldBookingModel.getUserId());
         fieldBookingEntity.setFieldId(fieldBookingModel.getFieldId());
         fieldBookingEntity.setStartTime(fieldBookingModel.getStartTime());
         fieldBookingEntity.setFinishTime(fieldBookingModel.getFinishTime());
+        fieldBookingEntity.setDuration(fieldBookingModel.getDuration());
         fieldBookingEntity.setFieldName(fieldBookingModel.getFieldName());
         fieldBookingEntity.setFieldImg(fieldBookingModel.getFieldImg());
         fieldBookingEntity.setTotalPrice(fieldBookingModel.getTotalPrice());

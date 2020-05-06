@@ -41,7 +41,7 @@ public class BookingRecyclerViewAdapter extends BaseRecyclerViewAdapter<FieldBoo
         holder.renderUI(fieldBooking);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         ImageView imgField;
         TextView tvFieldName, tvPlayDate, tvPlayTime, tvTotalPrice;
 
@@ -50,14 +50,27 @@ public class BookingRecyclerViewAdapter extends BaseRecyclerViewAdapter<FieldBoo
             imgField = view.findViewById(R.id.img_field);
             tvFieldName = view.findViewById(R.id.txt_field_name);
             tvPlayDate = view.findViewById(R.id.txt_play_date);
-            tvPlayTime = view.findViewById(R.id.txt_finish_time);
+            tvPlayTime = view.findViewById(R.id.txt_play_time);
             tvTotalPrice = view.findViewById(R.id.txt_total_price);
+            view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onClickListener(getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            mListener.onLongClickListener(getAdapterPosition());
+            return true;
         }
 
         private void renderUI(FieldBooking fieldBooking) {
             Glide.with(context).load(fieldBooking.getFieldImg()).into(imgField);
             tvFieldName.setText(fieldBooking.getFieldName());
-            tvPlayDate.setText(String.format("Ngày đá: %s",TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime())));
+            tvPlayDate.setText(String.format("Ngày đá: %s", TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime())));
             tvTotalPrice.setText(SportiveUtils.getTotalPriceFormat(fieldBooking.getTotalPrice()));
             tvPlayTime.setText(String.format("Giờ chơi: %s - %s",
                     TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getStartTime()),

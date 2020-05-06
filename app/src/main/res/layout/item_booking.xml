@@ -81,7 +81,7 @@
                         android:src="@drawable/ic_access_time_black_24dp"></ImageView>
 
                     <TextView
-                        android:id="@+id/txt_finish_time"
+                        android:id="@+id/txt_play_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/spacing_10"
@@ -99,6 +99,34 @@
                     android:textSize="@dimen/font_20"
                     android:textStyle="bold"></TextView>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_10"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_field_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_10"
+                        android:background="@drawable/border_circular"
+                        android:text="share"
+                        android:textColor="@color/white">
+
+                    </Button>
+
+                    <Button
+                        android:id="@+id/btn_field_booking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_circular_red"
+                        android:text="@string/field_canceling"
+                        android:textColor="@color/white">
+
+                    </Button>
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

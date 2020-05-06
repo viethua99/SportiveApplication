@@ -13,5 +13,6 @@ import io.reactivex.Maybe;
 public interface FieldBookingRepository {
     Maybe<List<FieldBooking>> getFieldBookingList();
     Maybe<List<FieldBooking>> getFieldBookingListById(String userId);
+    Maybe<FieldBooking> getBookingDataById(String bookingId);
     Completable saveFieldBooking(FieldBooking fieldBooking);
 }

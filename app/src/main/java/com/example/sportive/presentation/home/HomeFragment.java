@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import com.example.domain.model.DistrictLocation;
 import com.example.domain.model.SearchFieldConfig;
 import com.example.sportive.R;
+import com.example.sportive.myapp.MyApp;
 import com.example.sportive.presentation.base.BaseFragment;
 import com.example.sportive.presentation.location.LocationActivity;
 import com.example.sportive.presentation.map.MapActivity;
@@ -50,6 +51,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @BindView(R.id.spinner_duration)
     Spinner durationSpinner;
 
+    TimePickerDialog timePickerDialog;
+    DatePickerDialog datePickerDialog;
+
     @Inject
     HomeContract.Presenter presenter;
 
@@ -71,7 +75,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     protected void onMyCreatedView(View view) {
         Timber.d("onMyCreatedView");
-
+        setupDurationSpinner();
+        setupTimePickerDialog();
+        setupDatePickerDialog();
     }
 
     @Override
@@ -87,8 +93,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
-        setFixedLanguageToVietnamese();
-        setupDurationSpinner();
         edtPlayDate.setText(presenter.getFormattedDate(0, 0, 0));  //show current date for the first time
         edtPlayHour.setText(presenter.getFormattedHour(0)); //show (current hour+1) for the first time
     }
@@ -120,12 +124,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     private void setupDatePickerDialog() {
         Timber.d("setupDatePickerDialog");
-        DatePickerDialog datePickerDialog = new DatePickerDialog(Objects.requireNonNull(getContext()), R.style.DialogTheme, dataPickerDialogListener,
+        setFixedLanguageToVietnamese();
+        datePickerDialog = new DatePickerDialog(Objects.requireNonNull(getContext()), R.style.DialogTheme, dataPickerDialogListener,
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000); //Disable past dates
-        datePickerDialog.show();
     }
 
     //Set all datepicker / timerpick dialogs language to Vietnamese
@@ -140,13 +144,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     private void setupTimePickerDialog() {
         Timber.d("setupTimePickerDialog");
-        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(onTimeSetListener,
+        timePickerDialog = TimePickerDialog.newInstance(onTimeSetListener,
                 myCalendar.HOUR_OF_DAY,
                 myCalendar.MINUTE,
                 false);
         timePickerDialog.setTitle(getString(R.string.choose_play_time));
         timePickerDialog.enableMinutes(false);
-        timePickerDialog.show(Objects.requireNonNull(getFragmentManager()), "TimePickerDialog");
+
     }
 
     private void setupDurationSpinner() {
@@ -192,13 +196,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @OnClick(R.id.edt_play_date)
     public void onPlayDateClick() {
         Timber.d("onPlayDateClick");
-        setupDatePickerDialog();
+        datePickerDialog.show();
     }
 
     @OnClick(R.id.edt_play_hour)
     public void onPlayHourClick() {
         Timber.d("onPlayHourClick");
-        setupTimePickerDialog();
+        timePickerDialog.show(Objects.requireNonNull(getFragmentManager()), "TimePickerDialog");
     }
 
     @OnClick(R.id.btn_map)

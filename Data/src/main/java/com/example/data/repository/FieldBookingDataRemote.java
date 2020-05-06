@@ -16,5 +16,7 @@ public interface FieldBookingDataRemote {
 
     Maybe<List<FieldBookingEntity>> getFieldBookingListById(String userId);
 
+    Maybe<FieldBookingEntity> getBookingDataById(String bookingId);
+
     Completable saveFieldBooking(FieldBookingEntity fieldBookingEntity);
 }
