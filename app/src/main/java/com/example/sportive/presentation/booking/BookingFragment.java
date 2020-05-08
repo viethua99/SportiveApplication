@@ -1,6 +1,7 @@
 package com.example.sportive.presentation.booking;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -28,6 +29,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 import timber.log.Timber;
+import utils.SportiveUtils;
+import utils.TimeUtils;
 
 /**
  * Created by Viet Hua on 04/27/2020.
@@ -125,6 +128,11 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
         presenter.checkIfUserIsLoggedIn();
     }
 
+    @Override
+    public void refreshFragment() {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.detach(this).attach(this).commit();
+    }
 
     private void setUpRecyclerView(View view) {
         Timber.d("setupRecyclerView");
@@ -135,11 +143,18 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
         recyclerView.setAdapter(bookingRecyclerViewAdapter);
     }
 
-    @Override
-    public void refreshFragment() {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.detach(this).attach(this).commit();
+    private void startShareIntent(FieldBooking fieldBooking){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Sportive Application");
+        String shareMessage = String.format("Tên sân: %s\nThời gian: %s , %s\nTổng tiền: %s", fieldBooking.getFieldName(),
+                TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime()),
+                TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getStartTime()) + "-" + TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getFinishTime()),
+                SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(fieldBooking.getTotalPrice()));
+        intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        startActivity(intent);
     }
+
 
     private ItemClickListener listener = new ItemClickListener() {
         @Override
@@ -159,6 +174,8 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
         @Override
         public void onClickListener(int position) {
             Timber.d("onShareButtonClick: %s", position);
+            FieldBooking fieldBooking = bookingRecyclerViewAdapter.getItem(position);
+            startShareIntent(fieldBooking);
         }
 
         @Override

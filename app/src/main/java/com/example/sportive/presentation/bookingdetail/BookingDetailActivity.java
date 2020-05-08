@@ -70,7 +70,7 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
     @Inject
     BookingDetailContract.Presenter presenter;
 
-    private String bookingId;
+    private FieldBooking fieldBooking;
 
     public static void startBookingDetailActivity(AppCompatActivity activity, String bookingId) {
         Timber.d("startBookingDetailActivity");
@@ -89,10 +89,8 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
         super.onCreate(savedInstanceState);
         Timber.d("onCreate");
         AndroidInjection.inject(this);
-        getBundleData();
         setupToolbar();
         setupViewFlipper();
-        Timber.d(bookingId);
     }
 
     @Override
@@ -100,7 +98,7 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
-        presenter.getBookingDataById(bookingId);
+        presenter.getBookingDataById(getBookingIdFromBundle());
     }
 
     @Override
@@ -124,6 +122,8 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
     @Override
     public void showBookingData(FieldBooking fieldBooking) {
         Timber.d("showBookingData: %s", fieldBooking);
+        this.fieldBooking = fieldBooking;
+
         tvPlayDate.setText(String.format("Ngày đá: %s", TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime())));
         tvPlayTime.setText(String.format("Giờ chơi: %s - %s",
                 TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getStartTime()),
@@ -152,10 +152,10 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
         showToastMessage("Huỷ thành công");
     }
 
-    private void getBundleData() {
+    private String getBookingIdFromBundle() {
         Timber.d("getBundleData");
         Bundle bundle = getIntent().getExtras();
-        bookingId = bundle.getString(KEY_BOOKING_ID);
+        return bundle.getString(KEY_BOOKING_ID);
     }
 
     private void setupToolbar() {
@@ -172,9 +172,27 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
         viewFlipper.setOutAnimation(this, android.R.anim.slide_out_right);
     }
 
+    private void startShareIntent(FieldBooking fieldBooking) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Sportive Application");
+        String shareMessage = String.format("Tên sân: %s\nThời gian: %s , %s\nTổng tiền: %s", fieldBooking.getFieldName(),
+                TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime()),
+                TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getStartTime()) + "-" + TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getFinishTime()),
+                SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(fieldBooking.getTotalPrice()));
+        intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        startActivity(intent);
+    }
+
     @OnClick(R.id.btn_field_canceling)
     public void onFieldCancelingClick() {
-        presenter.deleteBookingById(bookingId);
+        presenter.deleteBookingById(getBookingIdFromBundle());
+        finish();
+    }
+
+    @OnClick(R.id.btn_share)
+    public void onShareClick() {
+        startShareIntent(fieldBooking);
         finish();
     }
 

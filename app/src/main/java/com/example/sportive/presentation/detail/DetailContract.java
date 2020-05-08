@@ -15,5 +15,6 @@ public interface DetailContract {
 
     interface Presenter extends BasePresenter<View> {
         void getSportFieldDataById(String id);
+
     }
 }

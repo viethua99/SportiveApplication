@@ -26,9 +26,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 import timber.log.Timber;
 import utils.SportiveUtils;
+import utils.TimeUtils;
 
 /**
  * Created by Viet Hua on 4/8/2020
@@ -68,8 +70,7 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
     @Inject
     DetailContract.Presenter presenter;
 
-    private String fieldId;
-    private int duration;
+    private SportField sportField;
 
     public static void startDetailActivity(AppCompatActivity activity, String fieldId, int duration) {
         Timber.d("startDetailActivity");
@@ -89,8 +90,6 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
         super.onCreate(savedInstanceState);
         Timber.d("onCreate");
         AndroidInjection.inject(this);
-
-        getBundleData();
         setupToolbar();
         setupViewFlipper();
     }
@@ -100,7 +99,7 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
-        presenter.getSportFieldDataById(fieldId);
+        presenter.getSportFieldDataById(getSportFieldIdFromBundle());
     }
 
     @Override
@@ -125,6 +124,8 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
     @Override
     public void showSportField(SportField sportField) {
         Timber.d("showSportField: %s", sportField);
+        this.sportField = sportField;
+
         progressBar.setVisibility(View.GONE);
         Glide.with(this).load(sportField.getImgPath()).into(imgField1);
         Glide.with(this).load("https://cdn.pixabay.com/photo/2016/06/15/01/11/soccer-1457988_1280.jpg").into(imgField2);
@@ -138,14 +139,18 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
 
     @Override
     public void showTotalPrice(int pricePerHour) {
-        tvTotalPrice.setText(SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(pricePerHour * duration));
-        tvDuration.setText(SportiveUtils.getDurationFormat(duration));
+        tvTotalPrice.setText(SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(pricePerHour * getDurationFromBundle()));
+        tvDuration.setText(SportiveUtils.getDurationFormat(getDurationFromBundle()));
     }
 
-    private void getBundleData() {
+    private int getDurationFromBundle() {
         Bundle bundle = getIntent().getExtras();
-        fieldId = bundle.getString(KEY_FIELD_ID);
-        duration = bundle.getInt(KEY_DURATION_TIME);
+        return bundle.getInt(KEY_DURATION_TIME);
+    }
+
+    private String getSportFieldIdFromBundle() {
+        Bundle bundle = getIntent().getExtras();
+        return bundle.getString(KEY_FIELD_ID);
     }
 
     private void setupToolbar() {
@@ -160,5 +165,26 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
         viewFlipper.setFlipInterval(VIEW_FLIPPER_TIME);
         viewFlipper.setInAnimation(this, android.R.anim.slide_in_left);
         viewFlipper.setOutAnimation(this, android.R.anim.slide_out_right);
+    }
+
+    private void startShareIntent(SportField sportField) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Sportive Application");
+        String shareMessage = String.format("Tên sân: %s\nTổng tiền: %s", sportField.getName(),
+                SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(sportField.getPrice() * getDurationFromBundle()));
+
+        intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_share)
+    public void onShareClick() {
+            startShareIntent(sportField);
+    }
+
+    @OnClick(R.id.btn_field_booking)
+    public void onBookingClick(){
+        showToastMessage("Đang phát triển");
     }
 }

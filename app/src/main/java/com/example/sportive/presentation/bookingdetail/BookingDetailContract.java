@@ -17,7 +17,6 @@ public interface BookingDetailContract {
 
     interface Presenter extends BasePresenter<View> {
         void getBookingDataById(String bookingId);
-
         void deleteBookingById(String bookingId);
     }
 }

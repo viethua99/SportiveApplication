@@ -53,6 +53,7 @@ public class BookingDetailPresenterImpl implements BookingDetailContract.Present
         deleteBookingByIdUseCase.execute(new DeleteBookingByIdObserver(), bookingId);
     }
 
+
     private class GetBookingDataByIdObserver extends DisposableMaybeObserver<FieldBooking> {
         @Override
         public void onSuccess(FieldBooking fieldBooking) {
