@@ -1,5 +1,6 @@
 package com.example.sportive.presentation.booking;
 
+import com.example.domain.interactor.fieldbooking.DeleteBookingByIdUseCase;
 import com.example.domain.interactor.fieldbooking.GetFieldBookingListByIdUseCase;
 import com.example.domain.model.FieldBooking;
 import com.example.sportive.di.SportiveManager;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import timber.log.Timber;
 
@@ -21,6 +23,8 @@ public class BookingPresenterImpl implements BookingContract.Presenter {
     SportiveManager sportiveManager;
     @Inject
     GetFieldBookingListByIdUseCase getFieldBookingListByIdUseCase;
+    @Inject
+    DeleteBookingByIdUseCase deleteBookingByIdUseCase;
 
     @Inject
     BookingPresenterImpl() {
@@ -50,6 +54,12 @@ public class BookingPresenterImpl implements BookingContract.Presenter {
         }
     }
 
+    @Override
+    public void deleteBookingById(String bookingId) {
+        Timber.d("deleteBookingById: %s", bookingId);
+        deleteBookingByIdUseCase.execute(new DeleteBookingByIdObserver(), bookingId);
+    }
+
     private class GetFieldBookingListByIdObserver extends DisposableMaybeObserver<List<FieldBooking>> {
 
         @Override
@@ -71,6 +81,20 @@ public class BookingPresenterImpl implements BookingContract.Presenter {
         @Override
         public void onComplete() {
             Timber.d("onComplete");
+            mView.refreshFragment();
+        }
+    }
+
+    private class DeleteBookingByIdObserver extends DisposableCompletableObserver {
+        @Override
+        public void onComplete() {
+            Timber.d("onComplete");
+            mView.showDeleteBookingSuccess();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Timber.e(e.getMessage());
         }
     }
 }

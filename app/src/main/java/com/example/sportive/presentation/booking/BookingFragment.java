@@ -1,6 +1,7 @@
 package com.example.sportive.presentation.booking;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +18,7 @@ import com.example.domain.model.FieldBooking;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
 import com.example.sportive.presentation.base.ItemClickListener;
+import com.example.sportive.presentation.bookingdetail.BookingDetailActivity;
 import com.example.sportive.presentation.login.LoginActivity;
 
 import java.util.List;
@@ -24,9 +27,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import dagger.Binds;
 import dagger.android.support.AndroidSupportInjection;
 import timber.log.Timber;
+import utils.SportiveUtils;
+import utils.TimeUtils;
 
 /**
  * Created by Viet Hua on 04/27/2020.
@@ -117,18 +121,75 @@ public class BookingFragment extends BaseFragment implements BookingContract.Vie
         tvEmptyMessage.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showDeleteBookingSuccess() {
+        Timber.d("showDeleteBookingSuccess");
+        showToastMessage("Huỷ thành công");
+        presenter.checkIfUserIsLoggedIn();
+    }
+
+    @Override
+    public void refreshFragment() {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.detach(this).attach(this).commit();
+    }
+
     private void setUpRecyclerView(View view) {
         Timber.d("setupRecyclerView");
         recyclerView = view.findViewById(R.id.rv_booking);
         bookingRecyclerViewAdapter = new BookingRecyclerViewAdapter(getContext(), listener);
+        bookingRecyclerViewAdapter.setOnButtonClickListener(shareButtonClickListener, cancelButtonClickListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(bookingRecyclerViewAdapter);
     }
 
+    private void startShareIntent(FieldBooking fieldBooking){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Sportive Application");
+        String shareMessage = String.format("Tên sân: %s\nThời gian: %s , %s\nTổng tiền: %s", fieldBooking.getFieldName(),
+                TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime()),
+                TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getStartTime()) + "-" + TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getFinishTime()),
+                SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(fieldBooking.getTotalPrice()));
+        intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        startActivity(intent);
+    }
+
+
     private ItemClickListener listener = new ItemClickListener() {
         @Override
         public void onClickListener(int position) {
+            Timber.d("onClickListener: %s", position);
+            String fieldBookingId = bookingRecyclerViewAdapter.getItem(position).getBookingId();
+            BookingDetailActivity.startBookingDetailActivity((AppCompatActivity) getActivity(), fieldBookingId);
 
+        }
+
+        @Override
+        public void onLongClickListener(int position) {
+
+        }
+    };
+    private ItemClickListener shareButtonClickListener = new ItemClickListener() {
+        @Override
+        public void onClickListener(int position) {
+            Timber.d("onShareButtonClick: %s", position);
+            FieldBooking fieldBooking = bookingRecyclerViewAdapter.getItem(position);
+            startShareIntent(fieldBooking);
+        }
+
+        @Override
+        public void onLongClickListener(int position) {
+
+        }
+    };
+
+    private ItemClickListener cancelButtonClickListener = new ItemClickListener() {
+        @Override
+        public void onClickListener(int position) {
+            Timber.d("onCancelButtonClick: %s", position);
+            String bookingId = bookingRecyclerViewAdapter.getItem(position).getBookingId();
+            presenter.deleteBookingById(bookingId);
         }
 
         @Override

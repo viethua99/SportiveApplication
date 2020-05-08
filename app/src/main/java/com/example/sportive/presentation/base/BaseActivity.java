@@ -1,5 +1,6 @@
 package com.example.sportive.presentation.base;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -11,11 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.Locale;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasAndroidInjector;
+import timber.log.Timber;
 import utils.AndroidDialogUtils;
 
 /**
@@ -90,6 +94,7 @@ public abstract class BaseActivity extends AppCompatActivity implements HasAndro
     public void hideLoading() {
         AndroidDialogUtils.getInstance().hideLoadingDialog();
     }
+
 
 
 }

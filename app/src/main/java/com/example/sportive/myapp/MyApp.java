@@ -1,11 +1,15 @@
 package com.example.sportive.myapp;
 
 import android.app.Application;
+import android.content.res.Configuration;
+import android.util.DisplayMetrics;
 
 import com.example.remote.LatestEmailPrefs;
 import com.example.sportive.BuildConfig;
 import com.example.sportive.di.AppComponent;
 import com.example.sportive.di.DaggerAppComponent;
+
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -27,6 +31,7 @@ public class MyApp extends Application implements HasAndroidInjector {
         super.onCreate();
         if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree()); //Plant Timber
         initDagger();
+        setFixedLanguageToVietnamese();
         LatestEmailPrefs.initSharedPreferences(this);
     }
 
@@ -39,6 +44,16 @@ public class MyApp extends Application implements HasAndroidInjector {
         Timber.d("Init Dagger 2");
         AppComponent appComponent = DaggerAppComponent.builder().application(this).build();
         appComponent.inject(this);
+    }
+
+    //Set all datepicker / timerpick dialogs language to Vietnamese
+    private void setFixedLanguageToVietnamese() {
+        Timber.d("setFixedLanguageToVietnamese");
+        Locale locale = new Locale("vi", "VN");
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getApplicationContext().getResources().updateConfiguration(config, null);
     }
 
 }

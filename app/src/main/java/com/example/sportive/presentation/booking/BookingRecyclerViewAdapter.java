@@ -3,6 +3,7 @@ package com.example.sportive.presentation.booking;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,9 @@ import utils.TimeUtils;
  */
 public class BookingRecyclerViewAdapter extends BaseRecyclerViewAdapter<FieldBooking, BookingRecyclerViewAdapter.ViewHolder> {
 
+    private ItemClickListener onShareButtonClickListener;
+    private ItemClickListener onBookingCancelClickListener;
+
     public BookingRecyclerViewAdapter(Context context, ItemClickListener listener) {
         super(context);
         this.mListener = listener;
@@ -41,27 +45,60 @@ public class BookingRecyclerViewAdapter extends BaseRecyclerViewAdapter<FieldBoo
         holder.renderUI(fieldBooking);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public void setOnButtonClickListener(ItemClickListener onShareButtonClickListener, ItemClickListener onBookingCancelClickListener) {
+        this.onShareButtonClickListener = onShareButtonClickListener;
+        this.onBookingCancelClickListener = onBookingCancelClickListener;
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         ImageView imgField;
         TextView tvFieldName, tvPlayDate, tvPlayTime, tvTotalPrice;
+        Button btnShare, btnBookingCancel;
 
         public ViewHolder(View view) {
             super(view);
             imgField = view.findViewById(R.id.img_field);
             tvFieldName = view.findViewById(R.id.txt_field_name);
             tvPlayDate = view.findViewById(R.id.txt_play_date);
-            tvPlayTime = view.findViewById(R.id.txt_finish_time);
+            tvPlayTime = view.findViewById(R.id.txt_play_time);
             tvTotalPrice = view.findViewById(R.id.txt_total_price);
+            btnShare = view.findViewById(R.id.btn_share);
+            btnBookingCancel = view.findViewById(R.id.btn_field_canceling);
+            view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onClickListener(getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            mListener.onLongClickListener(getAdapterPosition());
+            return true;
         }
 
         private void renderUI(FieldBooking fieldBooking) {
             Glide.with(context).load(fieldBooking.getFieldImg()).into(imgField);
             tvFieldName.setText(fieldBooking.getFieldName());
-            tvPlayDate.setText(String.format("Ngày đá: %s",TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime())));
+            tvPlayDate.setText(String.format("Ngày đá: %s", TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime())));
             tvTotalPrice.setText(SportiveUtils.getTotalPriceFormat(fieldBooking.getTotalPrice()));
             tvPlayTime.setText(String.format("Giờ chơi: %s - %s",
                     TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getStartTime()),
                     TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getFinishTime())));
+            btnShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onShareButtonClickListener.onClickListener(getAdapterPosition());
+                }
+            });
+            btnBookingCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBookingCancelClickListener.onClickListener(getAdapterPosition());
+                }
+            });
         }
     }
 

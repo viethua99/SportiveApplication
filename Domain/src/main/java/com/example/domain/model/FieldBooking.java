@@ -6,19 +6,21 @@ import java.util.Objects;
  * Created by Viet Hua on 4/13/2020
  */
 public class FieldBooking {
+    private String bookingId;
     private long startTime;
     private long finishTime;
+    private int duration;
     private String userId;
     private String fieldId;
     private String fieldName;
     private String fieldImg;
     private int totalPrice;
 
-    public FieldBooking(){
+    public FieldBooking() {
 
     }
 
-    public FieldBooking(long startTime, long finishTime, String userId, String fieldId, String fieldName, String fieldImg, int totalPrice) {
+    public FieldBooking(long startTime, long finishTime, int duration, String userId, String fieldId, String fieldName, String fieldImg, int totalPrice) {
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.userId = userId;
@@ -26,6 +28,7 @@ public class FieldBooking {
         this.fieldName = fieldName;
         this.fieldImg = fieldImg;
         this.totalPrice = totalPrice;
+        this.duration = duration;
     }
 
     public long getStartTime() {
@@ -84,6 +87,22 @@ public class FieldBooking {
         this.totalPrice = totalPrice;
     }
 
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,8 +125,10 @@ public class FieldBooking {
     @Override
     public String toString() {
         return "FieldBooking{" +
-                "startTime=" + startTime +
+                "bookingId='" + bookingId + '\'' +
+                ", startTime=" + startTime +
                 ", finishTime=" + finishTime +
+                ", duration=" + duration +
                 ", userId='" + userId + '\'' +
                 ", fieldId='" + fieldId + '\'' +
                 ", fieldName='" + fieldName + '\'' +

@@ -1,28 +1,22 @@
-package com.example.sportive.presentation.booking;
+package com.example.sportive.presentation.bookingdetail;
 
 import com.example.domain.model.FieldBooking;
+import com.example.domain.model.SportField;
 import com.example.sportive.presentation.base.BasePresenter;
 import com.example.sportive.presentation.base.BaseView;
 
-import java.util.List;
-
 /**
- * Created by Viet Hua on 04/27/2020.
+ * Created by Viet Hua on 05/06/2020.
  */
-public interface BookingContract {
+public interface BookingDetailContract {
     interface View extends BaseView {
-        void showNotLoginView();
-
-        void showBookingList(List<FieldBooking> fieldBookingList);
-
-        void showEmptyListMessage();
-
+        void showBookingData(FieldBooking fieldBooking);
         void showDeleteBookingSuccess();
-        void refreshFragment();
+        void showFieldData(SportField sportField);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void checkIfUserIsLoggedIn();
+        void getBookingDataById(String bookingId);
         void deleteBookingById(String bookingId);
     }
 }

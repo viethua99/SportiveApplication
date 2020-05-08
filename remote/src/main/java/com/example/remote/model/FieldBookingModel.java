@@ -4,6 +4,7 @@ package com.example.remote.model;
  * Created by Viet Hua on 4/13/2020
  */
 public class FieldBookingModel {
+    private String bookingId;
     private long startTime;
     private long finishTime;
     private String userId;
@@ -11,6 +12,7 @@ public class FieldBookingModel {
     private String fieldName;
     private String fieldImg;
     private int totalPrice;
+    private int duration;
 
     public long getStartTime() {
         return startTime;
@@ -68,16 +70,34 @@ public class FieldBookingModel {
         this.totalPrice = totalPrice;
     }
 
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     @Override
     public String toString() {
         return "FieldBookingModel{" +
-                "startTime=" + startTime +
+                "bookingId='" + bookingId + '\'' +
+                ", startTime=" + startTime +
                 ", finishTime=" + finishTime +
                 ", userId='" + userId + '\'' +
                 ", fieldId='" + fieldId + '\'' +
                 ", fieldName='" + fieldName + '\'' +
                 ", fieldImg='" + fieldImg + '\'' +
                 ", totalPrice=" + totalPrice +
+                ", duration=" + duration +
                 '}';
     }
 }

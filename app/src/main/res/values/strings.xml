@@ -15,6 +15,7 @@
     <string name="play_date">Ngày chơi</string>
     <string name="ranking_and_rating">Xếp hạng và đánh giá</string>
     <string name="field_booking">Đặt sân</string>
+    <string name="field_canceling">Huỷ sân</string>
     <string name="played_history">Lịch sử đá</string>
     <string name="fast_booking">Chọn sân nhanh</string>
     <string name="choose_play_time">Chọn giờ bắt đầu</string>
@@ -23,6 +24,7 @@
     <string name="email">Gmail</string>
     <string name="username">Họ tên</string>
     <string name="password">Mật khẩu</string>
+    <string name="change_time">Đổi lịch</string>
     <string name="phone_number">Số điện thoại</string>
     <string name="register">Đăng ký</string>
     <string name="login">Đăng nhập</string>

@@ -49,7 +49,23 @@ public class FieldBookingRepositoryImpl implements FieldBookingRepository {
     }
 
     @Override
+    public Maybe<FieldBooking> getBookingDataById(String bookingId) {
+        return fieldBookingDataRemote.getBookingDataById(bookingId)
+                .map(new Function<FieldBookingEntity, FieldBooking>() {
+                    @Override
+                    public FieldBooking apply(FieldBookingEntity fieldBookingEntity) throws Exception {
+                        return fieldBookingEntityMapper.mapFromEntity(fieldBookingEntity);
+                    }
+                });
+    }
+
+    @Override
     public Completable saveFieldBooking(FieldBooking fieldBooking) {
         return fieldBookingDataRemote.saveFieldBooking(fieldBookingEntityMapper.mapToEntity(fieldBooking));
+    }
+
+    @Override
+    public Completable deleteBookingById(String bookingId) {
+        return fieldBookingDataRemote.deleteBookingById(bookingId);
     }
 }
