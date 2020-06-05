@@ -49,9 +49,7 @@ public class HomePresenterImpl implements HomeContract.Presenter {
     @Override
     public String getFormattedHour(int hourOfDay) {
         Timber.d("getFormattedHour: %d",hourOfDay);
-        if (hourOfDay != 0) {
-            this.hourOfDay = hourOfDay;
-        }
+        this.hourOfDay = hourOfDay;
         return String.valueOf(this.hourOfDay) + "h";
     }
 
