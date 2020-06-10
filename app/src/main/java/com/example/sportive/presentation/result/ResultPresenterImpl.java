@@ -3,11 +3,13 @@ package com.example.sportive.presentation.result;
 import android.location.Location;
 
 import com.example.domain.interactor.fieldbooking.GetFieldBookingListUseCase;
+import com.example.domain.interactor.fieldbooking.GetFieldBookingTest;
 import com.example.domain.interactor.fieldbooking.SaveFieldBookingUseCase;
 import com.example.domain.interactor.minifield.GetMiniFieldIdListUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldByIdUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldIdListByDistrictUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldIdListUseCase;
+import com.example.domain.interactor.sportfield.SecondTestUseCase;
 import com.example.domain.interactor.sportfield.TestUseCase;
 import com.example.domain.model.EmptyParam;
 import com.example.domain.model.FieldBooking;
@@ -48,6 +50,8 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
     TestUseCase testUseCase;
     @Inject
     SportiveManager sportiveManager;
+    @Inject
+    GetFieldBookingTest getFieldBookingTest;
 
     @Inject
     GetMiniFieldIdListUseCase getMiniFieldIdListUseCase;
@@ -79,7 +83,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         Timber.d("getFieldBookingList: %s", searchFieldConfig.toString());
         mSearchFieldConfig = searchFieldConfig;
         getFieldBookingListUseCase.execute(new GetFieldBookingListObserver(), new EmptyParam());
-
+        getFieldBookingTest.execute(new TestObserver2(), searchFieldConfig);
     }
 
     @Override
@@ -276,6 +280,44 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         public void onComplete() {
             Timber.d("onComplete");
             Timber.e("TEST2: %s", test.toString());
+
+        }
+    }
+
+    @Inject
+    SecondTestUseCase secondTestUseCase;
+
+    private class TestObserver2 extends DisposableMaybeObserver<List<String>> {
+        @Override
+        public void onSuccess(List<String> strings) {
+            Timber.e("WHAT2: %s", strings);
+            secondTestUseCase.execute(new TestObserver3(), strings);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    }
+
+    private class TestObserver3 extends DisposableObserver<String> {
+        @Override
+        public void onNext(String sportField) {
+            Timber.e("WHAT: %s", sportField);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onComplete() {
 
         }
     }

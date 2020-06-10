@@ -66,10 +66,10 @@ public class MiniFieldDataRemoteImpl implements MiniFieldDataRemote {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             String fieldId = dataSnapshot.child("fieldId").getValue(String.class);
-                            if(!test.contains(fieldId)){
-                                test.add(fieldId);
                                 emitter.onNext(fieldId);
-                            }
+
+                        }else{
+                            emitter.onComplete();
                         }
 
                     }
