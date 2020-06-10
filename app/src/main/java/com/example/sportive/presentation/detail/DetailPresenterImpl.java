@@ -1,5 +1,6 @@
 package com.example.sportive.presentation.detail;
 
+import com.example.domain.interactor.fieldbooking.GetFieldBookingListUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldByIdUseCase;
 import com.example.domain.model.SportField;
 
@@ -41,6 +42,7 @@ public class DetailPresenterImpl implements DetailContract.Presenter {
     public void getSportFieldDataById(String id) {
         Timber.e("getSportFieldDataById");
         getSportFieldByIdUseCase.execute(new GetSportFieldDataByIdObserver(), id);
+
     }
 
 

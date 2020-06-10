@@ -7,5 +7,6 @@ public class Constants {
     public static final String KEY_FIELD = "fields";
     public static final String KEY_BOOKINGS = "bookings";
     public static final String KEY_USERS = "users";
+    public static final String KEY_MINI_FIELDS = "mini";
     public static final String KEY_DISTRICT_LOCATION = "districtLocation";
 }

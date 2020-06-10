@@ -3,11 +3,13 @@ package com.example.sportive.di;
 import com.example.data.AuthenticationRepositoryImpl;
 import com.example.data.DistrictLocationRepositoryImpl;
 import com.example.data.FieldBookingRepositoryImpl;
+import com.example.data.MiniFieldRepositoryImpl;
 import com.example.data.SportFieldRepositoryImpl;
 import com.example.data.UserInfoRepositoryImpl;
 import com.example.domain.repository.AuthenticationRepository;
 import com.example.domain.repository.DistrictLocationRepository;
 import com.example.domain.repository.FieldBookingRepository;
+import com.example.domain.repository.MiniFieldRepository;
 import com.example.domain.repository.SportFieldRepository;
 import com.example.domain.repository.UserInfoRepository;
 
@@ -34,4 +36,7 @@ public abstract class DataModule {
 
     @Binds
     public abstract UserInfoRepository bindUserInfoRepository(UserInfoRepositoryImpl impl);
+
+    @Binds
+    public abstract MiniFieldRepository bindMiniFieldRepository(MiniFieldRepositoryImpl impl);
 }

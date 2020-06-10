@@ -4,9 +4,11 @@ import android.location.Location;
 
 import com.example.domain.interactor.fieldbooking.GetFieldBookingListUseCase;
 import com.example.domain.interactor.fieldbooking.SaveFieldBookingUseCase;
+import com.example.domain.interactor.minifield.GetMiniFieldIdListUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldByIdUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldIdListByDistrictUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldIdListUseCase;
+import com.example.domain.interactor.sportfield.TestUseCase;
 import com.example.domain.model.EmptyParam;
 import com.example.domain.model.FieldBooking;
 import com.example.domain.model.SearchFieldConfig;
@@ -23,6 +25,7 @@ import javax.inject.Inject;
 
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableObserver;
 import timber.log.Timber;
 import utils.SportiveUtils;
 
@@ -42,7 +45,12 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
     @Inject
     SaveFieldBookingUseCase saveFieldBookingUseCase;
     @Inject
+    TestUseCase testUseCase;
+    @Inject
     SportiveManager sportiveManager;
+
+    @Inject
+    GetMiniFieldIdListUseCase getMiniFieldIdListUseCase;
 
     private SearchFieldConfig mSearchFieldConfig;
     private List<String> mSportFieldIdList;
@@ -127,7 +135,8 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
                     fieldBookingList,
                     mSearchFieldConfig.getStartTime(),
                     mSearchFieldConfig.getFinishTime());
-            getSportFieldIdListByDistrictUseCase.execute(new GetSportFieldIdListByDistrictObserver(), mSearchFieldConfig.getDistrictName());
+//            getSportFieldIdListByDistrictUseCase.execute(new GetSportFieldIdListByDistrictObserver(), mSearchFieldConfig.getDistrictName());
+            getMiniFieldIdListUseCase.execute(new GetMiniFieldObserver(), new EmptyParam());
         }
 
         @Override
@@ -138,16 +147,54 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onComplete() {
             Timber.d("onComplete");
-            getSportFieldIdListByDistrictUseCase.execute(new GetSportFieldIdListByDistrictObserver(), mSearchFieldConfig.getDistrictName());
+//            getSportFieldIdListByDistrictUseCase.execute(new GetSportFieldIdListByDistrictObserver(), mSearchFieldConfig.getDistrictName());
         }
+    }
+
+    private class GetMiniFieldObserver extends DisposableMaybeObserver<List<String>> {
+        @Override
+        public void onSuccess(List<String> miniFieldId) {
+            Timber.d("onSuccess: %s", miniFieldId);
+            mView.hideLoading();
+            List<String> availableSportFieldIdList = miniFieldId;
+            if (miniFieldId.isEmpty()) {
+                mView.showCannotFindAnyThing();
+            } else {
+                mSportFieldIdList = miniFieldId;
+                if (overlappedSportFieldIdList != null) {
+                    availableSportFieldIdList = getAvailableSportFieldIdList();
+                }
+
+                for (String sportFieldId : availableSportFieldIdList) {
+                    Timber.e("TEST: %s", sportFieldId);
+                    testUseCase.execute(new TestObserver(), sportFieldId);
+//                    getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), sportFieldId);
+                }
+            }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Timber.e("onError: %s", e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            Timber.d("onComplete");
+        }
+
     }
 
     private class GetSportFieldByIdObserver extends DisposableMaybeObserver<SportField> {
         @Override
         public void onSuccess(SportField sportField) {
-            mView.hideLoading();
             Timber.d("onSuccess: %s", sportField.toString());
-            mView.showAvailableSportFieldData(sportField);
+            mView.hideLoading();
+            if (sportField.getSportFieldAddress().getDistrict().equals(mSearchFieldConfig.getDistrictName())) {
+                mView.showAvailableSportFieldData(sportField);
+            }
+
+
         }
 
         @Override
@@ -183,6 +230,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
             }
         }
 
+
         @Override
         public void onError(Throwable e) {
             Timber.e(e.getMessage());
@@ -205,5 +253,31 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         public void onError(Throwable e) {
             Timber.e(e.getMessage());
         }
+
+
     }
+
+    Set<String> test = new HashSet<>();
+
+    private class TestObserver extends DisposableObserver<String> {
+        @Override
+        public void onNext(String s) {
+            Timber.d("onNext: %s", s);
+            Timber.e("ADD: %s", s);
+            getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), s);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Timber.e("onError: %s", e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            Timber.d("onComplete");
+            Timber.e("TEST2: %s", test.toString());
+
+        }
+    }
+
 }
