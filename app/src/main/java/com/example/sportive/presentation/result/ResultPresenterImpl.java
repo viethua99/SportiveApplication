@@ -1,9 +1,5 @@
 package com.example.sportive.presentation.result;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.example.domain.interactor.fieldbooking.GetAvailableFieldIdListUseCase;
 import com.example.domain.interactor.fieldbooking.SaveFieldBookingUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldUseCase;
@@ -14,11 +10,8 @@ import com.example.sportive.di.SportiveManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
@@ -45,6 +38,8 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
 
 
     private SearchFieldConfig mSearchFieldConfig;
+    private Map<String, Integer> EmptyFieldCountMap = new HashMap<>();
+    private List<SportField> sportFieldList = new ArrayList<>();
 
     @Inject
     ResultPresenterImpl() {
@@ -70,8 +65,6 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         mSearchFieldConfig = searchFieldConfig;
         getAvailableFieldIdListUseCase.execute(new GetAvailableFieldIdListObserver(), searchFieldConfig);
     }
-
-    List<String> a = new ArrayList<>();
 
     @Override
     public void saveFieldBookingData(String sportFieldName, String fieldImg, String fieldId, int price) {
@@ -114,7 +107,6 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onSuccess(List<String> miniFieldIdList) {
             Timber.d("onSuccess: %s", miniFieldIdList);
-            a = miniFieldIdList;
             getSportFieldUseCase.execute(new GetSportFieldObserver(), miniFieldIdList);
         }
 
@@ -129,30 +121,25 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         }
     }
 
-    Map<SportField, Integer> test = new HashMap<>();
-    List<SportField> testList = new ArrayList<>();
+
 
     private class GetSportFieldObserver extends DisposableObserver<SportField> {
         @Override
         public void onNext(SportField sportField) {
             Timber.e("onNext: %s", sportField);
+            int emptyFieldCount;
             mView.hideLoading();
             if (sportField.getSportFieldAddress().getDistrict().equals(mSearchFieldConfig.getDistrictName())) {
 
+                emptyFieldCount = EmptyFieldCountMap.get(sportField.getFieldId()) == null ? 1
+                        : EmptyFieldCountMap.get(sportField.getFieldId()) + 1;
 
-                if (test.get(sportField) == null) {
-                    test.put(sportField, 1);
-                } else {
-                    test.put(sportField, test.get(sportField) + 1);
-                }
 
-                if (testList.contains(sportField)) {
-                    testList.remove(sportField);
-                }
-                sportField.setEmpty(test.get(sportField));
-                testList.add(sportField);
-                Timber.e("TEST2: %s", test.get(sportField));
-                mView.testShow(testList);
+                EmptyFieldCountMap.put(sportField.getFieldId(), emptyFieldCount);
+                sportFieldList.remove(sportField);
+                sportField.setEmpty(EmptyFieldCountMap.get(sportField.getFieldId()));
+                sportFieldList.add(sportField);
+                mView.testShow(sportFieldList);
             }
         }
 
