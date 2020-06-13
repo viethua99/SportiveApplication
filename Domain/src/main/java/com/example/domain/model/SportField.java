@@ -7,6 +7,7 @@ public class SportField {
     private String fieldId;
     private String name;
     private String imgPath;
+    private int empty;
     private SportFieldAddress sportFieldAddress;
     private int rating;
     private int price;
@@ -81,6 +82,14 @@ public class SportField {
         this.longitude = longitude;
     }
 
+    public int getEmpty() {
+        return empty;
+    }
+
+    public void setEmpty(int empty) {
+        this.empty = empty;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -107,6 +116,7 @@ public class SportField {
                 "fieldId='" + fieldId + '\'' +
                 ", name='" + name + '\'' +
                 ", imgPath='" + imgPath + '\'' +
+                ", empty=" + empty +
                 ", sportFieldAddress=" + sportFieldAddress +
                 ", rating=" + rating +
                 ", price=" + price +

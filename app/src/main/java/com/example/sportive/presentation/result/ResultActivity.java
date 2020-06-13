@@ -67,7 +67,7 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         AndroidInjection.inject(this);
         searchFieldConfig = (SearchFieldConfig) getIntent().getSerializableExtra(HANDLE_SEARCH_FIELD);
         presenter.attachView(this);
-        presenter.getFieldBookingList(searchFieldConfig);
+        presenter.getAvailableSportField(searchFieldConfig);
 
         setupViews();
     }
@@ -107,19 +107,14 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
     }
 
     @Override
-    public void showSaveSuccessfully() {
-        showToastMessage("Đặt sân thành công");
+    public void testShow(List<SportField> sportFieldList) {
+        Timber.e("testShow: %s",sportFieldList);
+        resultRecyclerViewAdapter.setData(sportFieldList);
     }
 
     @Override
-    public void showCannotFindAnyThing() {
-        Timber.d("showCannotFindAnyThing :%d", resultRecyclerViewAdapter.getItemCount());
-        if (resultRecyclerViewAdapter.getItemCount() == 0) {
-            showToastMessage("Can't find anything");
-        }
-
-
-
+    public void showSaveSuccessfully() {
+        showToastMessage("Đặt sân thành công");
     }
 
     @Override
@@ -175,7 +170,6 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
             DetailActivity.startDetailActivity(ResultActivity.this, sportFieldId, searchFieldConfig.getDuration());
 
         }
-
         @Override
         public void onLongClickListener(int position) {
 
@@ -192,7 +186,6 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
             finish();
 
         }
-
         @Override
         public void onLongClickListener(int position) {
 

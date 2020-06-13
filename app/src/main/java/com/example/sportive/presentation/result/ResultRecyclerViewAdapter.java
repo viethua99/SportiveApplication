@@ -59,7 +59,7 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         Button btnBooking, btnDetail;
-        TextView tvFieldName, tvFieldLocation, tvFieldPrice, tvTotalPrice;
+        TextView tvFieldName, tvFieldLocation, tvFieldPrice, tvTotalPrice, tvEmptyField;
         RatingBar ratingBar;
         ImageView imgField;
 
@@ -71,6 +71,7 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
             tvFieldLocation = itemView.findViewById(R.id.txt_field_location);
             tvFieldPrice = itemView.findViewById(R.id.txt_field_price);
             tvTotalPrice = itemView.findViewById(R.id.txt_total_price);
+            tvEmptyField = itemView.findViewById(R.id.txt_empty_field);
             imgField = itemView.findViewById(R.id.img_field);
             ratingBar = itemView.findViewById(R.id.rating_bar);
             itemView.setOnClickListener(this);
@@ -93,6 +94,7 @@ public class ResultRecyclerViewAdapter extends BaseRecyclerViewAdapter<SportFiel
         }
 
         public void renderUI(SportField data) {
+            tvEmptyField.setText(String.format("Còn %s sân", data.getEmpty()));
             tvFieldName.setText(data.getName());
             tvFieldLocation.setText(String.format("%s, %s", data.getSportFieldAddress().getStreet(), data.getSportFieldAddress().getDistrict()));
             tvFieldPrice.setText(SportiveUtils.getPricePerHourFormat(data.getPrice()));

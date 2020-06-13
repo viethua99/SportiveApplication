@@ -1,5 +1,7 @@
 package com.example.domain.model;
 
+import java.util.Objects;
+
 /**
  * Created by Viet Hua on 04/22/2020.
  */
@@ -29,5 +31,19 @@ public class SportFieldAddress {
                 "street='" + street + '\'' +
                 ", district='" + district + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SportFieldAddress)) return false;
+        SportFieldAddress that = (SportFieldAddress) o;
+        return Objects.equals(street, that.street) &&
+                Objects.equals(district, that.district);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(street, district);
     }
 }

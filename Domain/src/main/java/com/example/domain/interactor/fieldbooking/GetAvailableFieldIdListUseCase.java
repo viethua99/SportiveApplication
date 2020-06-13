@@ -24,13 +24,13 @@ import io.reactivex.functions.Function;
 /**
  * Created by Viet Hua on 6/10/2020
  */
-public class GetFieldBookingTest extends MaybeUseCase<SearchFieldConfig> {
+public class GetAvailableFieldIdListUseCase extends MaybeUseCase<SearchFieldConfig> {
 
     private FieldBookingRepository fieldBookingRepository;
     private MiniFieldRepository miniFieldRepository;
 
     @Inject
-    public GetFieldBookingTest(ExecutionThread executionThread, FieldBookingRepository fieldBookingRepository, MiniFieldRepository miniFieldRepository) {
+    public GetAvailableFieldIdListUseCase(ExecutionThread executionThread, FieldBookingRepository fieldBookingRepository, MiniFieldRepository miniFieldRepository) {
         super(executionThread);
         this.fieldBookingRepository = fieldBookingRepository;
         this.miniFieldRepository = miniFieldRepository;
@@ -48,7 +48,6 @@ public class GetFieldBookingTest extends MaybeUseCase<SearchFieldConfig> {
         });
 
     }
-
 
     private List<String> getOverlappedSportFieldList(List<FieldBooking> fieldBookingList, long startTime, long finishTime) {
         Set<String> overlappedSportFieldSet = new HashSet<>();
@@ -70,7 +69,6 @@ public class GetFieldBookingTest extends MaybeUseCase<SearchFieldConfig> {
         List<String> intersection = new ArrayList<>(miniFieldIdList);
         intersection.retainAll(overlappedSportFieldIdList);
         availableSportFieldIdList.removeAll(intersection);
-
         return availableSportFieldIdList;
     }
 }

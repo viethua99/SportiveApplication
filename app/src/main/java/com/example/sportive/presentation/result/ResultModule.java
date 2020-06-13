@@ -9,5 +9,5 @@ import dagger.Module;
 @Module
 public abstract class ResultModule {
     @Binds
-    public abstract ResultContract.Presenter resultPrsenter(ResultPresenterImpl impl);
+    public abstract ResultContract.Presenter resultPresenter(ResultPresenterImpl impl);
 }

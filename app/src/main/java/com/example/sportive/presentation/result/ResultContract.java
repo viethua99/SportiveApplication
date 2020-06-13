@@ -15,12 +15,12 @@ public interface ResultContract {
         void showSaveSuccessfully();
         void showNotLoggedIn();
         void showAvailableSportFieldData(SportField sportField);
-        void showCannotFindAnyThing();
+        void testShow(List<SportField> sportFieldList);
         void hideLoading();
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getFieldBookingList(SearchFieldConfig searchFieldConfig);
+        void getAvailableSportField(SearchFieldConfig searchFieldConfig);
         void saveFieldBookingData(String sportFieldName, String fieldImg, String fieldId, int price);
     }
 }

@@ -1,27 +1,24 @@
 package com.example.sportive.presentation.result;
 
-import android.location.Location;
+import android.os.Build;
 
-import com.example.domain.interactor.fieldbooking.GetFieldBookingListUseCase;
-import com.example.domain.interactor.fieldbooking.GetFieldBookingTest;
+import androidx.annotation.RequiresApi;
+
+import com.example.domain.interactor.fieldbooking.GetAvailableFieldIdListUseCase;
 import com.example.domain.interactor.fieldbooking.SaveFieldBookingUseCase;
-import com.example.domain.interactor.minifield.GetMiniFieldIdListUseCase;
-import com.example.domain.interactor.sportfield.GetSportFieldByIdUseCase;
-import com.example.domain.interactor.sportfield.GetSportFieldIdListByDistrictUseCase;
-import com.example.domain.interactor.sportfield.GetSportFieldIdListUseCase;
-import com.example.domain.interactor.sportfield.SecondTestUseCase;
-import com.example.domain.interactor.sportfield.TestUseCase;
-import com.example.domain.model.EmptyParam;
+import com.example.domain.interactor.sportfield.GetSportFieldUseCase;
 import com.example.domain.model.FieldBooking;
 import com.example.domain.model.SearchFieldConfig;
 import com.example.domain.model.SportField;
 import com.example.sportive.di.SportiveManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
@@ -29,7 +26,6 @@ import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 import timber.log.Timber;
-import utils.SportiveUtils;
 
 /**
  * Created by Viet Hua on 4/10/2020
@@ -39,26 +35,16 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
 
 
     @Inject
-    GetFieldBookingListUseCase getFieldBookingListUseCase;
+    SportiveManager sportiveManager;
     @Inject
-    GetSportFieldByIdUseCase getSportFieldByIdUseCase;
-    @Inject
-    GetSportFieldIdListByDistrictUseCase getSportFieldIdListByDistrictUseCase;
+    GetSportFieldUseCase getSportFieldUseCase;
     @Inject
     SaveFieldBookingUseCase saveFieldBookingUseCase;
     @Inject
-    TestUseCase testUseCase;
-    @Inject
-    SportiveManager sportiveManager;
-    @Inject
-    GetFieldBookingTest getFieldBookingTest;
+    GetAvailableFieldIdListUseCase getAvailableFieldIdListUseCase;
 
-    @Inject
-    GetMiniFieldIdListUseCase getMiniFieldIdListUseCase;
 
     private SearchFieldConfig mSearchFieldConfig;
-    private List<String> mSportFieldIdList;
-    private List<String> overlappedSportFieldIdList;
 
     @Inject
     ResultPresenterImpl() {
@@ -72,18 +58,17 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
 
     @Override
     public void dropView() {
-        getFieldBookingListUseCase.dispose();
-        getSportFieldIdListByDistrictUseCase.dispose();
-        getSportFieldByIdUseCase.dispose();
+        getSportFieldUseCase.dispose();
+        saveFieldBookingUseCase.dispose();
+        getAvailableFieldIdListUseCase.dispose();
         mView = null;
     }
 
     @Override
-    public void getFieldBookingList(SearchFieldConfig searchFieldConfig) {
-        Timber.d("getFieldBookingList: %s", searchFieldConfig.toString());
+    public void getAvailableSportField(SearchFieldConfig searchFieldConfig) {
+        Timber.d("getAvailableSportField: %s", searchFieldConfig.toString());
         mSearchFieldConfig = searchFieldConfig;
-        getFieldBookingListUseCase.execute(new GetFieldBookingListObserver(), new EmptyParam());
-        getFieldBookingTest.execute(new TestObserver2(), searchFieldConfig);
+        getAvailableFieldIdListUseCase.execute(new GetAvailableFieldIdListObserver(), searchFieldConfig);
     }
 
     @Override
@@ -99,150 +84,11 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
                     fieldImg,
                     price * mSearchFieldConfig.getDuration()
             );
+            Timber.d("saveFieldBookingData: %s", fieldBooking);
             saveFieldBookingUseCase.execute(new SaveFieldBookingObserver(), fieldBooking);
 
         } else {
             mView.showNotLoggedIn();
-        }
-    }
-
-    private List<String> getOverlappedSportFieldList(List<FieldBooking> fieldBookingList, long startTime, long finishTime) {
-        Timber.d("getOverlappedSportFieldList");
-        Set<String> overlappedSportFieldSet = new HashSet<>();
-        for (FieldBooking fieldBooking : fieldBookingList) {
-            if (fieldBooking.getStartTime() < finishTime && fieldBooking.getFinishTime() > startTime) {
-                overlappedSportFieldSet.add(fieldBooking.getFieldId());
-            }
-        }
-
-        List<String> overlappedSportFieldList = new ArrayList<>(overlappedSportFieldSet);
-        return overlappedSportFieldList;
-    }
-
-    private List<String> getAvailableSportFieldIdList() {
-        Timber.d("getAvailableSportFieldIdList");
-        List<String> availableSportFieldIdList;
-        availableSportFieldIdList = new ArrayList<>(mSportFieldIdList);
-        availableSportFieldIdList.addAll(overlappedSportFieldIdList);
-        List<String> intersection = new ArrayList<>(mSportFieldIdList);
-        intersection.retainAll(overlappedSportFieldIdList);
-        availableSportFieldIdList.removeAll(intersection);
-
-        return availableSportFieldIdList;
-    }
-
-    private class GetFieldBookingListObserver extends DisposableMaybeObserver<List<FieldBooking>> {
-        @Override
-        public void onSuccess(List<FieldBooking> fieldBookingList) {
-            Timber.d("onSuccess: %s", fieldBookingList.toString());
-            overlappedSportFieldIdList = getOverlappedSportFieldList(
-                    fieldBookingList,
-                    mSearchFieldConfig.getStartTime(),
-                    mSearchFieldConfig.getFinishTime());
-//            getSportFieldIdListByDistrictUseCase.execute(new GetSportFieldIdListByDistrictObserver(), mSearchFieldConfig.getDistrictName());
-            getMiniFieldIdListUseCase.execute(new GetMiniFieldObserver(), new EmptyParam());
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Timber.e(e.getMessage());
-        }
-
-        @Override
-        public void onComplete() {
-            Timber.d("onComplete");
-//            getSportFieldIdListByDistrictUseCase.execute(new GetSportFieldIdListByDistrictObserver(), mSearchFieldConfig.getDistrictName());
-        }
-    }
-
-    private class GetMiniFieldObserver extends DisposableMaybeObserver<List<String>> {
-        @Override
-        public void onSuccess(List<String> miniFieldId) {
-            Timber.d("onSuccess: %s", miniFieldId);
-            mView.hideLoading();
-            List<String> availableSportFieldIdList = miniFieldId;
-            if (miniFieldId.isEmpty()) {
-                mView.showCannotFindAnyThing();
-            } else {
-                mSportFieldIdList = miniFieldId;
-                if (overlappedSportFieldIdList != null) {
-                    availableSportFieldIdList = getAvailableSportFieldIdList();
-                }
-
-                for (String sportFieldId : availableSportFieldIdList) {
-                    Timber.e("TEST: %s", sportFieldId);
-                    testUseCase.execute(new TestObserver(), sportFieldId);
-//                    getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), sportFieldId);
-                }
-            }
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Timber.e("onError: %s", e.getMessage());
-        }
-
-        @Override
-        public void onComplete() {
-            Timber.d("onComplete");
-        }
-
-    }
-
-    private class GetSportFieldByIdObserver extends DisposableMaybeObserver<SportField> {
-        @Override
-        public void onSuccess(SportField sportField) {
-            Timber.d("onSuccess: %s", sportField.toString());
-            mView.hideLoading();
-            if (sportField.getSportFieldAddress().getDistrict().equals(mSearchFieldConfig.getDistrictName())) {
-                mView.showAvailableSportFieldData(sportField);
-            }
-
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Timber.e(e.getMessage());
-        }
-
-        @Override
-        public void onComplete() {
-            Timber.d("onComplete");
-            mView.hideLoading();
-
-        }
-    }
-
-    private class GetSportFieldIdListByDistrictObserver extends DisposableMaybeObserver<List<String>> {
-        @Override
-        public void onSuccess(List<String> sportFieldIdList) {
-            Timber.d("onSuccess : %s", sportFieldIdList);
-            mView.hideLoading();
-            List<String> availableSportFieldIdList = sportFieldIdList;
-            if (sportFieldIdList.isEmpty()) {
-                mView.showCannotFindAnyThing();
-            } else {
-                mSportFieldIdList = sportFieldIdList;
-                if (overlappedSportFieldIdList != null) {
-                    availableSportFieldIdList = getAvailableSportFieldIdList();
-                }
-
-                for (String sportFieldId : availableSportFieldIdList) {
-                    getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), sportFieldId);
-                }
-            }
-        }
-
-
-        @Override
-        public void onError(Throwable e) {
-            Timber.e(e.getMessage());
-        }
-
-        @Override
-        public void onComplete() {
-            Timber.d("onComplete");
         }
     }
 
@@ -255,20 +101,19 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
 
         @Override
         public void onError(Throwable e) {
-            Timber.e(e.getMessage());
+            Timber.e("onError: %s", e.getMessage());
         }
 
 
     }
 
-    Set<String> test = new HashSet<>();
 
-    private class TestObserver extends DisposableObserver<String> {
+    private class GetAvailableFieldIdListObserver extends DisposableMaybeObserver<List<String>> {
         @Override
-        public void onNext(String s) {
-            Timber.d("onNext: %s", s);
-            Timber.e("ADD: %s", s);
-            getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), s);
+        public void onSuccess(List<String> miniFieldIdList) {
+            Timber.d("onSuccess: %s", miniFieldIdList);
+
+            getSportFieldUseCase.execute(new GetSportFieldObserver(), miniFieldIdList);
         }
 
         @Override
@@ -279,46 +124,45 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onComplete() {
             Timber.d("onComplete");
-            Timber.e("TEST2: %s", test.toString());
-
         }
     }
 
-    @Inject
-    SecondTestUseCase secondTestUseCase;
+    Map<SportField, Integer> test = new HashMap<>();
+    List<SportField> testList = new ArrayList<>();
 
-    private class TestObserver2 extends DisposableMaybeObserver<List<String>> {
+    private class GetSportFieldObserver extends DisposableObserver<SportField> {
         @Override
-        public void onSuccess(List<String> strings) {
-            Timber.e("WHAT2: %s", strings);
-            secondTestUseCase.execute(new TestObserver3(), strings);
+        public void onNext(SportField sportField) {
+            Timber.e("onNext: %s", sportField);
+            mView.hideLoading();
+            if (sportField.getSportFieldAddress().getDistrict().equals(mSearchFieldConfig.getDistrictName())) {
+
+
+                if (test.get(sportField) == null) {
+                    test.put(sportField, 1);
+                } else {
+                    test.put(sportField, test.get(sportField) + 1);
+                }
+
+                if (testList.contains(sportField)) {
+                    testList.remove(sportField);
+                }
+                sportField.setEmpty(test.get(sportField));
+                testList.add(sportField);
+                Timber.e("TEST2: %s", test.get(sportField));
+//                mView.showAvailableSportFieldData(sportField);
+                mView.testShow(testList);
+            }
         }
 
         @Override
         public void onError(Throwable e) {
-
+            Timber.e("onError: %s", e.getMessage());
         }
 
         @Override
         public void onComplete() {
-
-        }
-    }
-
-    private class TestObserver3 extends DisposableObserver<String> {
-        @Override
-        public void onNext(String sportField) {
-            Timber.e("WHAT: %s", sportField);
-        }
-
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onComplete() {
-
+            Timber.e("onComplete");
         }
     }
 

@@ -19,26 +19,22 @@ import io.reactivex.functions.Function;
 /**
  * Created by Viet Hua on 6/10/2020
  */
-public class SecondTestUseCase extends ObservableUseCase<List<String>> {
+public class GetSportFieldUseCase extends ObservableUseCase<List<String>> {
 
     private MiniFieldRepository miniFieldRepository;
     private SportFieldRepository sportFieldRepository;
 
     @Inject
-    public SecondTestUseCase(ExecutionThread executionThread, MiniFieldRepository miniFieldRepository, SportFieldRepository sportFieldRepository) {
+    public GetSportFieldUseCase(ExecutionThread executionThread, MiniFieldRepository miniFieldRepository, SportFieldRepository sportFieldRepository) {
         super(executionThread);
         this.miniFieldRepository = miniFieldRepository;
         this.sportFieldRepository = sportFieldRepository;
     }
 
     @Override
-    protected Observable<String> buildUseCase(List<String> param) {
-        return Observable.fromIterable(param).flatMap(new Function<String, ObservableSource<String>>() {
-            @Override
-            public ObservableSource<String> apply(String s) throws Exception {
-
-                return miniFieldRepository.getSportFieldId(s);
-            }
-        });
+    protected Observable<SportField> buildUseCase(List<String> miniFieldIdList) {
+        return Observable.fromIterable(miniFieldIdList)
+                .flatMap((Function<String, ObservableSource<SportField>>) miniFieldId -> miniFieldRepository.getSportFieldId(miniFieldId)
+                        .flatMapMaybe(sportFieldId -> sportFieldRepository.getSportFieldById(sportFieldId)));
     }
 }
