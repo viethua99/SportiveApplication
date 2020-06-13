@@ -14,5 +14,6 @@ import io.reactivex.Observable;
  */
 public interface MiniFieldRepository {
     Maybe<List<String>> getMiniFieldIdList();
+    Maybe<List<String>> getMiniFieldIdListById(String sportFieldId);
     Observable<String> getSportFieldId(String miniFieldList);
 }

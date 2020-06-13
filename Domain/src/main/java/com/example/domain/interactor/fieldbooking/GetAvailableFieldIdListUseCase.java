@@ -7,6 +7,7 @@ import com.example.domain.model.FieldBooking;
 import com.example.domain.model.SearchFieldConfig;
 import com.example.domain.repository.FieldBookingRepository;
 import com.example.domain.repository.MiniFieldRepository;
+import com.example.domain.utils.DomainUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,36 +40,14 @@ public class GetAvailableFieldIdListUseCase extends MaybeUseCase<SearchFieldConf
     @Override
     protected Maybe buildUseCase(SearchFieldConfig searchFieldConfig) {
         return Maybe.zip(fieldBookingRepository.getFieldBookingList(), miniFieldRepository.getMiniFieldIdList(), (fieldBookingList, miniFieldIdList) -> {
-            List<String> overlappedSportFieldList = getOverlappedSportFieldList(fieldBookingList, searchFieldConfig.getStartTime(), searchFieldConfig.getFinishTime());
+            List<String> overlappedSportFieldList = DomainUtils.getOverlappedSportFieldList(fieldBookingList, searchFieldConfig.getStartTime(), searchFieldConfig.getFinishTime());
             List<String> availableSportFieldIdList = miniFieldIdList;
             if (overlappedSportFieldList != null) {
-                availableSportFieldIdList = getAvailableSportFieldIdList(overlappedSportFieldList, miniFieldIdList);
+                availableSportFieldIdList = DomainUtils.getAvailableSportFieldIdList(overlappedSportFieldList, miniFieldIdList);
             }
             return availableSportFieldIdList;
         });
 
     }
 
-    private List<String> getOverlappedSportFieldList(List<FieldBooking> fieldBookingList, long startTime, long finishTime) {
-        Set<String> overlappedSportFieldSet = new HashSet<>();
-        for (FieldBooking fieldBooking : fieldBookingList) {
-            if (fieldBooking.getStartTime() < finishTime && fieldBooking.getFinishTime() > startTime) {
-                overlappedSportFieldSet.add(fieldBooking.getFieldId());
-            }
-        }
-
-        List<String> overlappedSportFieldList = new ArrayList<>(overlappedSportFieldSet);
-        return overlappedSportFieldList;
-    }
-
-
-    private List<String> getAvailableSportFieldIdList(List<String> overlappedSportFieldIdList, List<String> miniFieldIdList) {
-        List<String> availableSportFieldIdList;
-        availableSportFieldIdList = new ArrayList<>(miniFieldIdList);
-        availableSportFieldIdList.addAll(overlappedSportFieldIdList);
-        List<String> intersection = new ArrayList<>(miniFieldIdList);
-        intersection.retainAll(overlappedSportFieldIdList);
-        availableSportFieldIdList.removeAll(intersection);
-        return availableSportFieldIdList;
-    }
 }

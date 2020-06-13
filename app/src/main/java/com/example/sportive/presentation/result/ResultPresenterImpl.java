@@ -71,6 +71,8 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         getAvailableFieldIdListUseCase.execute(new GetAvailableFieldIdListObserver(), searchFieldConfig);
     }
 
+    List<String> a = new ArrayList<>();
+
     @Override
     public void saveFieldBookingData(String sportFieldName, String fieldImg, String fieldId, int price) {
         if (sportiveManager.getUserInfo() != null) {
@@ -112,7 +114,7 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
         @Override
         public void onSuccess(List<String> miniFieldIdList) {
             Timber.d("onSuccess: %s", miniFieldIdList);
-
+            a = miniFieldIdList;
             getSportFieldUseCase.execute(new GetSportFieldObserver(), miniFieldIdList);
         }
 
@@ -150,7 +152,6 @@ public class ResultPresenterImpl implements ResultContract.Presenter {
                 sportField.setEmpty(test.get(sportField));
                 testList.add(sportField);
                 Timber.e("TEST2: %s", test.get(sportField));
-//                mView.showAvailableSportFieldData(sportField);
                 mView.testShow(testList);
             }
         }

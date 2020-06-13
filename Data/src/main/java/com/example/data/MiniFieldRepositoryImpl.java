@@ -31,6 +31,11 @@ public class MiniFieldRepositoryImpl implements MiniFieldRepository {
     }
 
     @Override
+    public Maybe<List<String>> getMiniFieldIdListById(String sportFieldId) {
+        return miniFieldDataRemote.getMiniFieldIdListById(sportFieldId);
+    }
+
+    @Override
     public Observable<String> getSportFieldId(String miniFieldList) {
         return miniFieldDataRemote.getSportFieldId(miniFieldList);
     }

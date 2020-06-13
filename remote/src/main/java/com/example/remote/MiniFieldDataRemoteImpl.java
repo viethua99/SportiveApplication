@@ -54,7 +54,22 @@ public class MiniFieldDataRemoteImpl implements MiniFieldDataRemote {
         });
     }
 
-    private Set<String> test = new HashSet<>();
+    @Override
+    public Maybe<List<String>> getMiniFieldIdListById(final String sportFieldId) {
+        Query query = databaseReference.child(Constants.KEY_MINI_FIELDS);
+        return RxFirebaseDatabase.observeSingleValueEvent(query, new Function<DataSnapshot, List<String>>() {
+            @Override
+            public List<String> apply(DataSnapshot dataSnapshot) throws Exception {
+                List<String> miniFieldId = new ArrayList<>();
+                for (DataSnapshot subSnapshot : dataSnapshot.getChildren()) {
+                    if (subSnapshot.child("fieldId").getValue(String.class).equals(sportFieldId)) {
+                        miniFieldId.add(subSnapshot.getKey());
+                    }
+                }
+                return miniFieldId;
+            }
+        });
+    }
 
     @Override
     public Observable<String> getSportFieldId(final String miniFieldId) {
@@ -66,9 +81,9 @@ public class MiniFieldDataRemoteImpl implements MiniFieldDataRemote {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             String fieldId = dataSnapshot.child("fieldId").getValue(String.class);
-                                emitter.onNext(fieldId);
+                            emitter.onNext(fieldId);
 
-                        }else{
+                        } else {
                             emitter.onComplete();
                         }
 
