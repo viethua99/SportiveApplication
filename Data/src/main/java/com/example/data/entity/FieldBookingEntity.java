@@ -4,6 +4,7 @@ package com.example.data.entity;
  * Created by Viet Hua on 4/13/2020
  */
 public class FieldBookingEntity {
+    private String miniFieldId;
     private String bookingId;
     private long startTime;
     private long finishTime;
@@ -86,16 +87,27 @@ public class FieldBookingEntity {
         this.bookingId = bookingId;
     }
 
+    public String getMiniFieldId() {
+        return miniFieldId;
+    }
+
+    public void setMiniFieldId(String miniFieldId) {
+        this.miniFieldId = miniFieldId;
+    }
+
     @Override
     public String toString() {
         return "FieldBookingEntity{" +
-                "startTime=" + startTime +
+                "miniFieldId='" + miniFieldId + '\'' +
+                ", bookingId='" + bookingId + '\'' +
+                ", startTime=" + startTime +
                 ", finishTime=" + finishTime +
                 ", userId='" + userId + '\'' +
                 ", fieldId='" + fieldId + '\'' +
                 ", fieldName='" + fieldName + '\'' +
                 ", fieldImg='" + fieldImg + '\'' +
                 ", totalPrice=" + totalPrice +
+                ", duration=" + duration +
                 '}';
     }
 }

@@ -15,6 +15,7 @@ public class FieldBookingEntityMapper implements BaseMapper<FieldBookingEntity, 
     public FieldBookingEntity mapToEntity(FieldBooking fieldBooking) {
         FieldBookingEntity fieldBookingEntity = new FieldBookingEntity();
         fieldBookingEntity.setBookingId(fieldBooking.getBookingId());
+        fieldBookingEntity.setMiniFieldId(fieldBooking.getMiniFieldId());
         fieldBookingEntity.setUserId(fieldBooking.getUserId());
         fieldBookingEntity.setFieldId(fieldBooking.getFieldId());
         fieldBookingEntity.setFieldName(fieldBooking.getFieldName());
@@ -30,6 +31,7 @@ public class FieldBookingEntityMapper implements BaseMapper<FieldBookingEntity, 
     public FieldBooking mapFromEntity(FieldBookingEntity fieldBookingEntity) {
         FieldBooking fieldBooking = new FieldBooking();
         fieldBooking.setBookingId(fieldBookingEntity.getBookingId());
+        fieldBooking.setMiniFieldId(fieldBookingEntity.getMiniFieldId());
         fieldBooking.setUserId(fieldBookingEntity.getUserId());
         fieldBooking.setFieldId(fieldBookingEntity.getFieldId());
         fieldBooking.setStartTime(fieldBookingEntity.getStartTime());

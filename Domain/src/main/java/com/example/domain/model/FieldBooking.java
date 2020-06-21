@@ -6,6 +6,7 @@ import java.util.Objects;
  * Created by Viet Hua on 4/13/2020
  */
 public class FieldBooking {
+    private String miniFieldId;
     private String bookingId;
     private long startTime;
     private long finishTime;
@@ -103,6 +104,14 @@ public class FieldBooking {
         this.duration = duration;
     }
 
+    public String getMiniFieldId() {
+        return miniFieldId;
+    }
+
+    public void setMiniFieldId(String miniFieldId) {
+        this.miniFieldId = miniFieldId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,7 +119,10 @@ public class FieldBooking {
         FieldBooking that = (FieldBooking) o;
         return startTime == that.startTime &&
                 finishTime == that.finishTime &&
+                duration == that.duration &&
                 totalPrice == that.totalPrice &&
+                Objects.equals(miniFieldId, that.miniFieldId) &&
+                Objects.equals(bookingId, that.bookingId) &&
                 Objects.equals(userId, that.userId) &&
                 Objects.equals(fieldId, that.fieldId) &&
                 Objects.equals(fieldName, that.fieldName) &&
@@ -119,13 +131,14 @@ public class FieldBooking {
 
     @Override
     public int hashCode() {
-        return Objects.hash(startTime, finishTime, userId, fieldId, fieldName, fieldImg, totalPrice);
+        return Objects.hash(miniFieldId, bookingId, startTime, finishTime, duration, userId, fieldId, fieldName, fieldImg, totalPrice);
     }
 
     @Override
     public String toString() {
         return "FieldBooking{" +
-                "bookingId='" + bookingId + '\'' +
+                "miniFieldId='" + miniFieldId + '\'' +
+                ", bookingId='" + bookingId + '\'' +
                 ", startTime=" + startTime +
                 ", finishTime=" + finishTime +
                 ", duration=" + duration +

@@ -3,8 +3,7 @@ package com.example.sportive.presentation.bookingdetail;
 import com.example.domain.interactor.fieldbooking.DeleteBookingByIdUseCase;
 import com.example.domain.interactor.fieldbooking.GetBookingDataByIdUseCase;
 import com.example.domain.interactor.sportfield.GetSportFieldByIdUseCase;
-import com.example.domain.model.FieldBooking;
-import com.example.domain.model.SportField;
+import com.example.domain.model.BookingDetail;
 
 import javax.inject.Inject;
 
@@ -22,9 +21,9 @@ public class BookingDetailPresenterImpl implements BookingDetailContract.Present
     @Inject
     GetBookingDataByIdUseCase getBookingDataByIdUseCase;
     @Inject
-    GetSportFieldByIdUseCase getSportFieldByIdUseCase;
-    @Inject
     DeleteBookingByIdUseCase deleteBookingByIdUseCase;
+
+    public BookingDetail mBookingDetail;
 
     @Inject
     public BookingDetailPresenterImpl() {
@@ -38,12 +37,14 @@ public class BookingDetailPresenterImpl implements BookingDetailContract.Present
 
     @Override
     public void dropView() {
+        getBookingDataByIdUseCase.dispose();
+        deleteBookingByIdUseCase.dispose();
         mView = null;
     }
 
     @Override
-    public void getBookingDataById(String bookingId) {
-        Timber.d("getBookingDataById: %s", bookingId);
+    public void retrieveBookingDataById(String bookingId) {
+        Timber.d("retrieveBookingDataById: %s", bookingId);
         getBookingDataByIdUseCase.execute(new GetBookingDataByIdObserver(), bookingId);
     }
 
@@ -53,13 +54,17 @@ public class BookingDetailPresenterImpl implements BookingDetailContract.Present
         deleteBookingByIdUseCase.execute(new DeleteBookingByIdObserver(), bookingId);
     }
 
+    public BookingDetail getBookingDetail() {
+       return mBookingDetail != null ? mBookingDetail : new BookingDetail();
+    }
 
-    private class GetBookingDataByIdObserver extends DisposableMaybeObserver<FieldBooking> {
+
+    private class GetBookingDataByIdObserver extends DisposableMaybeObserver<BookingDetail> {
         @Override
-        public void onSuccess(FieldBooking fieldBooking) {
-            Timber.d("onSuccess: %s", fieldBooking);
-            mView.showBookingData(fieldBooking);
-            getSportFieldByIdUseCase.execute(new GetSportFieldByIdObserver(), fieldBooking.getFieldId());
+        public void onSuccess(BookingDetail bookingDetail) {
+            Timber.d("onSuccess: %s", bookingDetail);
+            mBookingDetail = bookingDetail;
+            mView.showBookingDetail(bookingDetail);
         }
 
         @Override
@@ -73,23 +78,6 @@ public class BookingDetailPresenterImpl implements BookingDetailContract.Present
         }
     }
 
-    private class GetSportFieldByIdObserver extends DisposableMaybeObserver<SportField> {
-        @Override
-        public void onSuccess(SportField sportField) {
-            Timber.d("onSuccess: %s", sportField);
-            mView.showFieldData(sportField);
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Timber.e(e.getMessage());
-        }
-
-        @Override
-        public void onComplete() {
-            Timber.e("onComplete");
-        }
-    }
 
     private class DeleteBookingByIdObserver extends DisposableCompletableObserver {
         @Override

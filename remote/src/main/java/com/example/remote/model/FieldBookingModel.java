@@ -4,6 +4,7 @@ package com.example.remote.model;
  * Created by Viet Hua on 4/13/2020
  */
 public class FieldBookingModel {
+    private String miniFieldId;
     private String bookingId;
     private long startTime;
     private long finishTime;
@@ -86,10 +87,19 @@ public class FieldBookingModel {
         this.duration = duration;
     }
 
+    public String getMiniFieldId() {
+        return miniFieldId;
+    }
+
+    public void setMiniFieldId(String miniFieldId) {
+        this.miniFieldId = miniFieldId;
+    }
+
     @Override
     public String toString() {
         return "FieldBookingModel{" +
-                "bookingId='" + bookingId + '\'' +
+                "miniFieldId='" + miniFieldId + '\'' +
+                ", bookingId='" + bookingId + '\'' +
                 ", startTime=" + startTime +
                 ", finishTime=" + finishTime +
                 ", userId='" + userId + '\'' +

@@ -49,6 +49,7 @@ public class FieldBookingDataRemoteImpl implements FieldBookingDataRemote {
                     fieldBookingModel.setBookingId(subSnapshot.getKey());
                     fieldBookingModel.setFieldId(subSnapshot.child("fieldId").getValue(String.class));
                     fieldBookingModel.setUserId(subSnapshot.child("userId").getValue(String.class));
+                    fieldBookingModel.setMiniFieldId(subSnapshot.child("miniFieldId").getValue(String.class));
                     fieldBookingModel.setFieldName(subSnapshot.child("fieldName").getValue(String.class));
                     fieldBookingModel.setFieldImg(subSnapshot.child("fieldImg").getValue(String.class));
                     fieldBookingModel.setStartTime(subSnapshot.child("startTime").getValue(Long.class));
@@ -76,6 +77,7 @@ public class FieldBookingDataRemoteImpl implements FieldBookingDataRemote {
                         fieldBookingModel.setBookingId(subSnapshot.getKey());
                         fieldBookingModel.setFieldId(subSnapshot.child("fieldId").getValue(String.class));
                         fieldBookingModel.setUserId(subSnapshot.child("userId").getValue(String.class));
+                        fieldBookingModel.setMiniFieldId(subSnapshot.child("miniFieldId").getValue(String.class));
                         fieldBookingModel.setFieldName(subSnapshot.child("fieldName").getValue(String.class));
                         fieldBookingModel.setFieldImg(subSnapshot.child("fieldImg").getValue(String.class));
                         fieldBookingModel.setStartTime(subSnapshot.child("startTime").getValue(Long.class));
@@ -99,6 +101,7 @@ public class FieldBookingDataRemoteImpl implements FieldBookingDataRemote {
                 FieldBookingModel fieldBookingModel = new FieldBookingModel();
                 fieldBookingModel.setBookingId(dataSnapshot.getKey());
                 fieldBookingModel.setFieldId(dataSnapshot.child("fieldId").getValue(String.class));
+                fieldBookingModel.setMiniFieldId(dataSnapshot.child("miniFieldId").getValue(String.class));
                 fieldBookingModel.setUserId(dataSnapshot.child("userId").getValue(String.class));
                 fieldBookingModel.setFieldName(dataSnapshot.child("fieldName").getValue(String.class));
                 fieldBookingModel.setFieldImg(dataSnapshot.child("fieldImg").getValue(String.class));

@@ -1,5 +1,6 @@
 package com.example.sportive.presentation.bookingdetail;
 
+import com.example.domain.model.BookingDetail;
 import com.example.domain.model.FieldBooking;
 import com.example.domain.model.SportField;
 import com.example.sportive.presentation.base.BasePresenter;
@@ -10,13 +11,13 @@ import com.example.sportive.presentation.base.BaseView;
  */
 public interface BookingDetailContract {
     interface View extends BaseView {
-        void showBookingData(FieldBooking fieldBooking);
+        void showBookingDetail(BookingDetail bookingDetail);
         void showDeleteBookingSuccess();
-        void showFieldData(SportField sportField);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getBookingDataById(String bookingId);
+        void retrieveBookingDataById(String bookingId);
         void deleteBookingById(String bookingId);
+        BookingDetail getBookingDetail();
     }
 }

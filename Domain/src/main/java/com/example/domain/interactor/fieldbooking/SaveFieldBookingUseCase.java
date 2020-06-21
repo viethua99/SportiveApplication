@@ -47,7 +47,7 @@ public class SaveFieldBookingUseCase extends CompletableUseCase<FieldBooking> {
         }).flatMapCompletable(new Function<List<String>, CompletableSource>() {
             @Override
             public CompletableSource apply(List<String> strings) throws Exception {
-                param.setFieldId(strings.get(0));
+                param.setMiniFieldId(strings.get(0));
                return fieldBookingRepository.saveFieldBooking(param);
             }
         });

@@ -16,8 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-import com.example.domain.model.FieldBooking;
-import com.example.domain.model.SportField;
+import com.example.domain.model.BookingDetail;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseActivity;
 
@@ -70,8 +69,6 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
     @Inject
     BookingDetailContract.Presenter presenter;
 
-    private FieldBooking fieldBooking;
-
     public static void startBookingDetailActivity(AppCompatActivity activity, String bookingId) {
         Timber.d("startBookingDetailActivity");
         Intent intent = new Intent(activity, BookingDetailActivity.class);
@@ -98,7 +95,7 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
         super.onStart();
         Timber.d("onStart");
         presenter.attachView(this);
-        presenter.getBookingDataById(getBookingIdFromBundle());
+        presenter.retrieveBookingDataById(getBookingIdFromBundle());
     }
 
     @Override
@@ -120,31 +117,27 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
     }
 
     @Override
-    public void showBookingData(FieldBooking fieldBooking) {
-        Timber.d("showBookingData: %s", fieldBooking);
-        this.fieldBooking = fieldBooking;
+    public void showBookingDetail(BookingDetail bookingDetail) {
+        Timber.d("showBookingDetail: %s", bookingDetail);
+        progressBar.setVisibility(View.GONE);
 
-        tvPlayDate.setText(String.format("Ngày đá: %s", TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime())));
+        tvPlayDate.setText(String.format("Ngày đá: %s", TimeUtils.convertMillisecondsToDateFormat(bookingDetail.getStartTime())));
         tvPlayTime.setText(String.format("Giờ chơi: %s - %s",
-                TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getStartTime()),
-                TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getFinishTime())));
-        tvTotalPrice.setText(SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(fieldBooking.getTotalPrice()));
-        tvDuration.setText(SportiveUtils.getDurationFormat(fieldBooking.getDuration()));
+                TimeUtils.convertMillisecondsToHourFormat(bookingDetail.getStartTime()),
+                TimeUtils.convertMillisecondsToHourFormat(bookingDetail.getFinishTime())));
+        tvTotalPrice.setText(SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(bookingDetail.getTotalPrice()));
+        tvDuration.setText(SportiveUtils.getDurationFormat(bookingDetail.getDuration()));
+        tvFieldAddress.setText(String.format("%s, %s", bookingDetail.getSportFieldAddress().getStreet(),
+                bookingDetail.getSportFieldAddress().getDistrict()));
+        tvFieldName.setText(bookingDetail.getFieldName());
+        Glide.with(this).load(bookingDetail.getFieldImagePath()).into(imgField1);
 
         //Test
-        Glide.with(this).load(fieldBooking.getFieldImg()).into(imgField1);
         Glide.with(this).load("https://cdn.pixabay.com/photo/2016/06/15/01/11/soccer-1457988_1280.jpg").into(imgField2);
         Glide.with(this).load("https://cdn.pixabay.com/photo/2017/06/23/23/49/youth-2436343_960_720.jpg").into(imgField3);
-    }
-
-    @Override
-    public void showFieldData(SportField sportField) {
-        Timber.d("showFieldData: %s", sportField);
-        progressBar.setVisibility(View.GONE);
-        tvFieldAddress.setText(String.format("%s, %s", sportField.getSportFieldAddress().getStreet(), sportField.getSportFieldAddress().getDistrict()));
-        tvFieldName.setText(sportField.getName());
         rlDetail.setVisibility(View.VISIBLE);
     }
+
 
     @Override
     public void showDeleteBookingSuccess() {
@@ -172,14 +165,15 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
         viewFlipper.setOutAnimation(this, android.R.anim.slide_out_right);
     }
 
-    private void startShareIntent(FieldBooking fieldBooking) {
+    private void startShareIntent() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, "Sportive Application");
-        String shareMessage = String.format("Tên sân: %s\nThời gian: %s , %s\nTổng tiền: %s", fieldBooking.getFieldName(),
-                TimeUtils.convertMillisecondsToDateFormat(fieldBooking.getStartTime()),
-                TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getStartTime()) + "-" + TimeUtils.convertMillisecondsToHourFormat(fieldBooking.getFinishTime()),
-                SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(fieldBooking.getTotalPrice()));
+        String shareMessage = String.format("Tên sân: %s\nThời gian: %s , %s\nTổng tiền: %s", presenter.getBookingDetail().getFieldName(),
+                TimeUtils.convertMillisecondsToDateFormat(presenter.getBookingDetail().getStartTime()),
+                TimeUtils.convertMillisecondsToHourFormat(presenter.getBookingDetail().getStartTime()) + "-" +
+                        TimeUtils.convertMillisecondsToHourFormat(presenter.getBookingDetail().getFinishTime()),
+                SportiveUtils.getPriceWithDotAndVietnameseCurrencyFormat(presenter.getBookingDetail().getTotalPrice()));
         intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
         startActivity(intent);
     }
@@ -192,7 +186,7 @@ public class BookingDetailActivity extends BaseActivity implements BookingDetail
 
     @OnClick(R.id.btn_share)
     public void onShareClick() {
-        startShareIntent(fieldBooking);
+        startShareIntent();
         finish();
     }
 
