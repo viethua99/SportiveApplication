@@ -58,6 +58,7 @@ public class FieldBookingDataRemoteImpl implements FieldBookingDataRemote {
                     fieldBookingModel.setTotalPrice(((Long) subSnapshot.child("totalPrice").getValue()).intValue());
                     fieldBookingEntityList.add(fieldBookingModelMapper.mapFromModel(fieldBookingModel));
                 }
+                Log.e("TEST2","TEST " + fieldBookingEntityList);
                 return fieldBookingEntityList;
             }
         });

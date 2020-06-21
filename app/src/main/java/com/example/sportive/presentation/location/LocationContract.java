@@ -12,9 +12,10 @@ import java.util.List;
 public interface LocationContract {
     interface View extends BaseView {
         void showDistrictLocationList(List<DistrictLocation> districtLocationList);
+
     }
 
     interface Presenter extends BasePresenter<View> {
-            void getDistrictLocationList();
+        void getDistrictLocationList();
     }
 }

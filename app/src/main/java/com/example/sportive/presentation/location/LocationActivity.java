@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.domain.model.DistrictLocation;
 import com.example.sportive.R;
@@ -39,6 +41,8 @@ public class LocationActivity extends BaseActivity implements LocationContract.V
     Toolbar toolbar;
     @BindView(R.id.rv_location)
     RecyclerView recyclerView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     @Inject
     LocationContract.Presenter presenter;
@@ -102,6 +106,12 @@ public class LocationActivity extends BaseActivity implements LocationContract.V
     public void showDistrictLocationList(List<DistrictLocation> districtLocationList) {
         Timber.d("showDistrictLocationList: %s", districtLocationList);
         locationRecyclerViewAdapter.setData(districtLocationList);
+    }
+
+    @Override
+    public void hideLoading() {
+        Timber.d("hideLoading");
+        progressBar.setVisibility(View.GONE);
     }
 
     private void setupViews() {

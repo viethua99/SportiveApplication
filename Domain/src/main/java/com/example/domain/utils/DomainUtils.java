@@ -16,7 +16,7 @@ public class DomainUtils {
         Set<String> overlappedSportFieldSet = new HashSet<>();
         for (FieldBooking fieldBooking : fieldBookingList) {
             if (fieldBooking.getStartTime() < finishTime && fieldBooking.getFinishTime() > startTime) {
-                overlappedSportFieldSet.add(fieldBooking.getFieldId());
+                overlappedSportFieldSet.add(fieldBooking.getMiniFieldId());
             }
         }
 

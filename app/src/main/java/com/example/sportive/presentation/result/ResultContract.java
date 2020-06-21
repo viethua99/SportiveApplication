@@ -14,9 +14,7 @@ public interface ResultContract {
     interface View extends BaseView {
         void showSaveSuccessfully();
         void showNotLoggedIn();
-        void showAvailableSportFieldData(SportField sportField);
         void testShow(List<SportField> sportFieldList);
-        void hideLoading();
     }
 
     interface Presenter extends BasePresenter<View> {

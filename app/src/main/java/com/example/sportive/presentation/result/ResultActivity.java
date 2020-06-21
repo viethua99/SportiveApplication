@@ -96,16 +96,6 @@ public class ResultActivity extends BaseActivity implements ResultContract.View 
         return true;
     }
 
-
-    @Override
-    public void showAvailableSportFieldData(SportField sportField) {
-        Timber.d("showAvailableSportFieldData");
-        resultRecyclerViewAdapter.addData(sportField);
-        if (resultRecyclerViewAdapter.getItemCount() == 0) {
-            showToastMessage("Cant find anything");
-        }
-    }
-
     @Override
     public void testShow(List<SportField> sportFieldList) {
         Timber.e("testShow: %s",sportFieldList);

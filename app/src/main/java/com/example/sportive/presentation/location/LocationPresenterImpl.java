@@ -46,6 +46,7 @@ public class LocationPresenterImpl implements LocationContract.Presenter {
         @Override
         public void onSuccess(List<DistrictLocation> districtLocations) {
             Timber.d("onSuccess: %s", districtLocations.toString());
+            mView.hideLoading();
             mView.showDistrictLocationList(districtLocations);
         }
 
