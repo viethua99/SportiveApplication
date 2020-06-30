@@ -4,6 +4,8 @@ import com.example.sportive.presentation.bookingdetail.BookingDetailActivity;
 import com.example.sportive.presentation.bookingdetail.BookingDetailModule;
 import com.example.sportive.presentation.detail.DetailActivity;
 import com.example.sportive.presentation.detail.DetailModule;
+import com.example.sportive.presentation.edituser.EditUserActivity;
+import com.example.sportive.presentation.edituser.EditUserModule;
 import com.example.sportive.presentation.location.LocationActivity;
 import com.example.sportive.presentation.location.LocationModule;
 import com.example.sportive.presentation.login.LoginActivity;
@@ -58,5 +60,8 @@ public abstract class AppBindingModule {
 
     @ContributesAndroidInjector(modules = BookingDetailModule.class)
     public abstract BookingDetailActivity bookingDetailActivity();
+
+    @ContributesAndroidInjector(modules = EditUserModule.class)
+    public abstract EditUserActivity editUserActivity();
 
 }

@@ -3,14 +3,18 @@ package com.example.sportive.presentation.profile;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.domain.model.UserInfo;
 import com.example.sportive.R;
 import com.example.sportive.presentation.base.BaseFragment;
+import com.example.sportive.presentation.edituser.EditUserActivity;
 import com.example.sportive.presentation.login.LoginActivity;
 
 import javax.inject.Inject;
@@ -35,6 +39,10 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     ScrollView profileScrollView;
     @BindView(R.id.txt_username)
     TextView username;
+    @BindView(R.id.img_user_cover)
+    ImageView imgUserCover;
+    @BindView(R.id.img_user_avatar)
+    ImageView imgUserAvatar;
     @Inject
     ProfileContract.Presenter presenter;
 
@@ -93,6 +101,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         notLoggedInLayout.setVisibility(View.GONE);
         profileScrollView.setVisibility(View.VISIBLE);
         username.setText(userInfo.getName());
+        Glide.with(this)
+                .load("https://cdn.pixabay.com/photo/2016/06/15/01/11/soccer-1457988_1280.jpg")
+                .apply(RequestOptions.circleCropTransform())
+                .into(imgUserAvatar);
+        Glide.with(this)
+                .load("https://cdn.pixabay.com/photo/2017/06/23/23/49/youth-2436343_960_720.jpg")
+                .into(imgUserCover);
+
     }
 
     @Override
@@ -104,6 +120,12 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void showSignOutSuccess() {
         showToastMessage("Log out successfully");
         LoginActivity.startLoginActivity((AppCompatActivity) getActivity());
+    }
+
+    @OnClick(R.id.txt_edit_profile)
+    public void onEditProfileClick() {
+        Timber.d("onEditProfileClick");
+        EditUserActivity.startEditUserActivity((AppCompatActivity) getActivity());
     }
 
     @OnClick(R.id.txt_logout)
